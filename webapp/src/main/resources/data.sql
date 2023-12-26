@@ -1,11 +1,11 @@
 -- Insert 5 random users
 INSERT INTO usr (name, surname, email, password, is_admin)
 VALUES
-    ('Maximo', 'Timochenko', 'mtimochenko@teco.com.ar', 'password123', false),
-    ('Matias', 'Gioscio', 'mgioscio@teco.com.ar', 'password456', true),
-    ('Brian', 'Silva', 'basilva@teco.com.ar', 'password789', false),
-    ('Sebastian', 'Lopez', 'seblopez@teco.com.ar', 'password101', false),
-    ('Joaquin', 'Higa', 'jhiga@teco.com.ar', 'password102', true);
+    ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false),
+    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', true),
+    ('Brian', 'Silva', 'basilva@noc.com', 'password789', false),
+    ('Sebastian', 'Lopez', 'seblopez@noc.com', 'password101', false),
+    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', true);
 
 -- Insertar 5 tareas específicas
 INSERT INTO task (name, description, creator_id, creation_date, is_completed)
