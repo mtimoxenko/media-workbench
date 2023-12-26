@@ -4,13 +4,10 @@ import com.dentalcura.webapp.dto.address.AddressResponse;
 import com.dentalcura.webapp.dto.patient.CreatePatientRequest;
 import com.dentalcura.webapp.dto.patient.UpdatePatientRequest;
 import com.dentalcura.webapp.dto.patient.PatientResponse;
-import com.dentalcura.webapp.model.Address;
-import com.dentalcura.webapp.model.Patient;
-import com.dentalcura.webapp.model.User;
+import com.dentalcura.webapp.model.Task;
 import com.dentalcura.webapp.repository.IPatientRepository;
 import com.dentalcura.webapp.service.IPatientService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
-import com.dentalcura.webapp.utils.exceptions.DuplicateEmailException;
 import com.dentalcura.webapp.utils.exceptions.DuplicateNiNumberException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -42,33 +39,33 @@ public class PatientService implements IPatientService {
             throw new DuplicateNiNumberException("NI Number [" + createPatientRequest.niNumber() + "] is already in use.");
         }
 
-        Patient patient = mapper.convertValue(createPatientRequest, Patient.class);
-        Address address = patient.getAddress();
+        Task task = mapper.convertValue(createPatientRequest, Task.class);
+        Address address = task.getAddress();
 
-        address.setPatient(patient);
-        patient.setAddress(address);
+        address.setTask(task);
+        task.setAddress(address);
 
-        patientRepository.save(patient);
-        LOGGER.info("New patient was registered [" + patient.getName() + " " +patient.getSurname() + "]");
+        patientRepository.save(task);
+        LOGGER.info("New patient was registered [" + task.getName() + " " + task.getSurname() + "]");
     }
 
     @Override
     public List<PatientResponse> selectAllPatient() {
-        List<Patient> patients = patientRepository.findAll();
+        List<Task> tasks = patientRepository.findAll();
         List<PatientResponse> patientResponses = new ArrayList<>();
 
-        for(Patient patient: patients){
+        for(Task task : tasks){
             patientResponses.add(
                     new PatientResponse(
-                            patient.getId(),
-                            patient.getName(),
-                            patient.getSurname(),
-                            patient.getNiNumber(),
+                            task.getId(),
+                            task.getName(),
+                            task.getSurname(),
+                            task.getNiNumber(),
                             new AddressResponse(
-                                    patient.getAddress().getStreetName(),
-                                    patient.getAddress().getStreetNumber(),
-                                    patient.getAddress().getFloor(),
-                                    patient.getAddress().getDepartment()
+                                    task.getAddress().getStreetName(),
+                                    task.getAddress().getStreetNumber(),
+                                    task.getAddress().getFloor(),
+                                    task.getAddress().getDepartment()
                             )
                     )
             );
@@ -82,17 +79,17 @@ public class PatientService implements IPatientService {
         if (!patientRepository.existsById(id))
             throw new CustomNotFoundException("Patient id [" + id + "] not found");
 
-        Optional<Patient> optionalPatient = patientRepository.findById(id);
+        Optional<Task> optionalPatient = patientRepository.findById(id);
 
         if(optionalPatient.isPresent()) {
-            Patient patient = optionalPatient.get();
-            Address address = patient.getAddress();
+            Task task = optionalPatient.get();
+            Address address = task.getAddress();
 
             return new PatientResponse(
-                    patient.getId(),
-                    patient.getName(),
-                    patient.getSurname(),
-                    patient.getNiNumber(),
+                    task.getId(),
+                    task.getName(),
+                    task.getSurname(),
+                    task.getNiNumber(),
                     new AddressResponse(
                             address.getStreetName(),
                             address.getStreetNumber(),
@@ -110,28 +107,28 @@ public class PatientService implements IPatientService {
         if (!patientRepository.existsById(id))
             throw new CustomNotFoundException("Patient id [" + id + "] not found");
 
-        Optional<Patient> optionalPatient = patientRepository.findById(id);
+        Optional<Task> optionalPatient = patientRepository.findById(id);
 
         if (optionalPatient.isPresent()) {
-            Patient patient = optionalPatient.get();
+            Task task = optionalPatient.get();
             LOGGER.info("Request to update patient id [" + id + "]");
 
-            Address address = patient.getAddress();
+            Address address = task.getAddress();
 
 
-            patient.setName(updatePatientRequest.name());
-            patient.setSurname(updatePatientRequest.surname());
+            task.setName(updatePatientRequest.name());
+            task.setSurname(updatePatientRequest.surname());
 
             address.setStreetName(updatePatientRequest.address().getStreetName());
             address.setStreetNumber(updatePatientRequest.address().getStreetNumber());
             address.setFloor(updatePatientRequest.address().getFloor());
             address.setDepartment(updatePatientRequest.address().getDepartment());
 
-            address.setPatient(patient);
-            patient.setAddress(address);
+            address.setTask(task);
+            task.setAddress(address);
 
-            patientRepository.save(patient);
-            LOGGER.info("Patient updated to [" + patient.getName() + " " +patient.getSurname() + "]");
+            patientRepository.save(task);
+            LOGGER.info("Patient updated to [" + task.getName() + " " + task.getSurname() + "]");
 
         }
     }
@@ -148,11 +145,11 @@ public class PatientService implements IPatientService {
 
 
     private boolean isNiNumberDuplicated(Integer niNum){
-        List<Patient> patients = patientRepository.findAll();
+        List<Task> tasks = patientRepository.findAll();
         boolean isDuplicated = false;
 
-        for(Patient patient: patients){
-            if (patient.getNiNumber().equals(niNum)) {
+        for(Task task : tasks){
+            if (task.getNiNumber().equals(niNum)) {
                 isDuplicated = true;
                 break;
             }

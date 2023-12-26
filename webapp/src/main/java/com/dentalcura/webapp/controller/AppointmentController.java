@@ -38,7 +38,7 @@ public class AppointmentController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("appointment_created", "true");  // Adding a custom header
-        String message = "Appointment created successfully!";
+        String message = "UserTask created successfully!";
 
         appointmentService.insertAppointment(createAppointmentRequest);
         return ResponseEntity.ok()
@@ -51,7 +51,7 @@ public class AppointmentController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("appointment_updated", "true");  // Adding a custom header
-        String message = "Appointment updated successfully!";
+        String message = "UserTask updated successfully!";
 
         appointmentService.updateAppointmentByID(id, updateAppointmentRequest);
         return ResponseEntity.ok()
@@ -64,7 +64,7 @@ public class AppointmentController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("appointment_deleted", "true");  // Adding a custom header
-        String message = "Appointment deleted successfully!";
+        String message = "UserTask deleted successfully!";
 
         appointmentService.deleteAppointmentByID(id);
         return ResponseEntity.ok()

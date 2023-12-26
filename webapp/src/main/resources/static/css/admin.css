@@ -68,7 +68,7 @@ nav .user-info button {
 }
 
 .tables {
-    background-color: var(--negro);
+    background-color: transparent;
     padding: 2rem 3rem;
     margin-bottom: 1rem;
     display: flex;
@@ -90,7 +90,7 @@ nav .user-info button {
 }
 
 form{
-    background-color: var(--negro);
+    background-color: transparent;
     max-width: 30rem;
     margin: 0 auto;
     padding: 2rem 0rem;

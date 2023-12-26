@@ -6,9 +6,9 @@ import com.dentalcura.webapp.dto.appointment.UpdateAppointmentRequest;
 import com.dentalcura.webapp.dto.appointment.AppointmentResponse;
 import com.dentalcura.webapp.dto.dentist.DentistResponseToAppointment;
 import com.dentalcura.webapp.dto.patient.PatientResponseToAppointment;
-import com.dentalcura.webapp.model.Appointment;
-import com.dentalcura.webapp.model.Dentist;
-import com.dentalcura.webapp.model.Patient;
+import com.dentalcura.webapp.model.Comment;
+import com.dentalcura.webapp.model.UserTask;
+import com.dentalcura.webapp.model.Task;
 import com.dentalcura.webapp.repository.IAppointmentRepository;
 import com.dentalcura.webapp.service.IAppointmentService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
@@ -42,32 +42,32 @@ public class AppointmentService implements IAppointmentService {
     public void insertAppointment(CreateAppointmentRequest createAppointmentRequest) {
         if (isAppointmentDuplicated(
                 createAppointmentRequest.date(),
-                createAppointmentRequest.patient().getId(),
-                createAppointmentRequest.dentist().getId()))
-        {throw new DuplicateAppointmentException("Appointment already exists.");}
+                createAppointmentRequest.task().getId(),
+                createAppointmentRequest.comment().getId()))
+        {throw new DuplicateAppointmentException("UserTask already exists.");}
 
-        Appointment appointment = mapper.convertValue(createAppointmentRequest, Appointment.class);
-        appointmentRepository.save(appointment);
-        LOGGER.info("New appointment was registered [" +createAppointmentRequest.date()+ "]");
+        UserTask userTask = mapper.convertValue(createAppointmentRequest, UserTask.class);
+        appointmentRepository.save(userTask);
+        LOGGER.info("New userTask was registered [" +createAppointmentRequest.date()+ "]");
     }
 
     @Override
     public List<AppointmentResponse> selectAllAppointment() {
-        List<Appointment> appointments = appointmentRepository.findAll();
+        List<UserTask> userTasks = appointmentRepository.findAll();
         List<AppointmentResponse> appointmentResponses = new ArrayList<>();
 
-        for(Appointment appointment: appointments){
+        for(UserTask userTask : userTasks){
             appointmentResponses.add(
                     new AppointmentResponse(
-                        appointment.getId(),
-                        appointment.getDate(),
+                        userTask.getId(),
+                        userTask.getDate(),
                         new PatientResponseToAppointment(
-                                appointment.getPatient().getName(),
-                                appointment.getPatient().getSurname()
+                                userTask.getTask().getName(),
+                                userTask.getTask().getSurname()
                         ),
                         new DentistResponseToAppointment(
-                                appointment.getDentist().getName(),
-                                appointment.getDentist().getSurname()
+                                userTask.getDentist().getName(),
+                                userTask.getDentist().getSurname()
                         )));
         }
          
@@ -77,25 +77,25 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public AppointmentResponse selectAppointmentByID(Long id) {
         if (!appointmentRepository.existsById(id))
-            throw new CustomNotFoundException("Appointment id [" + id + "] not found");
+            throw new CustomNotFoundException("UserTask id [" + id + "] not found");
 
-        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        Optional<UserTask> optionalAppointment = appointmentRepository.findById(id);
 
         if (optionalAppointment.isPresent()) {
-            Appointment appointment = optionalAppointment.get();
-            Patient patient = appointment.getPatient();
-            Dentist dentist = appointment.getDentist();
+            UserTask userTask = optionalAppointment.get();
+            Task task = userTask.getTask();
+            Comment comment = userTask.getDentist();
 
             return new AppointmentResponse(
-                    appointment.getId(),
-                    appointment.getDate(),
+                    userTask.getId(),
+                    userTask.getDate(),
                     new PatientResponseToAppointment(
-                            patient.getName(),
-                            patient.getSurname()
+                            task.getName(),
+                            task.getSurname()
                     ),
                     new DentistResponseToAppointment(
-                            dentist.getName(),
-                            dentist.getSurname()
+                            comment.getName(),
+                            comment.getSurname()
                     )
             );
 
@@ -107,25 +107,25 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public void updateAppointmentByID(Long id, UpdateAppointmentRequest updateAppointmentRequest) {
         if (!appointmentRepository.existsById(id))
-            throw new CustomNotFoundException("Appointment id [" + id + "] not found");
+            throw new CustomNotFoundException("UserTask id [" + id + "] not found");
 
 
-        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        Optional<UserTask> optionalAppointment = appointmentRepository.findById(id);
 
         if(optionalAppointment.isPresent()) {
 
-            Appointment appointment = optionalAppointment.get();
-            LOGGER.info("Request to update appointment id [" + id + "]");
+            UserTask userTask = optionalAppointment.get();
+            LOGGER.info("Request to update userTask id [" + id + "]");
 
             if (isAppointmentDuplicated(
                     updateAppointmentRequest.date(),
-                    appointment.getPatient().getId(),
-                    appointment.getDentist().getId()))
-            {throw new DuplicateAppointmentException("Appointment already exists.");}
+                    userTask.getTask().getId(),
+                    userTask.getDentist().getId()))
+            {throw new DuplicateAppointmentException("UserTask already exists.");}
             else {
-                appointment.setDate(updateAppointmentRequest.date());
-                appointmentRepository.save(appointment);
-                LOGGER.info("Appointment updated to [" + appointment.getDate() + "]");
+                userTask.setDate(updateAppointmentRequest.date());
+                appointmentRepository.save(userTask);
+                LOGGER.info("UserTask updated to [" + userTask.getDate() + "]");
             }
         }
 
@@ -134,21 +134,21 @@ public class AppointmentService implements IAppointmentService {
     @Override
     public void deleteAppointmentByID(Long id) {
         if (!appointmentRepository.existsById(id))
-            throw new CustomNotFoundException("Appointment id [" + id + "] not found");
+            throw new CustomNotFoundException("UserTask id [" + id + "] not found");
 
         appointmentRepository.deleteById(id);
-        LOGGER.info("Appointment deleted from DB");
+        LOGGER.info("UserTask deleted from DB");
     }
 
     private boolean isAppointmentDuplicated(String date, Long patientId, Long dentistId){
-        List<Appointment> appointments = appointmentRepository.findAll();
+        List<UserTask> userTasks = appointmentRepository.findAll();
         boolean isDuplicated = false;
 
-        for(Appointment appointment: appointments){
+        for(UserTask userTask : userTasks){
             if (
-                    appointment.getDate().equals(date) &&
-                    appointment.getDentist().getId().equals(dentistId) &&
-                    appointment.getPatient().getId().equals(patientId)
+                    userTask.getDate().equals(date) &&
+                    userTask.getDentist().getId().equals(dentistId) &&
+                    userTask.getTask().getId().equals(patientId)
             ) {
                 isDuplicated = true;
                 break;

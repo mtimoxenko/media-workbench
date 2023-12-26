@@ -40,7 +40,7 @@ nav img {
 }
 
 form {
-    background-color: var(--negro);
+    background-color: transparent;
     max-width: 24rem;
     margin: 0 auto;
     padding: 2rem 3rem;

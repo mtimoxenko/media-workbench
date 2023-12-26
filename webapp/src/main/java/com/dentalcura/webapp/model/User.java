@@ -1,8 +1,9 @@
 package com.dentalcura.webapp.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +23,16 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private boolean admin;
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
+
+    @OneToMany(mappedBy = "creator")
+    private List<Task> createdTasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserTask> assignedTasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
 
 }

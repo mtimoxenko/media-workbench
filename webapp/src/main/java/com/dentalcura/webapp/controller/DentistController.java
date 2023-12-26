@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/dentist")
+@RequestMapping("/comment")
 public class DentistController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class DentistController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("dentist_created", "true");  // Adding a custom header
-        String message = "Dentist created successfully!";
+        String message = "Comment created successfully!";
 
         dentistService.insertDentist(createDentistRequest);
         return ResponseEntity.ok()
@@ -51,7 +51,7 @@ public class DentistController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("dentist_updated", "true");  // Adding a custom header
-        String message = "Dentist updated successfully!";
+        String message = "Comment updated successfully!";
 
         dentistService.updateDentistByID(id, updateDentistRequest);
         return ResponseEntity.ok()
@@ -64,7 +64,7 @@ public class DentistController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("dentist_deleted", "true");  // Adding a custom header
-        String message = "Dentist deleted successfully!";
+        String message = "Comment deleted successfully!";
 
         dentistService.deleteDentistByID(id);
         return ResponseEntity.ok()

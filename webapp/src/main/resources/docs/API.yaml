@@ -10,7 +10,7 @@ paths:
         '200':
           description: OK
     post:
-      summary: Create new Appointment
+      summary: Create new UserTask
       requestBody:
         required: true
         content:
@@ -35,7 +35,7 @@ paths:
           description: Created
   /appointment/{id}:
     get:
-      summary: Get Appointment By ID
+      summary: Get UserTask By ID
       parameters:
         - name: id
           in: path
@@ -46,7 +46,7 @@ paths:
         '200':
           description: OK
     put:
-      summary: Update Appointment By ID
+      summary: Update UserTask By ID
       parameters:
         - name: id
           in: path
@@ -66,7 +66,7 @@ paths:
         '200':
           description: OK
     delete:
-      summary: Delete Appointment By ID
+      summary: Delete UserTask By ID
       parameters:
         - name: id
           in: path
@@ -83,7 +83,7 @@ paths:
         '200':
           description: OK
     post:
-      summary: Create new Dentist
+      summary: Create new Comment
       requestBody:
         required: true
         content:
@@ -102,7 +102,7 @@ paths:
           description: Created
   /dentist/{id}:
     get:
-      summary: Get Dentist By ID
+      summary: Get Comment By ID
       parameters:
         - name: id
           in: path
@@ -113,7 +113,7 @@ paths:
         '200':
           description: OK
     put:
-      summary: Update Dentist By ID
+      summary: Update Comment By ID
       parameters:
         - name: id
           in: path
@@ -135,7 +135,7 @@ paths:
         '200':
           description: OK
     delete:
-      summary: Delete Dentist By ID
+      summary: Delete Comment By ID
       parameters:
         - name: id
           in: path

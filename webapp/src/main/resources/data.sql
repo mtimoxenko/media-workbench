@@ -1,45 +1,35 @@
-
--- Insert 5 random rows into the patient table with famous movie heroes
-INSERT INTO patient (ni_number, name, reg_date, surname)
+-- Insert 5 random users
+INSERT INTO usr (id, name, surname, email, password, is_admin)
 VALUES
-    (111, 'Luke', '2023-08-30', 'Skywalker'),
-    (222, 'Harry', '2023-08-29', 'Potter'),
-    (333, 'Indiana', '2023-08-28', 'Jones'),
-    (444, 'Ellen', '2023-08-27', 'Ripley'),
-    (555, 'Neo', '2023-08-26', 'Anderson');
+    (1, 'John', 'Doe', 'john.doe@example.com', 'password123', false),
+    (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password456', true),
+    (3, 'Alice', 'Johnson', 'alice.johnson@example.com', 'password789', false),
+    (4, 'Bob', 'Brown', 'bob.brown@example.com', 'password101', false),
+    (5, 'Charlie', 'Davis', 'charlie.davis@example.com', 'password102', true);
 
--- Insert 5 random rows into the dentist table with famous movie villains
-INSERT INTO dentist (license_number, name, surname)
+-- Insert 5 random tasks
+INSERT INTO task (id, name, description, creator_id, creation_date, is_completed)
 VALUES
-    (12345, 'Darth', 'Vader'),
-    (54321, 'Hannibal', 'Lecter'),
-    (98765, 'Joker', 'Nicholson'),
-    (67890, 'Lord', 'Voldemort'),
-    (13579, 'Darth', 'Maul');
+    (1, 'Database Design', 'Design the initial database schema', 2, '2023-08-01 09:00:00', false),
+    (2, 'Setup Development Environment', 'Prepare the development tools and workspace', 2, '2023-08-02 10:00:00', false),
+    (3, 'Implement Authentication', 'Implement user login and registration', 5, '2023-08-03 11:00:00', false),
+    (4, 'Create Landing Page', 'Develop the initial landing page of the application', 5, '2023-08-04 12:00:00', false),
+    (5, 'Setup Database', 'Install and configure the database server', 2, '2023-08-05 13:00:00', false);
 
--- Insert 5 random rows into the appointment table
-INSERT INTO appointment (dentist_id, patient_id, date)
+-- Insert 5 random assignments of tasks to users (UserTask)
+INSERT INTO userTask (user_id, task_id, is_task_completed, assignment_date, assigned_by)
 VALUES
-    (2, 3, '2023/09/01 - 12:30'),
-    (1, 2, '2023/09/02 - 14:30'),
-    (3, 1, '2023/09/03 - 12:00'),
-    (4, 5, '2023/09/04 - 16:00'),
-    (2, 4, '2023/09/05 - 12:30');
+    (1, 1, false, '2023-08-06 14:00:00', 2),
+    (1, 2, false, '2023-08-07 15:00:00', 2),
+    (3, 3, false, '2023-08-08 09:30:00', 5),
+    (4, 4, false, '2023-08-09 16:45:00', 5),
+    (5, 5, false, '2023-08-10 17:00:00', 2);
 
--- Insert 5 random rows into the address table for patients with department code
-INSERT INTO address (floor, street_num, patient_id, department, street_name)
+-- Insert 5 random comments
+INSERT INTO comments (id, user_id, task_id, text, timestamp)
 VALUES
-    (3, 123, 1, 'A', 'Main Street'),
-    (2, 456, 2, 'B', 'First Avenue'),
-    (5, 789, 3, 'C', 'Park Road'),
-    (1, 987, 4, 'D', 'Elm Street'),
-    (4, 567, 5, 'E', 'Broadway');
-
--- Insert 5 random rows into the usr table with famous movie hackers
-INSERT INTO usr (admin, email, name, password, surname)
-VALUES
-    (true, 'admin@example.com', 'Neo', 'admin123', 'Matrix'),
-    (true, 'admin2@example.com', 'Elliott', 'admin234', 'Alderson'),
-    (false, 'user1@example.com', 'Trinity', 'userpass1', 'Matrix'),
-    (false, 'user2@example.com', 'Lisbeth', 'userpass2', 'Salander'),
-    (false, 'user3@example.com', 'Morpheus', 'userpass3', 'Matrix');
+    (1, 1, 1, 'Initial database schema looks good.', '2023-08-11 09:15:00'),
+    (2, 3, 2, 'Development environment set up completed.', '2023-08-12 10:30:00'),
+    (3, 4, 3, 'Authentication flow implemented.', '2023-08-13 11:45:00'),
+    (4, 5, 4, 'Landing page created and live.', '2023-08-14 14:30:00'),
+    (5, 2, 5, 'Database setup and configured.', '2023-08-15 15:45:00');

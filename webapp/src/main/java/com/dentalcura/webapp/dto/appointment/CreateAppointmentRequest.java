@@ -1,10 +1,10 @@
 package com.dentalcura.webapp.dto.appointment;
 
-import com.dentalcura.webapp.model.Dentist;
-import com.dentalcura.webapp.model.Patient;
+import com.dentalcura.webapp.model.Comment;
+import com.dentalcura.webapp.model.Task;
 
 public record CreateAppointmentRequest(
         String date,
-        Patient patient,
-        Dentist dentist
+        Task task,
+        Comment comment
 ) { }

@@ -2,17 +2,14 @@ package com.dentalcura.webapp.service.impl;
 
 
 import com.dentalcura.webapp.dto.user.*;
-import com.dentalcura.webapp.model.Patient;
 import com.dentalcura.webapp.model.User;
 import com.dentalcura.webapp.repository.IUserRepository;
 import com.dentalcura.webapp.service.IUserService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
 import com.dentalcura.webapp.utils.exceptions.DuplicateEmailException;
-import com.dentalcura.webapp.utils.exceptions.DuplicateNiNumberException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
