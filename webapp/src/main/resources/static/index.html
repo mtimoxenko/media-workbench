@@ -28,20 +28,24 @@
   </header>
 
   <div class="container">
-    <form>
+    <form class="flex-column center-items">
       <div class="form-header">
-        <!-- <h2>Find and book an UserTask</h2> -->
         <p class="rounded">Login</p>
       </div>
-
-      <label>Email</label>
-      <input id="inputEmail" type="text">
-      <label>Password</label>
-      <input id="inputPassword" type="password">
-
+    
+      <div class="custom-field two">
+        <input id="inputEmail" type="text" placeholder=" email" required>
+        <label class="placeholder" for="inputEmail"></label>
+      </div>
+    
+      <div class="custom-field two">
+        <input id="inputPassword" type="password" placeholder=" password" required>
+        <label class="placeholder" for="inputPassword"></label>
+      </div>
+    
       <button type="submit">Login</button>
-
     </form>
+    
 
     <div class="ingresarA">
       <a href="signup.html">Don't have an account? Sing up here</a>

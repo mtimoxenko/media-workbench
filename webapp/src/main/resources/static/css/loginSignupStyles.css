@@ -1,14 +1,16 @@
 @import url('./globalStyles.css');
 
+:root {
+    --color-bg-main: rgb(30, 33, 43);
+    --color-main-text: rgb(179, 179, 190);
+}
+
 body {
-    /* background-image: url('../assets/wallpaper1.jpg'); */
-    background-image: url('../assets/1.jpg');
+    background-image: url('../assets/2.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    /* capa sobre fondo */
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .6);
-
 }
 
 header {
@@ -30,6 +32,7 @@ nav h1 span {
     font-size: 1rem;
     color: var(--lila);
 }
+
 nav img {
     display: block;
     height: 80%;
@@ -39,9 +42,10 @@ nav img {
     padding: 0 5%;
 }
 
+/* Form Styles */
 form {
     background-color: transparent;
-    max-width: 24rem;
+    max-width: 30rem;
     margin: 0 auto;
     padding: 2rem 3rem;
     border-radius: .2rem;
@@ -70,6 +74,8 @@ form label {
 }
 
 form input {
+    background: transparent;
+    color: var(--color-main-text);
     border-radius: .1rem;
     margin-bottom: 1rem;
     padding: .3rem .5rem;
@@ -81,7 +87,7 @@ form input:focus {
     border: 2px solid var(--lila);
 }
 
-form button{
+form button {
     background-color: var(--azul);
     color: white;
     padding: .8rem 0;
@@ -90,7 +96,7 @@ form button{
     font-weight: 400;
 }
 
-form button:hover{
+form button:hover {
     background-color: var(--azul-hover);
 }
 
@@ -102,6 +108,125 @@ form button:hover{
 .ingresarA a {
     color: #ffffff;
 }
-.ingresarA a:hover{
+
+.ingresarA a:hover {
     color: var(--lila);
 }
+
+/* Flex and Alignment */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.center-items {
+    align-items: center;
+}
+
+/* Gaps */
+.gap10 {
+    gap: 10px;
+}
+
+.gap15 {
+    gap: 15px;
+}
+
+/* Custom Field Styles */
+.custom-field {
+    position: relative;
+    font-size: 14px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: inline-block;
+    --field-padding: 12px;
+}
+
+.custom-field input {
+    border: none;
+    background: transparent;
+    padding: var(--field-padding);
+    border-radius: 3px;
+    width: 170px;
+    outline: none;
+    font-size: 14px;
+}
+
+#message {
+    width: 300px;
+}
+
+.custom-field .placeholder {
+    position: absolute;
+    left: var(--field-padding);
+    top: 22px;
+    transform: translateY(-50%);
+    transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+.custom-field.two input {
+    background: linear-gradient(90deg, #6f6c6c, #6f6c6c) center bottom/0 0.15em no-repeat,
+                linear-gradient(90deg, #ccc, #ccc) left bottom/100% 0.15em no-repeat,
+                linear-gradient(90deg, transparent, transparent) left bottom/100% no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.custom-field.two input:not(:placeholder-shown),
+.custom-field.two input:focus {
+    background-size: 100% 0.15em, 100% 0.1em, 100%;
+}
+
+button {
+    color: var(--color-main-text);
+    background-color: transparent;
+    border: 2px solid var(--color-main-text);
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    width: 40%;
+    margin-top: 4%;
+    padding: 15px 20px;
+}
+
+button:hover {
+    background-color: rgb(91, 98, 117);
+    color: white;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Add other styles required for the form */
+  }
+  
+  /* If there is padding or specific widths you want to maintain for the form elements, 
+     you may want to add a class or use a more specific selector for them. */
+  
+  
+/* Checkbox Styles - Specific to checkbox and label */
+#role {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 1rem; /* Add margin below the checkbox */
+  }
+  
+  
+  
+  /* Center the button */
+  form button {
+    width: 50%; /* Adjust the width of the button if needed */
+    margin-top: 20px; /* Space above the button */
+    /* Add other button styles as needed */
+  }
+  
+  /* Override anchor tag block to keep it centered */
+  .ingresarA a {
+    display: block;
+    text-align: center;
+    /* Add other anchor tag styles as needed */
+  }
+  

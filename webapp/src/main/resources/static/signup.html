@@ -28,31 +28,39 @@
   </header>
 
   <div class="container">
-    <form>
+    <form class="flex-column center-items">
       <div class="form-header">
-        <!-- <h2>Find and book an UserTask</h2> -->
         <p class="rounded">Register</p>
       </div>
-
-      <label>Name</label>
-      <input id="inputName" type="text">
-
-      <label>Surname</label>
-      <input id="inputSurname" type="text">
-
-      <label>Email</label>
-      <input id="inputEmail" type="text">
-
-      <label>Password</label>
-      <input id="inputPassword" type="password">
-
-      <div id="role">
+    
+      <div class="custom-field two">
+        <input id="inputName" type="text" placeholder="Name" required>
+        <label class="placeholder" for="inputName"></label>
+      </div>
+    
+      <div class="custom-field two">
+        <input id="inputSurname" type="text" placeholder="Surname" required>
+        <label class="placeholder" for="inputSurname"></label>
+      </div>
+    
+      <div class="custom-field two">
+        <input id="inputEmail" type="text" placeholder="Email" required>
+        <label class="placeholder" for="inputEmail"></label>
+      </div>
+    
+      <div class="custom-field two">
+        <input id="inputPassword" type="password" placeholder="Password" required>
+        <label class="placeholder" for="inputPassword"></label>
+      </div>
+    
+      <!-- <div class="custom-field two" id="role">
         <input type="checkbox" name="role" id="admin">
         <label for="admin">Admin</label>
-    </div>
-
-      <button type="submit">Register Now</button>
+      </div> -->
+    
+      <button type="submit" class="form-button">Register Now</button>
     </form>
+    
 
     <div class="ingresarA">
       <a href="index.html">Already have an account?</a>
