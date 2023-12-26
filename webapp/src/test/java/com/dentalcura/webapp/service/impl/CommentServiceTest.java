@@ -1,7 +1,7 @@
 package com.dentalcura.webapp.service.impl;
 
-import com.dentalcura.webapp.dto.dentist.CreateDentistRequest;
-import com.dentalcura.webapp.dto.dentist.UpdateDentistRequest;
+import com.dentalcura.webapp.dto.task.CreateTaskRequest;
+import com.dentalcura.webapp.dto.task.UpdateTaskRequest;
 import com.dentalcura.webapp.model.Comment;
 import com.dentalcura.webapp.repository.ITaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,13 +29,13 @@ class CommentServiceTest {
     @Test
     void insertDentist() {
 
-        CreateDentistRequest createDentistRequest = new CreateDentistRequest(
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest(
                 "testName",
                 "testSurname",
                 1111
         );
 
-        Comment comment = mapper.convertValue(createDentistRequest, Comment.class);
+        Comment comment = mapper.convertValue(createTaskRequest, Comment.class);
 
         dentistRepository.save(comment);
 
@@ -56,21 +56,21 @@ class CommentServiceTest {
     @Test
     void updateDentistByID() {
 
-        CreateDentistRequest createDentistRequest = new CreateDentistRequest(
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest(
                 "testName",
                 "testSurname",
                 1111
         );
 
-        Comment comment = mapper.convertValue(createDentistRequest, Comment.class);
+        Comment comment = mapper.convertValue(createTaskRequest, Comment.class);
         dentistRepository.save(comment);
 
-        UpdateDentistRequest updateDentistRequest = new UpdateDentistRequest(
+        UpdateTaskRequest updateTaskRequest = new UpdateTaskRequest(
                 "testNameUpdate",
                 "testSurnameUpdate"
         );
 
-        Comment commentUpdate = mapper.convertValue(updateDentistRequest, Comment.class);
+        Comment commentUpdate = mapper.convertValue(updateTaskRequest, Comment.class);
         commentUpdate.setId(1L);
         dentistRepository.save(commentUpdate);
 
@@ -88,13 +88,13 @@ class CommentServiceTest {
     @Test
     void deleteDentistByID() {
 
-        CreateDentistRequest createDentistRequest = new CreateDentistRequest(
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest(
                 "testName",
                 "testSurname",
                 2222
         );
 
-        Comment commentToDelete = mapper.convertValue(createDentistRequest, Comment.class);
+        Comment commentToDelete = mapper.convertValue(createTaskRequest, Comment.class);
         dentistRepository.save(commentToDelete);
 
         dentistRepository.deleteById(4L);

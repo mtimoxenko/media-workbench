@@ -1,7 +1,7 @@
 package com.dentalcura.webapp.service.impl;
 
-import com.dentalcura.webapp.dto.appointment.CreateAppointmentRequest;
-import com.dentalcura.webapp.dto.appointment.UpdateAppointmentRequest;
+import com.dentalcura.webapp.dto.comment.CreateCommentRequest;
+import com.dentalcura.webapp.dto.comment.UpdateCommentRequest;
 import com.dentalcura.webapp.model.UserTask;
 import com.dentalcura.webapp.repository.ICommentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,13 +29,13 @@ class UserTaskServiceTest {
     @Test
     void insertAppointment() {
 
-        CreateAppointmentRequest createAppointmentRequest = new CreateAppointmentRequest(
+        CreateCommentRequest createCommentRequest = new CreateCommentRequest(
                 "test",
                 null,
                 null
         );
 
-        UserTask userTask = mapper.convertValue(createAppointmentRequest, UserTask.class);
+        UserTask userTask = mapper.convertValue(createCommentRequest, UserTask.class);
 
         appointmentRepository.save(userTask);
 
@@ -55,18 +55,18 @@ class UserTaskServiceTest {
 
     @Test
     void updateAppointmentByID() {
-        CreateAppointmentRequest createAppointmentRequest = new CreateAppointmentRequest(
+        CreateCommentRequest createCommentRequest = new CreateCommentRequest(
                 "test",
                 null,
                 null
         );
 
-        UserTask userTask = mapper.convertValue(createAppointmentRequest, UserTask.class);
+        UserTask userTask = mapper.convertValue(createCommentRequest, UserTask.class);
         appointmentRepository.save(userTask);
 
-        UpdateAppointmentRequest updateAppointmentRequest = new UpdateAppointmentRequest("newDate");
+        UpdateCommentRequest updateCommentRequest = new UpdateCommentRequest("newDate");
 
-        UserTask userTaskUpdate = mapper.convertValue(updateAppointmentRequest, UserTask.class);
+        UserTask userTaskUpdate = mapper.convertValue(updateCommentRequest, UserTask.class);
         userTaskUpdate.setId(2L);
         appointmentRepository.save(userTaskUpdate);
 
@@ -85,13 +85,13 @@ class UserTaskServiceTest {
     @Test
     void deleteAppointmentByID() {
         
-        CreateAppointmentRequest createAppointmentRequest = new CreateAppointmentRequest(
+        CreateCommentRequest createCommentRequest = new CreateCommentRequest(
                 "dateToDelete",
                 null,
                 null
         );
 
-        UserTask userTaskToDelete = mapper.convertValue(createAppointmentRequest, UserTask.class);
+        UserTask userTaskToDelete = mapper.convertValue(createCommentRequest, UserTask.class);
         appointmentRepository.save(userTaskToDelete);
 
         appointmentRepository.deleteById(6L);

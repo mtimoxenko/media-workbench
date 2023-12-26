@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "user_task") // Especifica el nombre de la tabla en la base de datos
 public class UserTask {
 
     @Id

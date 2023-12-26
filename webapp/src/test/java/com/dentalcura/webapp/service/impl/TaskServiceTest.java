@@ -1,7 +1,7 @@
 package com.dentalcura.webapp.service.impl;
 
-import com.dentalcura.webapp.dto.patient.CreatePatientRequest;
-import com.dentalcura.webapp.dto.patient.UpdatePatientRequest;
+import com.dentalcura.webapp.dto.usertask.CreateUserTaskRequest;
+import com.dentalcura.webapp.dto.usertask.UpdateUserTaskRequest;
 import com.dentalcura.webapp.model.Task;
 import com.dentalcura.webapp.repository.IUserTaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ class TaskServiceTest {
     @Test
     void insertPatient() {
 
-        CreatePatientRequest createPatientRequest = new CreatePatientRequest(
+        CreateUserTaskRequest createUserTaskRequest = new CreateUserTaskRequest(
                 "testName",
                 "testSurname",
                 1111,
@@ -38,7 +38,7 @@ class TaskServiceTest {
                 null
         );
 
-        Task task = mapper.convertValue(createPatientRequest, Task.class);
+        Task task = mapper.convertValue(createUserTaskRequest, Task.class);
 
         patientRepository.save(task);
 
@@ -59,7 +59,7 @@ class TaskServiceTest {
     @Test
     void updatePatientByID() {
         
-        CreatePatientRequest createPatientRequest = new CreatePatientRequest(
+        CreateUserTaskRequest createUserTaskRequest = new CreateUserTaskRequest(
                 "testName",
                 "testSurname",
                 1111,
@@ -67,16 +67,16 @@ class TaskServiceTest {
                 null
         );
 
-        Task task = mapper.convertValue(createPatientRequest, Task.class);
+        Task task = mapper.convertValue(createUserTaskRequest, Task.class);
         patientRepository.save(task);
 
-        UpdatePatientRequest updatePatientRequest = new UpdatePatientRequest(
+        UpdateUserTaskRequest updateUserTaskRequest = new UpdateUserTaskRequest(
                 "testNameUpdate",
                 "testSurnameUpdate",
                 null
         );
 
-        Task taskUpdate = mapper.convertValue(updatePatientRequest, Task.class);
+        Task taskUpdate = mapper.convertValue(updateUserTaskRequest, Task.class);
         taskUpdate.setId(1L);
         patientRepository.save(taskUpdate);
 
@@ -94,7 +94,7 @@ class TaskServiceTest {
     @Test
     void deletePatientByID() {
 
-        CreatePatientRequest createPatientRequest = new CreatePatientRequest(
+        CreateUserTaskRequest createUserTaskRequest = new CreateUserTaskRequest(
                 "testName",
                 "testSurname",
                 1111,
@@ -102,7 +102,7 @@ class TaskServiceTest {
                 null
         );
 
-        Task taskToDelete = mapper.convertValue(createPatientRequest, Task.class);
+        Task taskToDelete = mapper.convertValue(createUserTaskRequest, Task.class);
         patientRepository.save(taskToDelete);
 
         patientRepository.deleteById(4L);

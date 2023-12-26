@@ -1,6 +1,6 @@
-package com.dentalcura.webapp.dto.dentist;
+package com.dentalcura.webapp.dto.task;
 
-public record CreateDentistRequest(
+public record CreateTaskRequest(
         String name,
         String surname,
         Integer licenseNumber

@@ -1,6 +1,6 @@
-// if (!sessionStorage.jwt || sessionStorage.jwt != 33) {
-//   location.replace('./index.html');
-// }
+if (!sessionStorage.jwt || sessionStorage.jwt != 33) {
+  location.replace('./index.html');
+}
 
 
 window.addEventListener('load', function () {
