@@ -29,13 +29,13 @@ cd NOC-ME-Workbench
 After setting up, follow the user guide to start using NOC-ME-Workbench for managing NOC tasks and workflows.
 
 ## Contributing
-Contributions to NOC-ME-Workbench are welcome. Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
+Contributions to NOC-ME-Workbench are welcome.
 
 ## License
 This project is licensed under the MIT License - see the `LICENSE.md` file for details.
 
 ## Contact
-For any queries or suggestions, please reach out to project maintainers at contact@example.com.
+For any queries or suggestions, please reach out to project maintainers at mtimochenko@tutanota.com.
 
 ## Acknowledgments
 - Special thanks to the team and contributors who have made this project possible.
