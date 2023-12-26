@@ -3,7 +3,7 @@ package com.dentalcura.webapp.service.impl;
 import com.dentalcura.webapp.dto.appointment.CreateAppointmentRequest;
 import com.dentalcura.webapp.dto.appointment.UpdateAppointmentRequest;
 import com.dentalcura.webapp.model.UserTask;
-import com.dentalcura.webapp.repository.IAppointmentRepository;
+import com.dentalcura.webapp.repository.ICommentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTaskServiceTest {
 
     @Autowired
-    IAppointmentRepository appointmentRepository;
+    ICommentRepository appointmentRepository;
 
     @Autowired
     ObjectMapper mapper;

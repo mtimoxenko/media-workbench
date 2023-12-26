@@ -9,7 +9,7 @@ import com.dentalcura.webapp.dto.patient.PatientResponseToAppointment;
 import com.dentalcura.webapp.model.Comment;
 import com.dentalcura.webapp.model.UserTask;
 import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.repository.IAppointmentRepository;
+import com.dentalcura.webapp.repository.ICommentRepository;
 import com.dentalcura.webapp.service.IAppointmentService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
 import com.dentalcura.webapp.utils.exceptions.DuplicateAppointmentException;
@@ -33,7 +33,7 @@ public class AppointmentService implements IAppointmentService {
     private final static Logger LOGGER = Logger.getLogger(DentistService.class);
 
     @Autowired
-    private IAppointmentRepository appointmentRepository;
+    private ICommentRepository appointmentRepository;
 
     @Autowired
     ObjectMapper mapper;

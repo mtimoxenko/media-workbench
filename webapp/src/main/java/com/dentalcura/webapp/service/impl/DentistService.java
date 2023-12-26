@@ -8,7 +8,7 @@ import com.dentalcura.webapp.dto.dentist.DentistResponse;
 import com.dentalcura.webapp.dto.patient.PatientResponseToDentist;
 import com.dentalcura.webapp.model.Comment;
 import com.dentalcura.webapp.model.UserTask;
-import com.dentalcura.webapp.repository.IDentistRepository;
+import com.dentalcura.webapp.repository.ITaskRepository;
 import com.dentalcura.webapp.service.IDentistService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
 import com.dentalcura.webapp.utils.exceptions.DuplicateNiNumberException;
@@ -30,7 +30,7 @@ public class DentistService implements IDentistService {
     private final static Logger LOGGER = Logger.getLogger(DentistService.class);
 
     @Autowired
-    private IDentistRepository dentistRepository;
+    private ITaskRepository dentistRepository;
 
     @Autowired
     ObjectMapper mapper;

@@ -3,7 +3,7 @@ package com.dentalcura.webapp.service.impl;
 import com.dentalcura.webapp.dto.patient.CreatePatientRequest;
 import com.dentalcura.webapp.dto.patient.UpdatePatientRequest;
 import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.repository.IPatientRepository;
+import com.dentalcura.webapp.repository.IUserTaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class TaskServiceTest {
     }
 
     @Autowired
-    IPatientRepository patientRepository;
+    IUserTaskRepository patientRepository;
 
     @Autowired
     ObjectMapper mapper;

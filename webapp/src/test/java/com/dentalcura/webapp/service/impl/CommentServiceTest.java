@@ -3,7 +3,7 @@ package com.dentalcura.webapp.service.impl;
 import com.dentalcura.webapp.dto.dentist.CreateDentistRequest;
 import com.dentalcura.webapp.dto.dentist.UpdateDentistRequest;
 import com.dentalcura.webapp.model.Comment;
-import com.dentalcura.webapp.repository.IDentistRepository;
+import com.dentalcura.webapp.repository.ITaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommentServiceTest {
 
     @Autowired
-    IDentistRepository dentistRepository;
+    ITaskRepository dentistRepository;
 
     @Autowired
     ObjectMapper mapper;

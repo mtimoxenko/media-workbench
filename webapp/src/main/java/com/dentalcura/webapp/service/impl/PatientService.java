@@ -5,7 +5,7 @@ import com.dentalcura.webapp.dto.patient.CreatePatientRequest;
 import com.dentalcura.webapp.dto.patient.UpdatePatientRequest;
 import com.dentalcura.webapp.dto.patient.PatientResponse;
 import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.repository.IPatientRepository;
+import com.dentalcura.webapp.repository.IUserTaskRepository;
 import com.dentalcura.webapp.service.IPatientService;
 import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
 import com.dentalcura.webapp.utils.exceptions.DuplicateNiNumberException;
@@ -28,7 +28,7 @@ public class PatientService implements IPatientService {
     private final static Logger LOGGER = Logger.getLogger(PatientService.class);
 
     @Autowired
-    private IPatientRepository patientRepository;
+    private IUserTaskRepository patientRepository;
 
     @Autowired
     ObjectMapper mapper;
