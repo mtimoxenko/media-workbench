@@ -1,7 +1,6 @@
 package com.nocme.workbench.controller;
 
 
-import com.dentalcura.webapp.dto.user.*;
 import com.nocme.workbench.service.IUserService;
 import com.nocme.workbench.dto.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,14 +59,14 @@ public class UserController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest updateUserRequest) {
+    @PutMapping
+    public ResponseEntity<String> updateUser(@RequestBody UpdateUserRequest updateUserRequest) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add("user_updated", "true");  // Adding a custom header
         String message = "User updated successfully!";
 
-        userService.updateUserByID(id, updateUserRequest);
+        userService.updateUserByID(updateUserRequest);
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .body(message);

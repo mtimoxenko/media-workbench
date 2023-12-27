@@ -1,5 +1,6 @@
 package com.nocme.workbench.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,6 +34,7 @@ public class Task {
     private User creator;  // Changed to User entity mapping
 
     @OneToMany(mappedBy = "task")
+    @JsonIgnore
     private List<UserTask> userTasks;
 
 }

@@ -1,5 +1,6 @@
 package com.nocme.workbench.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,12 +28,19 @@ public class User {
     private Boolean isAdmin;
 
     @OneToMany(mappedBy = "creator")
+    @JsonIgnore /*
+    handle potential infinite recursion problems
+    that can occur during JSON serialization/deserialization
+    when you have bi-directional relationships in your entity classes.
+    */
     private List<Task> createdTasks;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<UserTask> assignedTasks;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Comment> comments;
 
 }
