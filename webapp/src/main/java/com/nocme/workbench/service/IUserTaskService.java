@@ -1,8 +1,8 @@
-package com.dentalcura.webapp.service;
+package com.nocme.workbench.service;
 
-import com.dentalcura.webapp.dto.usertask.CreateUserTaskRequest;
-import com.dentalcura.webapp.dto.usertask.UpdateUserTaskRequest;
-import com.dentalcura.webapp.dto.usertask.UserTaskResponse;
+import com.nocme.workbench.dto.usertask.CreateUserTaskRequest;
+import com.nocme.workbench.dto.usertask.UpdateUserTaskRequest;
+import com.nocme.workbench.dto.usertask.UserTaskResponse;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package com.dentalcura.webapp.service.impl;
+package com.nocme.workbench.service.impl;
 
-import com.dentalcura.webapp.dto.user.CreateUserRequest;
-import com.dentalcura.webapp.dto.user.LoginUserRequest;
-import com.dentalcura.webapp.dto.user.LoginUserResponse;
-import com.dentalcura.webapp.dto.user.UpdateUserRequest;
-import com.dentalcura.webapp.model.User;
-import com.dentalcura.webapp.repository.IUserRepository;
+import com.nocme.workbench.dto.user.CreateUserRequest;
+import com.nocme.workbench.dto.user.LoginUserRequest;
+import com.nocme.workbench.dto.user.LoginUserResponse;
+import com.nocme.workbench.dto.user.UpdateUserRequest;
+import com.nocme.workbench.model.User;
+import com.nocme.workbench.repository.IUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

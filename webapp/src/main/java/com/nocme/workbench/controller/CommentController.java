@@ -1,10 +1,10 @@
-package com.dentalcura.webapp.controller;
+package com.nocme.workbench.controller;
 
 
-import com.dentalcura.webapp.dto.comment.CreateCommentRequest;
-import com.dentalcura.webapp.dto.comment.CommentResponse;
-import com.dentalcura.webapp.dto.comment.UpdateCommentRequest;
-import com.dentalcura.webapp.service.ICommentService;
+import com.nocme.workbench.dto.comment.CreateCommentRequest;
+import com.nocme.workbench.dto.comment.CommentResponse;
+import com.nocme.workbench.dto.comment.UpdateCommentRequest;
+import com.nocme.workbench.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

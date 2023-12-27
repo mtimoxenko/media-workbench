@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.utils.exceptions;
+package com.nocme.workbench.utils.exceptions;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;

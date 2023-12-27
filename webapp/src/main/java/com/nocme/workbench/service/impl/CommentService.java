@@ -1,15 +1,13 @@
-package com.dentalcura.webapp.service.impl;
+package com.nocme.workbench.service.impl;
 
 
-import com.dentalcura.webapp.dto.comment.CreateCommentRequest;
-import com.dentalcura.webapp.dto.comment.UpdateCommentRequest;
-import com.dentalcura.webapp.dto.comment.CommentResponse;
-import com.dentalcura.webapp.model.Comment;
-import com.dentalcura.webapp.model.UserTask;
-import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.repository.ICommentRepository;
-import com.dentalcura.webapp.service.ICommentService;
-import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
+import com.nocme.workbench.dto.comment.CreateCommentRequest;
+import com.nocme.workbench.dto.comment.UpdateCommentRequest;
+import com.nocme.workbench.dto.comment.CommentResponse;
+import com.nocme.workbench.model.Comment;
+import com.nocme.workbench.repository.ICommentRepository;
+import com.nocme.workbench.service.ICommentService;
+import com.nocme.workbench.utils.exceptions.CustomNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;

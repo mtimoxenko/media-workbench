@@ -1,8 +1,8 @@
-package com.dentalcura.webapp.service;
+package com.nocme.workbench.service;
 
-import com.dentalcura.webapp.dto.task.CreateTaskRequest;
-import com.dentalcura.webapp.dto.task.UpdateTaskRequest;
-import com.dentalcura.webapp.dto.task.TaskResponse;
+import com.nocme.workbench.dto.task.CreateTaskRequest;
+import com.nocme.workbench.dto.task.UpdateTaskRequest;
+import com.nocme.workbench.dto.task.TaskResponse;
 
 import java.util.List;
 

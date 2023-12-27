@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.dto.task;
+package com.nocme.workbench.dto.task;
 
 public record CreateTaskRequest(
         String name,

@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.model;
+package com.nocme.workbench.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false)
     private String password;
     @Column(name = "is_admin", nullable = false)
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     @OneToMany(mappedBy = "creator")
     private List<Task> createdTasks;

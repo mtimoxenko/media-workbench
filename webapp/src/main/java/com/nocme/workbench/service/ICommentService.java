@@ -1,8 +1,8 @@
-package com.dentalcura.webapp.service;
+package com.nocme.workbench.service;
 
-import com.dentalcura.webapp.dto.comment.CreateCommentRequest;
-import com.dentalcura.webapp.dto.comment.UpdateCommentRequest;
-import com.dentalcura.webapp.dto.comment.CommentResponse;
+import com.nocme.workbench.dto.comment.CreateCommentRequest;
+import com.nocme.workbench.dto.comment.UpdateCommentRequest;
+import com.nocme.workbench.dto.comment.CommentResponse;
 
 import java.util.List;
 

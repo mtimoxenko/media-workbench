@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.utils.exceptions;
+package com.nocme.workbench.utils.exceptions;
 
 public class CustomNotFoundException extends RuntimeException{
 

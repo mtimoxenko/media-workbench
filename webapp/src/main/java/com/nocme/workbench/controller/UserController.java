@@ -1,9 +1,9 @@
-package com.dentalcura.webapp.controller;
+package com.nocme.workbench.controller;
 
 
 import com.dentalcura.webapp.dto.user.*;
-import com.dentalcura.webapp.model.User;
-import com.dentalcura.webapp.service.IUserService;
+import com.nocme.workbench.service.IUserService;
+import com.nocme.workbench.dto.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

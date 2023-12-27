@@ -1,7 +1,7 @@
-package com.dentalcura.webapp.dto.comment;
+package com.nocme.workbench.dto.comment;
 
-import com.dentalcura.webapp.model.Comment;
-import com.dentalcura.webapp.model.Task;
+import com.nocme.workbench.model.Comment;
+import com.nocme.workbench.model.Task;
 
 public record CreateCommentRequest(
         String date,

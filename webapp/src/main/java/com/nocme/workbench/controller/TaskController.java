@@ -1,10 +1,10 @@
-package com.dentalcura.webapp.controller;
+package com.nocme.workbench.controller;
 
 
-import com.dentalcura.webapp.dto.task.CreateTaskRequest;
-import com.dentalcura.webapp.dto.task.TaskResponse;
-import com.dentalcura.webapp.dto.task.UpdateTaskRequest;
-import com.dentalcura.webapp.service.ITaskService;
+import com.nocme.workbench.dto.task.CreateTaskRequest;
+import com.nocme.workbench.dto.task.TaskResponse;
+import com.nocme.workbench.dto.task.UpdateTaskRequest;
+import com.nocme.workbench.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

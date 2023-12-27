@@ -1,8 +1,7 @@
-package com.dentalcura.webapp.service;
+package com.nocme.workbench.service;
 
 import com.dentalcura.webapp.dto.user.*;
-import com.dentalcura.webapp.model.User;
-import org.springframework.stereotype.Service;
+import com.nocme.workbench.dto.user.*;
 
 import java.util.List;
 

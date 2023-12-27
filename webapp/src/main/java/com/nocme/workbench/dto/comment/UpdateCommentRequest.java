@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.dto.comment;
+package com.nocme.workbench.dto.comment;
 
 public record UpdateCommentRequest(
         String date

@@ -1,4 +1,4 @@
-package com.dentalcura.webapp;
+package com.nocme.workbench;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

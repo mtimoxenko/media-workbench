@@ -1,18 +1,15 @@
-package com.dentalcura.webapp.service.impl;
+package com.nocme.workbench.service.impl;
 
 
 
-import com.dentalcura.webapp.dto.task.CreateTaskRequest;
-import com.dentalcura.webapp.dto.task.UpdateTaskRequest;
-import com.dentalcura.webapp.dto.task.TaskResponse;
+import com.nocme.workbench.dto.task.CreateTaskRequest;
+import com.nocme.workbench.dto.task.UpdateTaskRequest;
+import com.nocme.workbench.dto.task.TaskResponse;
 
-import com.dentalcura.webapp.model.Comment;
-import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.model.UserTask;
-import com.dentalcura.webapp.repository.ITaskRepository;
-import com.dentalcura.webapp.service.ITaskService;
-import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
-import com.dentalcura.webapp.utils.exceptions.DuplicateNiNumberException;
+import com.nocme.workbench.model.Task;
+import com.nocme.workbench.repository.ITaskRepository;
+import com.nocme.workbench.service.ITaskService;
+import com.nocme.workbench.utils.exceptions.CustomNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.model;
+package com.nocme.workbench.model;
 
 import jakarta.persistence.*;
 import lombok.*;

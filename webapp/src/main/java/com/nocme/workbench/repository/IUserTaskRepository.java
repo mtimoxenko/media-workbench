@@ -1,6 +1,6 @@
-package com.dentalcura.webapp.repository;
+package com.nocme.workbench.repository;
 
-import com.dentalcura.webapp.model.UserTask;
+import com.nocme.workbench.model.UserTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

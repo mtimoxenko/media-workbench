@@ -1,9 +1,9 @@
-package com.dentalcura.webapp.service.impl;
+package com.nocme.workbench.service.impl;
 
-import com.dentalcura.webapp.dto.usertask.CreateUserTaskRequest;
-import com.dentalcura.webapp.dto.usertask.UpdateUserTaskRequest;
-import com.dentalcura.webapp.model.Task;
-import com.dentalcura.webapp.repository.IUserTaskRepository;
+import com.nocme.workbench.dto.usertask.CreateUserTaskRequest;
+import com.nocme.workbench.dto.usertask.UpdateUserTaskRequest;
+import com.nocme.workbench.model.Task;
+import com.nocme.workbench.repository.IUserTaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

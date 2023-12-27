@@ -10,9 +10,9 @@ window.addEventListener('load', function () {
   // const token = JSON.parse(localStorage.jwt);
 
   const endpointDate = './json/turno.json'
-  const endpointDentist = 'http://localhost:8080/dentist'
-  const endpointPatient = 'http://localhost:8080/patient'
-  const endpointAppointment = 'http://localhost:8080/appointment'  
+  const endpointDentist = 'http://localhost:8080/task'
+  // const endpointPatient = 'http://localhost:8080/patient'
+  // const endpointAppointment = 'http://localhost:8080/appointment'  
 
   const formAddAppointment = document.querySelector('.new-appointment')
   const btnCloseApp = document.querySelector('#closeApp')
@@ -50,7 +50,7 @@ window.addEventListener('load', function () {
         data.forEach(dentist=>{
           selectDentist.innerHTML+=`
           <div><input type="radio" name="dentist" id="${dentist.id}">
-          <label for="${dentist.id}">${dentist.name} ${dentist.surname}</label>
+          <label for="${dentist.id}">${dentist.name} ${dentist.description}</label>
           </div>`
         })
       })

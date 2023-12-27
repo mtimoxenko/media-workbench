@@ -1,13 +1,14 @@
-package com.dentalcura.webapp.service.impl;
+package com.nocme.workbench.service.impl;
 
 
 import com.dentalcura.webapp.dto.user.*;
-import com.dentalcura.webapp.model.User;
-import com.dentalcura.webapp.repository.IUserRepository;
-import com.dentalcura.webapp.service.IUserService;
-import com.dentalcura.webapp.utils.exceptions.CustomNotFoundException;
-import com.dentalcura.webapp.utils.exceptions.DuplicateEmailException;
+import com.nocme.workbench.model.User;
+import com.nocme.workbench.repository.IUserRepository;
+import com.nocme.workbench.service.IUserService;
+import com.nocme.workbench.utils.exceptions.CustomNotFoundException;
+import com.nocme.workbench.utils.exceptions.DuplicateEmailException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nocme.workbench.dto.user.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.log4j.Logger;

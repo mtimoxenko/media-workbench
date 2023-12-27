@@ -1,4 +1,4 @@
-package com.dentalcura.webapp.dto.user;
+package com.nocme.workbench.dto.user;
 
 public record UpdateUserRequest(
         String name,

@@ -1,4 +1,4 @@
-package com.dentalcura.webapp;
+package com.nocme.workbench;
 
 
 import org.springframework.boot.SpringApplication;
