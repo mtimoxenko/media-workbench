@@ -12,7 +12,7 @@ public interface ICommentService {
     void insertComment(CreateCommentRequest createCommentRequest);
     List<CommentResponse> selectAllComment();
     CommentResponse selectCommentByID(Long id);
-    void updateCommentByID(Long id, UpdateCommentRequest updateCommentRequest);
+    void updateCommentByID(UpdateCommentRequest updateCommentRequest);
     void deleteCommentByID(Long id);
 
 }

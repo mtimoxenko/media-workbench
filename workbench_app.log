@@ -1,0 +1,10 @@
+[2023-12-28 00:56:09] [ INFO ] [CommentService:59] New comment was added to task [Gestión de Desborde de Tráfico con Filtro QWILT] by user [Maximo]
+[2023-12-28 00:56:21] [ INFO ] [CommentService:59] New comment was added to task [Gestión de Desborde de Tráfico con Filtro QWILT] by user [Maximo]
+[2023-12-28 00:58:06] [ INFO ] [CommentService:85] Comment id [2] updated successfully!
+[2023-12-28 00:58:19] [ INFO ] [CommentService:95] Comment with id [1] successfully deleted.
+[2023-12-28 00:58:44] [ INFO ] [CommentService:85] Comment id [2] updated successfully!
+[2023-12-28 01:08:51] [ INFO ] [CommentService:59] New comment was added to task [Gestión de Desborde de Tráfico con Filtro QWILT] by user [Maximo]
+[2023-12-28 01:09:21] [ INFO ] [CommentService:91] Comment id [2] updated successfully!
+[2023-12-28 01:09:38] [ INFO ] [CommentService:101] Comment with id [1] successfully deleted.
+[2023-12-28 01:10:00] [ INFO ] [CommentService:59] New comment was added to task [Gestión de Desborde de Tráfico con Filtro QWILT] by user [Maximo]
+[2023-12-28 01:10:45] [ INFO ] [CommentService:59] New comment was added to task [Grafana Healthchecks] by user [Matias]

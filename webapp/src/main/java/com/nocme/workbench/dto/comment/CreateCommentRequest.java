@@ -1,10 +1,10 @@
 package com.nocme.workbench.dto.comment;
 
-import com.nocme.workbench.model.Comment;
-import com.nocme.workbench.model.Task;
+import java.time.LocalDateTime;
 
 public record CreateCommentRequest(
-        String date,
-        Task task,
-        Comment comment
+        String text,
+        LocalDateTime timestamp,
+        Long userId,
+        Long taskId
 ) { }

@@ -21,7 +21,7 @@ public class Comment {
     private String text;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;  // Changed to LocalDateTime
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
