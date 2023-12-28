@@ -1,9 +1,6 @@
 package com.nocme.workbench.controller;
 
-
-import com.nocme.workbench.dto.task.CreateTaskRequest;
-import com.nocme.workbench.dto.task.TaskResponse;
-import com.nocme.workbench.dto.task.UpdateTaskRequest;
+import com.nocme.workbench.dto.task.*;
 import com.nocme.workbench.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/task")
 public class TaskController {
@@ -22,7 +18,7 @@ public class TaskController {
     ITaskService taskService;
 
     @GetMapping()
-    public ResponseEntity<List<TaskResponse>> getTaskAll() {
+    public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return new ResponseEntity<>(taskService.selectAllTask(), HttpStatus.OK);
     }
 
@@ -36,9 +32,8 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<String> createTask(@RequestBody CreateTaskRequest createTaskRequest) {
         HttpHeaders httpHeaders = new HttpHeaders();
-
-        httpHeaders.add("task_created", "true");  // Adding a custom header
-        String message = "Comment created successfully!";
+        httpHeaders.add("task_created", "true");  // custom header
+        String message = "Task created successfully!";
 
         taskService.insertTask(createTaskRequest);
         return ResponseEntity.ok()
@@ -46,14 +41,13 @@ public class TaskController {
                 .body(message);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateTask(@PathVariable Long id, @RequestBody UpdateTaskRequest updateTaskRequest) {
+    @PutMapping
+    public ResponseEntity<String> updateTask(@RequestBody UpdateTaskRequest updateTaskRequest) {
         HttpHeaders httpHeaders = new HttpHeaders();
-
         httpHeaders.add("task_updated", "true");  // Adding a custom header
-        String message = "Comment updated successfully!";
+        String message = "Task updated successfully!";
 
-        taskService.updateTaskByID(id, updateTaskRequest);
+        taskService.updateTaskByID(updateTaskRequest);
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .body(message);
@@ -62,14 +56,12 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
-
         httpHeaders.add("task_deleted", "true");  // Adding a custom header
-        String message = "Comment deleted successfully!";
+        String message = "Task deleted successfully!";
 
         taskService.deleteTaskByID(id);
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .body(message);
     }
-
 }

@@ -27,19 +27,15 @@ public class User {
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin;
 
-    @OneToMany(mappedBy = "creator")
-    @JsonIgnore /*
-    handle potential infinite recursion problems
-    that can occur during JSON serialization/deserialization
-    when you have bi-directional relationships in your entity classes.
-    */
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Task> createdTasks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<UserTask> assignedTasks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
 

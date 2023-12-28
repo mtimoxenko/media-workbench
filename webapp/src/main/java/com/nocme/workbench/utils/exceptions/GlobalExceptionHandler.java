@@ -7,6 +7,8 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import com.nocme.workbench.utils.exceptions.CustomDatabaseException;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -76,5 +78,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CustomDatabaseException.class)
+    public ResponseEntity<String> handleCustomDatabaseException(CustomDatabaseException ex) {
+        LOGGER.error("Database error: " + ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }

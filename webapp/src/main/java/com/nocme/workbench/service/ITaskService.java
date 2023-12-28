@@ -12,7 +12,7 @@ public interface ITaskService {
     void insertTask(CreateTaskRequest createTaskRequest);
     List<TaskResponse> selectAllTask();
     TaskResponse selectTaskByID(Long id);
-    void updateTaskByID(Long id, UpdateTaskRequest updateTaskRequest);
+    void updateTaskByID(UpdateTaskRequest updateTaskRequest);
     void deleteTaskByID(Long id);
 
 }

@@ -1,6 +1,8 @@
 package com.nocme.workbench.dto.task;
 
 public record UpdateTaskRequest(
+        Long id,
         String name,
-        String surname
+        String description,
+        Boolean isCompleted
 ) { }

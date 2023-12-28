@@ -1,24 +1,24 @@
 package com.nocme.workbench.service.impl;
 
-
-
-import com.nocme.workbench.dto.task.CreateTaskRequest;
-import com.nocme.workbench.dto.task.UpdateTaskRequest;
-import com.nocme.workbench.dto.task.TaskResponse;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nocme.workbench.dto.task.*;
 import com.nocme.workbench.model.Task;
 import com.nocme.workbench.repository.ITaskRepository;
+import com.nocme.workbench.model.User;
+import com.nocme.workbench.repository.IUserRepository;
 import com.nocme.workbench.service.ITaskService;
+import com.nocme.workbench.utils.exceptions.CustomDatabaseException;
 import com.nocme.workbench.utils.exceptions.CustomNotFoundException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter @Setter
 @Service
@@ -28,136 +28,92 @@ public class TaskService implements ITaskService {
 
     @Autowired
     private ITaskRepository taskRepository;
+    @Autowired
+    private IUserRepository userRepository; // Add User repository
+
 
     @Autowired
     ObjectMapper mapper;
 
     @Override
     public void insertTask(CreateTaskRequest createTaskRequest) {
-//        if (isLicenseNumberDuplicated(createTaskRequest.licenseNumber())) {
-//            throw new DuplicateNiNumberException("License number [" + createTaskRequest.licenseNumber() + "] is already in use.");
-//        }
-//
-//        Comment comment = mapper.convertValue(createTaskRequest, Comment.class);
-//        taskRepository.save(comment);
-        LOGGER.info("New comment was registered [ ]");
+        Task task = new Task();
+        task.setName(createTaskRequest.name());
+        task.setDescription(createTaskRequest.description());
+
+        // Fetch the creator user by ID and set it
+        User creator = userRepository.findById(createTaskRequest.creatorId())
+                .orElseThrow(() -> new CustomNotFoundException("User id [" + createTaskRequest.creatorId() + "] not found"));
+        task.setCreator(creator);
+
+        taskRepository.save(task);
+        LOGGER.info("New task was registered [" + task.getName() + "]");
     }
 
     @Override
     public List<TaskResponse> selectAllTask() {
-        List<Task> comments = taskRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+        List<TaskResponse> taskResponses = new ArrayList<>();
 
-//        List<TaskResponse> taskResponses = new ArrayList<>();
-//
-//
-//        for(Comment comment : comments){
-//            List<AppointmentResponseToTask> appointmentResponses = new ArrayList<>();
-//            for(UserTask userTask : comment.getAppointments()){
-//                appointmentResponses.add(
-//                        new AppointmentResponseToTask(
-//                                userTask.getId(),
-//                                userTask.getDate(),
-//                                new PatientResponseToTask(
-//                                        userTask.getTask().getName(),
-//                                        userTask.getTask().getSurname()
-//                                )
-//                        )
-//                );
-//            }
-//            taskResponses.add(
-//                    new TaskResponse(
-//                            comment.getId(),
-//                            comment.getName(),
-//                            comment.getSurname(),
-//                            comment.getLicenseNumber(),
-//                            appointmentResponses
-//                            ));
-//
-//        }
-         
-//        return taskResponses;
-        return null;
+        for(Task task: tasks){
+            taskResponses.add(mapper.convertValue(task, TaskResponse.class));
+        }
+
+        return taskResponses;
     }
 
     @Override
     public TaskResponse selectTaskByID(Long id) {
-        if (!taskRepository.existsById(id))
-            throw new CustomNotFoundException("Comment id [" + id + "] not found");
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new CustomNotFoundException("Task id [" + id + "] not found"));
 
-        Optional<Task> optionalTask = taskRepository.findById(id);
-
-
-        if(optionalTask.isPresent()) {
-            Task comment = optionalTask.get();
-//            List<AppointmentResponseToTask> appointmentResponses = new ArrayList<>();
-//
-//            for(UserTask userTask : comment.getAppointments()){
-//
-//
-//                appointmentResponses.add(
-//                        new AppointmentResponseToTask(
-//                                userTask.getId(),
-//                                userTask.getDate(),
-//                                new PatientResponseToTask(
-//                                        userTask.getTask().getName(),
-//                                        userTask.getTask().getSurname()
-//                                )
-//                        )
-//                );
-//            }
-//
-//            return new TaskResponse(
-//                    comment.getId(),
-//                    comment.getName(),
-//                    comment.getSurname(),
-//                    comment.getLicenseNumber(),
-//                    appointmentResponses
-//            );
-
-        }
-            return null;
+        return mapper.convertValue(task, TaskResponse.class);
     }
 
     @Override
-    public void updateTaskByID(Long id, UpdateTaskRequest updateTaskRequest) {
-        if (!taskRepository.existsById(id))
-            throw new CustomNotFoundException("Comment id [" + id + "] not found");
+    public void updateTaskByID(UpdateTaskRequest updateTaskRequest) {
+        LOGGER.info("Attempting to update task with id: " + updateTaskRequest.id());
 
-        Optional<Task> optionalTask = taskRepository.findById(id);
-
-        if (optionalTask.isPresent()) {
-//            Task comment = optionalTask.get();
-//            LOGGER.info("Request to update comment id [" + id + "]");
-//
-//            comment.setName(updateTaskRequest.name());
-//            comment.setSurname(updateTaskRequest.surname());
-//
-//            taskRepository.save(comment);
-            LOGGER.info("Comment updated to []");
+        if (!taskRepository.existsById(updateTaskRequest.id())) {
+            throw new CustomNotFoundException("Task id [" + updateTaskRequest.id() + "] not found.");
         }
+
+        Task existingTask = taskRepository.findById(updateTaskRequest.id())
+                .orElseThrow(() -> new CustomNotFoundException("Task id [" + updateTaskRequest.id() + "] not found."));
+
+        // Update task fields from request
+        existingTask.setName(updateTaskRequest.name());
+        existingTask.setDescription(updateTaskRequest.description());
+        existingTask.setIsCompleted(updateTaskRequest.isCompleted());
+
+        // No need to update creation date or creator as they should remain constant after initial creation
+
+        taskRepository.save(existingTask);
+        LOGGER.info("Task id [" + updateTaskRequest.id() + "] successfully updated!");
     }
 
     @Override
+    @Transactional
     public void deleteTaskByID(Long id) {
-        if (!taskRepository.existsById(id))
-            throw new CustomNotFoundException("Comment id [" + id + "] not found");
+        LOGGER.info("Attempting to delete task with id: " + id);
 
-        taskRepository.deleteById(id);
-        LOGGER.info("Comment deleted from DB");
-    }
+        try {
+            if (!taskRepository.existsById(id)) {
+                LOGGER.warn("Attempted to delete non-existing task with id: " + id);
+                throw new CustomNotFoundException("Task id [" + id + "] not found");
+            }
 
-
-    private boolean isLicenseNumberDuplicated(Integer licNum){
-        List<Task> comments = taskRepository.findAll();
-
-//        for(Comment comment : comments){
-//            if (comment.getLicenseNumber().equals(licNum)) {
-//                isDuplicated = true;
-//                break;
-//            }
-//        }
-
-        return false;
+            taskRepository.deleteById(id);
+            LOGGER.info("Task with id [" + id + "] successfully deleted from the database.");
+        } catch (DataAccessException e) {
+            LOGGER.error("Database access error occurred while deleting task with id " + id, e);
+            // Handle or rethrow as appropriate for your application
+            throw new CustomDatabaseException("Failed to delete task due to database access error", e);
+        } catch (Exception e) {
+            LOGGER.error("Unexpected error occurred while deleting task with id " + id, e);
+            // Handle or rethrow as appropriate for your application
+            throw e;
+        }
     }
 
 }
