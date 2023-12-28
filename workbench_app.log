@@ -8,3 +8,12 @@
 [2023-12-28 01:09:38] [ INFO ] [CommentService:101] Comment with id [1] successfully deleted.
 [2023-12-28 01:10:00] [ INFO ] [CommentService:59] New comment was added to task [Gestión de Desborde de Tráfico con Filtro QWILT] by user [Maximo]
 [2023-12-28 01:10:45] [ INFO ] [CommentService:59] New comment was added to task [Grafana Healthchecks] by user [Matias]
+[2023-12-28 02:47:07] [ INFO ] [UserTaskService:107] UserTask with id [1] successfully deleted.
+[2023-12-28 03:00:48] [ INFO ] [UserTaskService:54] New user task created for task [Mantenimiento de EDGE] and user [Joaquin]
+[2023-12-28 03:02:46] [ INFO ] [UserTaskService:137] UserTask id [2] updated successfully!
+[2023-12-28 03:03:21] [ INFO ] [UserTaskService:137] UserTask id [2] updated successfully!
+[2023-12-28 03:04:10] [ INFO ] [UserTaskService:137] UserTask id [2] updated successfully!
+[2023-12-28 03:08:25] [ INFO ] [UserTaskService:150] UserTask with id [1] successfully deleted.
+[2023-12-28 03:08:36] [ ERROR] [GlobalExceptionHandler:27] UserTask id [36] not found
+[2023-12-28 03:08:43] [ INFO ] [UserTaskService:140] UserTask id [3] updated successfully!
+[2023-12-28 03:09:13] [ INFO ] [UserTaskService:54] New user task created for task [Mantenimiento de EDGE] and user [Joaquin]
