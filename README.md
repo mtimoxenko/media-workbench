@@ -1,7 +1,7 @@
-# NOC-ME-Workbench
+# Media-Workbench
 
 ## Overview
-NOC-ME-Workbench is a comprehensive task management system designed for Network Operations Centers (NOCs), focusing on multimedia workflows and efficient operations management. This platform provides a robust solution for handling diverse tasks, monitoring operations, and managing multimedia content seamlessly.
+Media-Workbench is a comprehensive task management system designed for Network Operations Centers (NOCs), focusing on multimedia workflows and efficient operations management. This platform provides a robust solution for handling diverse tasks, monitoring operations, and managing multimedia content seamlessly.
 
 ## Features
 - **Task Management**: Efficiently manage and track tasks specific to NOC operations.
@@ -12,7 +12,7 @@ NOC-ME-Workbench is a comprehensive task management system designed for Network 
 - **Reporting and Analytics**: Advanced tools for reporting and analyzing operational data.
 
 ## Getting Started
-To get started with NOC-ME-Workbench, follow these steps:
+To get started with Media-Workbench, follow these steps:
 
 1. **Setup**: Clone the repository and set up the project environment.
 2. **Configuration**: Configure the application settings as per your NOC requirements.
@@ -20,16 +20,16 @@ To get started with NOC-ME-Workbench, follow these steps:
 
 ## Installation
 ```bash
-git clone https://github.com/your-repository/NOC-ME-Workbench.git
-cd NOC-ME-Workbench
+git clone https://github.com/your-repository/Media-Workbench.git
+cd Media-Workbench
 # Follow specific setup instructions
 ```
 
 ## Usage
-After setting up, follow the user guide to start using NOC-ME-Workbench for managing NOC tasks and workflows.
+After setting up, follow the user guide to start using Media-Workbench for managing NOC tasks and workflows.
 
 ## Contributing
-Contributions to NOC-ME-Workbench are welcome.
+Contributions to Media-Workbench are welcome.
 
 ## License
 This project is licensed under the MIT License - see the `LICENSE.md` file for details.
@@ -41,5 +41,5 @@ For any queries or suggestions, please reach out to project maintainers at mtimo
 - Special thanks to the team and contributors who have made this project possible.
 
 ## Entity-Relationship (ER) Model
-Below is the ER model of the NOC-ME-Workbench project:
+Below is the ER model of the Media-Workbench project:
 ![ER Model](docs/eer.png)
