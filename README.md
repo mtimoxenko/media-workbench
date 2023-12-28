@@ -32,7 +32,7 @@ After setting up, follow the user guide to start using Media-Workbench for manag
 Contributions to Media-Workbench are welcome.
 
 ## License
-This project is licensed under the MIT License - see the `LICENSE.md` file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
 
 ## Contact
 For any queries or suggestions, please reach out to project maintainers at mtimochenko@tutanota.com.
@@ -42,4 +42,4 @@ For any queries or suggestions, please reach out to project maintainers at mtimo
 
 ## Entity-Relationship (ER) Model
 Below is the ER model of the Media-Workbench project:
-![ER Model](docs/eer.png)
+![ER Model](_docs/eer.png)
