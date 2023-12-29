@@ -8,11 +8,12 @@
 		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.dentalcura</groupId>
-	<artifactId>webapp</artifactId>
+	<groupId>com.mediaworkbench</groupId>
+	<artifactId>media-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>webapp</name>
-	<description>DentalCura WebApp</description>
+	<name>Media Workbench Web API</name>
+	<description>REST API for managing and accessing media content in the Media Workbench platform</description>
+
 	<properties>
 		<java.version>20</java.version>
 	</properties>
