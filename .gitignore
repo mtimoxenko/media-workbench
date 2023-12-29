@@ -2,8 +2,8 @@
 back/out/
 back/!**/src/main/**/out/
 back/!**/src/test/**/out/
-back/.idea/
 .idea/
+back/.idea
 back/target/
 back/workbench_app.log
 
