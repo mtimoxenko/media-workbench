@@ -1,15 +1,14 @@
 package com.mediaworkbench.workbench.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mediaworkbench.workbench.dto.usertask.CreateUserTaskRequest;
-import com.mediaworkbench.workbench.dto.usertask.UpdateUserTaskRequest;
-import com.mediaworkbench.workbench.dto.usertask.UserTaskResponse;
-import com.mediaworkbench.workbench.repository.ITaskRepository;
-import com.mediaworkbench.workbench.repository.IUserRepository;
-import com.mediaworkbench.workbench.repository.IUserTaskRepository;
+import com.mediaworkbench.workbench.dto.usertask.*;
 import com.mediaworkbench.workbench.model.UserTask;
 import com.mediaworkbench.workbench.model.User;
 import com.mediaworkbench.workbench.model.Task;
+import com.mediaworkbench.workbench.model.UserTaskStatus;
+import com.mediaworkbench.workbench.repository.IUserTaskRepository;
+import com.mediaworkbench.workbench.repository.IUserRepository;
+import com.mediaworkbench.workbench.repository.ITaskRepository;
 import com.mediaworkbench.workbench.service.IUserTaskService;
 import com.mediaworkbench.workbench.utils.exceptions.CustomNotFoundException;
 import org.apache.log4j.Logger;
@@ -38,9 +37,8 @@ public class UserTaskService implements IUserTaskService {
     public void insertUserTask(CreateUserTaskRequest createUserTaskRequest) {
         UserTask userTask = new UserTask();
         userTask.setAssignmentDate(createUserTaskRequest.assignmentDate());
-        userTask.setIsTaskCompleted(false); // Default value for new user task
+        userTask.setUserTaskStatus(UserTaskStatus.ASSIGNED); // Set default status as ASSIGNED
 
-        // Fetch the assigner, user and task entities by ID
         User assigner = userRepository.findById(createUserTaskRequest.assignerId())
                 .orElseThrow(() -> new CustomNotFoundException("Assigner id [" + createUserTaskRequest.assignerId() + "] not found"));
         User user = userRepository.findById(createUserTaskRequest.userId())
@@ -62,10 +60,10 @@ public class UserTaskService implements IUserTaskService {
         return userTasks.stream().map(userTask -> new UserTaskResponse(
                 userTask.getId(),
                 userTask.getAssignmentDate(),
-                userTask.getAssigner().getName(),
-                userTask.getAssigner().getSurname(), // Assigner's surname
-                userTask.getTask().getName(),        // Task's name
-                userTask.getIsTaskCompleted()        // Task completion status
+                userTask.getUser().getName(),       // User's name
+                userTask.getUser().getSurname(),    // User's surname
+                userTask.getTask().getName(),
+                userTask.getUserTaskStatus().toString()
         )).collect(Collectors.toList());
     }
 
@@ -76,25 +74,21 @@ public class UserTaskService implements IUserTaskService {
         return new UserTaskResponse(
                 userTask.getId(),
                 userTask.getAssignmentDate(),
-                userTask.getAssigner().getName(),
-                userTask.getAssigner().getSurname(), // Assigner's surname
-                userTask.getTask().getName(),        // Task's name
-                userTask.getIsTaskCompleted()        // Task completion status
+                userTask.getUser().getName(),       // User's name
+                userTask.getUser().getSurname(),    // User's surname
+                userTask.getTask().getName(),
+                userTask.getUserTaskStatus().toString()
         );
     }
 
-
     @Override
     public void updateUserTaskByID(UpdateUserTaskRequest updateUserTaskRequest) {
-        // Fetch the userTask by the ID provided in the request
         UserTask userTask = userTaskRepository.findById(updateUserTaskRequest.id())
                 .orElseThrow(() -> new CustomNotFoundException("UserTask id [" + updateUserTaskRequest.id() + "] not found"));
 
-        // Update fields
         userTask.setAssignmentDate(updateUserTaskRequest.assignmentDate());
-        userTask.setIsTaskCompleted(updateUserTaskRequest.is_task_completed());
+        userTask.setUserTaskStatus(updateUserTaskRequest.userTaskStatus());
 
-        // Update assigner, user, and task only if their IDs are provided in the request
         if (updateUserTaskRequest.assignerId() != null) {
             User assigner = userRepository.findById(updateUserTaskRequest.assignerId())
                     .orElseThrow(() -> new CustomNotFoundException("Assigner id [" + updateUserTaskRequest.assignerId() + "] not found"));
@@ -111,11 +105,9 @@ public class UserTaskService implements IUserTaskService {
             userTask.setTask(task);
         }
 
-        // Save the updated userTask
         userTaskRepository.save(userTask);
         LOGGER.info("UserTask id [" + updateUserTaskRequest.id() + "] updated successfully!");
     }
-
 
     @Override
     @Transactional
@@ -125,5 +117,4 @@ public class UserTaskService implements IUserTaskService {
         userTaskRepository.delete(userTask);
         LOGGER.info("UserTask with id [" + id + "] successfully deleted.");
     }
-
 }

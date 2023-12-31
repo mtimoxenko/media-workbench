@@ -1,5 +1,6 @@
 package com.mediaworkbench.workbench.dto.usertask;
 
+import com.mediaworkbench.workbench.model.UserTaskStatus;
 import java.time.LocalDateTime;
 
 public record UpdateUserTaskRequest(
@@ -8,6 +9,5 @@ public record UpdateUserTaskRequest(
         Long assignerId,
         Long userId,
         Long taskId,
-        Boolean is_task_completed
-
+        UserTaskStatus userTaskStatus // Updated to use enum
 ) { }

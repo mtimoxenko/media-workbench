@@ -13,6 +13,6 @@ public interface ITaskService {
     List<TaskResponse> selectAllTask();
     TaskResponse selectTaskByID(Long id);
     void updateTaskByID(UpdateTaskRequest updateTaskRequest);
-    void deleteTaskByID(Long id);
+    void cancelTaskByID(Long id);
 
 }

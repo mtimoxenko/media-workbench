@@ -56,12 +56,12 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<String> cancelTask(@PathVariable Long id) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("task_deleted", "true");  // Adding a custom header
-        String message = "Task deleted successfully!";
+        httpHeaders.add("task_canceled", "true");  // Adding a custom header
+        String message = "Task CANCELED successfully!";
 
-        taskService.deleteTaskByID(id);
+        taskService.cancelTaskByID(id);
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .body(message);

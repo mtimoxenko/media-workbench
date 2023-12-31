@@ -47,19 +47,22 @@ public class UserService implements IUserService {
         LOGGER.info("New user was registered [" + user.getName() + " " + user.getSurname() + "]");
     }
 
-    // UserServiceImpl.java
+
+
+
     @Override
     @Transactional
     public List<UserResponse> selectAllUser() {
         List<User> users = userRepository.findAll();
-        List<UserResponse> userResponses = users.stream().map(user -> {
+
+        return users.stream().map(user -> {
             List<UserTaskResponse> userTaskResponses = user.getAssignedTasks().stream().map(userTask -> new UserTaskResponse(
                     userTask.getId(),
                     userTask.getAssignmentDate(),
                     userTask.getAssigner().getName(), // Assigner's name
                     userTask.getAssigner().getSurname(), // Assigner's surname
                     userTask.getTask().getName(), // Task's name
-                    userTask.getIsTaskCompleted() // Completion status
+                    userTask.getUserTaskStatus().toString() // UserTask status
             )).collect(Collectors.toList());
 
             return new UserResponse(
@@ -71,8 +74,6 @@ public class UserService implements IUserService {
                     userTaskResponses // List of UserTaskResponses
             );
         }).collect(Collectors.toList());
-
-        return userResponses;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class UserService implements IUserService {
                 userTask.getAssigner().getName(), // Assigner's name
                 userTask.getAssigner().getSurname(), // Assigner's surname
                 userTask.getTask().getName(), // Task's name
-                userTask.getIsTaskCompleted() // Completion status
+                userTask.getUserTaskStatus().toString() // UserTask status
         )).collect(Collectors.toList());
 
         return new UserResponse(
@@ -99,6 +100,8 @@ public class UserService implements IUserService {
                 userTaskResponses // List of UserTaskResponses
         );
     }
+
+
 
 
 

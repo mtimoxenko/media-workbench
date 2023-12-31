@@ -1,4 +1,3 @@
-// UserTaskResponse.java
 package com.mediaworkbench.workbench.dto.usertask;
 
 import java.time.LocalDateTime;
@@ -6,8 +5,8 @@ import java.time.LocalDateTime;
 public record UserTaskResponse(
         Long id,
         LocalDateTime assignmentDate,
-        String assignerName,      // Include assigner's name
-        String assignerSurname,   // Include assigner's surname
-        String taskName,          // Include task's name
-        Boolean isTaskCompleted   // Task completion status
+        String userName,           // Name of the user to whom the task is assigned
+        String userSurname,        // Surname of the user to whom the task is assigned
+        String taskName,           // Include task's name
+        String userTaskStatus      // Updated to represent status as a string
 ) {}

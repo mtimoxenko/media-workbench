@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mediaworkbench.workbench.dto.task.CreateTaskRequest;
 import com.mediaworkbench.workbench.dto.task.TaskResponse;
 import com.mediaworkbench.workbench.dto.task.UpdateTaskRequest;
+import com.mediaworkbench.workbench.model.*;
 import com.mediaworkbench.workbench.repository.ITaskRepository;
 import com.mediaworkbench.workbench.repository.IUserRepository;
-import com.mediaworkbench.workbench.model.Task;
-import com.mediaworkbench.workbench.model.User;
+import com.mediaworkbench.workbench.repository.IUserTaskRepository;
 import com.mediaworkbench.workbench.service.ITaskService;
 import com.mediaworkbench.workbench.utils.exceptions.CustomDatabaseException;
 import com.mediaworkbench.workbench.utils.exceptions.CustomNotFoundException;
@@ -32,6 +32,9 @@ public class TaskService implements ITaskService {
     private ITaskRepository taskRepository;
     @Autowired
     private IUserRepository userRepository; // Add User repository
+    @Autowired
+    private IUserTaskRepository userTaskRepository; // Add UserTask repository
+
 
 
     @Autowired
@@ -49,7 +52,7 @@ public class TaskService implements ITaskService {
         task.setCreator(creator);
 
         taskRepository.save(task);
-        LOGGER.info("New task was registered [" + task.getName() + "]");
+        LOGGER.info("New task [" + task.getName() + "] was registered by " + creator.getName() + " " + creator.getSurname());
     }
 
     @Override
@@ -58,7 +61,15 @@ public class TaskService implements ITaskService {
         List<TaskResponse> taskResponses = new ArrayList<>();
 
         for(Task task: tasks){
-            taskResponses.add(mapper.convertValue(task, TaskResponse.class));
+            TaskResponse taskResponse = new TaskResponse(
+                    task.getId(),
+                    task.getName(),
+                    task.getDescription(),
+                    task.getStatus(),
+                    task.getCreator().getName(), // Creator's name
+                    task.getCreator().getSurname() // Creator's surname
+            );
+            taskResponses.add(taskResponse);
         }
 
         return taskResponses;
@@ -69,7 +80,14 @@ public class TaskService implements ITaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Task id [" + id + "] not found"));
 
-        return mapper.convertValue(task, TaskResponse.class);
+        return new TaskResponse(
+                task.getId(),
+                task.getName(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getCreator().getName(), // Creator's name
+                task.getCreator().getSurname() // Creator's surname
+        );
     }
 
     @Override
@@ -86,7 +104,7 @@ public class TaskService implements ITaskService {
         // Update task fields from request
         existingTask.setName(updateTaskRequest.name());
         existingTask.setDescription(updateTaskRequest.description());
-        existingTask.setIsCompleted(updateTaskRequest.isCompleted());
+        existingTask.setStatus(updateTaskRequest.status()); // Update the status of the task
 
         // No need to update creation date or creator as they should remain constant after initial creation
 
@@ -94,28 +112,27 @@ public class TaskService implements ITaskService {
         LOGGER.info("Task id [" + updateTaskRequest.id() + "] successfully updated!");
     }
 
+
     @Override
     @Transactional
-    public void deleteTaskByID(Long id) {
-        LOGGER.info("Attempting to delete task with id: " + id);
+    public void cancelTaskByID(Long id) {
+        LOGGER.info("Attempting to cancel task with id: " + id);
 
-        try {
-            if (!taskRepository.existsById(id)) {
-                LOGGER.warn("Attempted to delete non-existing task with id: " + id);
-                throw new CustomNotFoundException("Task id [" + id + "] not found");
-            }
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new CustomNotFoundException("Task id [" + id + "] not found"));
 
-            taskRepository.deleteById(id);
-            LOGGER.info("Task with id [" + id + "] successfully deleted from the database.");
-        } catch (DataAccessException e) {
-            LOGGER.error("Database access error occurred while deleting task with id " + id, e);
-            // Handle or rethrow as appropriate for your application
-            throw new CustomDatabaseException("Failed to delete task due to database access error", e);
-        } catch (Exception e) {
-            LOGGER.error("Unexpected error occurred while deleting task with id " + id, e);
-            // Handle or rethrow as appropriate for your application
-            throw e;
-        }
+        // Update Task status to CANCELED
+        task.setStatus(TaskStatus.CANCELED);
+        taskRepository.save(task);
+
+        // Update all related UserTasks to CANCELED
+        List<UserTask> userTasks = userTaskRepository.findByTaskId(id);
+        userTasks.forEach(userTask -> {
+            userTask.setUserTaskStatus(UserTaskStatus.CANCELED);
+        });
+        userTaskRepository.saveAll(userTasks);
+
+        LOGGER.info("Task with id [" + id + "] and all related UserTasks successfully updated to CANCELED.");
     }
 
 }

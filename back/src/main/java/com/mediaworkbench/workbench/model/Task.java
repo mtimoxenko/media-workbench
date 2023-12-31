@@ -24,11 +24,12 @@ public class Task {
     @Column(nullable = false)
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private TaskStatus status = TaskStatus.ACTIVE;
+
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-
-    @Column(name = "is_completed", nullable = false)
-    private Boolean isCompleted = false; // Set a default value
 
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)

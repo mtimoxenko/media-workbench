@@ -11,21 +11,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_task") // Especifica el nombre de la tabla en la base de datos
+@Table(name = "user_task")
 public class UserTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "is_task_completed", nullable = false)
-    private Boolean isTaskCompleted;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_task_status", nullable = false)
+    private UserTaskStatus userTaskStatus = UserTaskStatus.ASSIGNED; // Default to ASSIGNED
+
+
     @Column(name = "assignment_date", nullable = false)
     private LocalDateTime assignmentDate;
 
     @ManyToOne
     @JoinColumn(name = "assigned_by", nullable = false)
-    private User assigner;  // Changed to User entity mapping
+    private User assigner;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
