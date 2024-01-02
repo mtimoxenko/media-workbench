@@ -3,13 +3,14 @@ package com.mediaworkbench.workbench.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mediaworkbench.workbench.dto.task.CreateTaskRequest;
 import com.mediaworkbench.workbench.dto.task.TaskResponse;
+import com.mediaworkbench.workbench.dto.comment.CommentResponse;
 import com.mediaworkbench.workbench.dto.task.UpdateTaskRequest;
 import com.mediaworkbench.workbench.model.*;
+import com.mediaworkbench.workbench.repository.ICommentRepository;
 import com.mediaworkbench.workbench.repository.ITaskRepository;
 import com.mediaworkbench.workbench.repository.IUserRepository;
 import com.mediaworkbench.workbench.repository.IUserTaskRepository;
 import com.mediaworkbench.workbench.service.ITaskService;
-import com.mediaworkbench.workbench.utils.exceptions.CustomDatabaseException;
 import com.mediaworkbench.workbench.utils.exceptions.CustomNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter @Setter
 @Service
@@ -31,14 +33,15 @@ public class TaskService implements ITaskService {
     @Autowired
     private ITaskRepository taskRepository;
     @Autowired
-    private IUserRepository userRepository; // Add User repository
+    private IUserRepository userRepository;
     @Autowired
-    private IUserTaskRepository userTaskRepository; // Add UserTask repository
-
-
-
+    private IUserTaskRepository userTaskRepository;
     @Autowired
-    ObjectMapper mapper;
+    private ICommentRepository commentRepository;
+    @Autowired
+    private ObjectMapper mapper;
+
+
 
     @Override
     public void insertTask(CreateTaskRequest createTaskRequest) {
@@ -55,40 +58,20 @@ public class TaskService implements ITaskService {
         LOGGER.info("New task [" + task.getName() + "] was registered by " + creator.getName() + " " + creator.getSurname());
     }
 
+
     @Override
     public List<TaskResponse> selectAllTask() {
         List<Task> tasks = taskRepository.findAll();
-        List<TaskResponse> taskResponses = new ArrayList<>();
-
-        for(Task task: tasks){
-            TaskResponse taskResponse = new TaskResponse(
-                    task.getId(),
-                    task.getName(),
-                    task.getDescription(),
-                    task.getStatus(),
-                    task.getCreator().getName(), // Creator's name
-                    task.getCreator().getSurname() // Creator's surname
-            );
-            taskResponses.add(taskResponse);
-        }
-
-        return taskResponses;
+        return tasks.stream().map(this::mapTaskToTaskResponse).collect(Collectors.toList());
     }
 
     @Override
     public TaskResponse selectTaskByID(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Task id [" + id + "] not found"));
-
-        return new TaskResponse(
-                task.getId(),
-                task.getName(),
-                task.getDescription(),
-                task.getStatus(),
-                task.getCreator().getName(), // Creator's name
-                task.getCreator().getSurname() // Creator's surname
-        );
+        return mapTaskToTaskResponse(task);
     }
+
 
     @Override
     public void updateTaskByID(UpdateTaskRequest updateTaskRequest) {
@@ -134,5 +117,31 @@ public class TaskService implements ITaskService {
 
         LOGGER.info("Task with id [" + id + "] and all related UserTasks successfully updated to CANCELED.");
     }
+
+
+    private TaskResponse mapTaskToTaskResponse(Task task) {
+        // Mapping comments manually
+        List<CommentResponse> commentResponses = task.getComments().stream()
+                .map(comment -> new CommentResponse(
+                        comment.getId(),
+                        comment.getText(),
+                        comment.getTimestamp(),
+                        comment.getUser().getId(),
+                        comment.getUser().getName(),
+                        comment.getUser().getSurname()))
+                .collect(Collectors.toList());
+
+        // Creating a new TaskResponse record with all fields
+        return new TaskResponse(
+                task.getId(),
+                task.getName(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getCreator().getName(),
+                task.getCreator().getSurname(),
+                commentResponses);
+    }
+
+
 
 }

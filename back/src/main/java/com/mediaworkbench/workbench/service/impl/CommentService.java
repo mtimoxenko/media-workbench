@@ -26,10 +26,15 @@ public class CommentService implements ICommentService {
 
     private static final Logger LOGGER = Logger.getLogger(CommentService.class);
 
+    @Autowired
     private final ICommentRepository commentRepository;
+    @Autowired
     private final IUserRepository userRepository;
+    @Autowired
     private final ITaskRepository taskRepository;
-    private final ObjectMapper mapper;
+    @Autowired
+    private ObjectMapper mapper;
+
 
     @Autowired
     public CommentService(ICommentRepository commentRepository,
@@ -39,7 +44,6 @@ public class CommentService implements ICommentService {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
-        this.mapper = mapper;
     }
 
     @Override
@@ -56,17 +60,14 @@ public class CommentService implements ICommentService {
         comment.setTask(task);
 
         commentRepository.save(comment);
-        LOGGER.info("New comment was added to task [" + task.getName() + "] by user [" + user.getName() + "]");
+        LOGGER.info("New comment was added to task [" + task.getName() + "] by user [" + user.getName() + " " + user.getSurname() + "]");
     }
 
     @Override
     public List<CommentResponse> selectAllComment() {
         List<Comment> comments = commentRepository.findAll();
         return comments.stream()
-                .map(comment -> new CommentResponse(
-                        comment.getId(),
-                        comment.getText(),
-                        comment.getTask().getId())) // Map the task ID as well
+                .map(this::mapCommentToCommentResponse)
                 .collect(Collectors.toList());
     }
 
@@ -74,11 +75,21 @@ public class CommentService implements ICommentService {
     public CommentResponse selectCommentByID(Long id) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("Comment id [" + id + "] not found"));
+        return mapCommentToCommentResponse(comment);
+    }
+
+    private CommentResponse mapCommentToCommentResponse(Comment comment) {
         return new CommentResponse(
                 comment.getId(),
                 comment.getText(),
-                comment.getTask().getId()); // Include the task ID in the response
+                comment.getTimestamp(),
+                comment.getUser().getId(),
+                comment.getUser().getName(),
+                comment.getUser().getSurname()
+        );
     }
+
+
 
     @Override
     public void updateCommentByID(UpdateCommentRequest updateCommentRequest) {

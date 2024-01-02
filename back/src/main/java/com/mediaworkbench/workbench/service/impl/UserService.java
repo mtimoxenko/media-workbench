@@ -33,7 +33,7 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Autowired
-    ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     @Override
     public void insertUser(CreateUserRequest createUserRequest) {

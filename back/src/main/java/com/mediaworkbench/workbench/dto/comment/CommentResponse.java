@@ -1,8 +1,12 @@
 package com.mediaworkbench.workbench.dto.comment;
 
-public record CommentResponse(
-        Long id,
-        String text,
-        Long taskId
+import java.time.LocalDateTime;
 
+public record CommentResponse(
+        Long commentId,
+        String commentText,
+        LocalDateTime commentTimestamp,
+        Long userId,
+        String userName,
+        String userSurname
 ) { }
