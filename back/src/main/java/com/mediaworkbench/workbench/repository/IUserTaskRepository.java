@@ -8,8 +8,6 @@ import java.util.List;
 
 @Repository
 public interface IUserTaskRepository extends JpaRepository <UserTask, Long> {
-    // In IUserTaskRepository.java
-
     List<UserTask> findByTaskId(Long taskId);
 
 }

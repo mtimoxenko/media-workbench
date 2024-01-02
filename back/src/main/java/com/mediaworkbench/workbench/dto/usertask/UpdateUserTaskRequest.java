@@ -9,5 +9,5 @@ public record UpdateUserTaskRequest(
         Long assignerId,
         Long userId,
         Long taskId,
-        UserTaskStatus userTaskStatus // Updated to use enum
+        UserTaskStatus userTaskStatus // Use enum type for status
 ) { }

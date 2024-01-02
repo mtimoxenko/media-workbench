@@ -8,5 +8,7 @@ public record UserTaskResponse(
         String userName,           // Name of the user to whom the task is assigned
         String userSurname,        // Surname of the user to whom the task is assigned
         String taskName,           // Include task's name
-        String userTaskStatus      // Updated to represent status as a string
+        String userTaskStatus,     // Updated to represent status as a string
+        String assignerName,       // Name of the user who assigned the task
+        String assignerSurname     // Surname of the user who assigned the task
 ) {}

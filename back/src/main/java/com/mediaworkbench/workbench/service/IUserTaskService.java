@@ -13,6 +13,6 @@ public interface IUserTaskService {
     List<UserTaskResponse> selectAllUserTask();
     UserTaskResponse selectUserTaskByID(Long id);
     void updateUserTaskByID(UpdateUserTaskRequest updateUserTaskRequest);
-    void deleteUserTaskByID(Long id);
+    void cancelUserTaskByID(Long id);
 
 }

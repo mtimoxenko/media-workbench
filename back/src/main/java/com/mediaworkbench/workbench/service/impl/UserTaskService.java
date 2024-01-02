@@ -51,7 +51,7 @@ public class UserTaskService implements IUserTaskService {
         userTask.setTask(task);
 
         userTaskRepository.save(userTask);
-        LOGGER.info("New user task created for task [" + task.getName() + "] and user [" + user.getName() + "]");
+        LOGGER.info("New user task created [" + task.getName() + "] for user [" + user.getName() + "]");
     }
 
     @Override
@@ -60,10 +60,12 @@ public class UserTaskService implements IUserTaskService {
         return userTasks.stream().map(userTask -> new UserTaskResponse(
                 userTask.getId(),
                 userTask.getAssignmentDate(),
-                userTask.getUser().getName(),       // User's name
-                userTask.getUser().getSurname(),    // User's surname
-                userTask.getTask().getName(),
-                userTask.getUserTaskStatus().toString()
+                userTask.getUser().getName(), // User's name to whom the task is assigned
+                userTask.getUser().getSurname(), // User's surname to whom the task is assigned
+                userTask.getTask().getName(), // Task's name
+                userTask.getUserTaskStatus().toString(), // User task status
+                userTask.getAssigner().getName(), // Assigner's name
+                userTask.getAssigner().getSurname() // Assigner's surname
         )).collect(Collectors.toList());
     }
 
@@ -74,10 +76,12 @@ public class UserTaskService implements IUserTaskService {
         return new UserTaskResponse(
                 userTask.getId(),
                 userTask.getAssignmentDate(),
-                userTask.getUser().getName(),       // User's name
-                userTask.getUser().getSurname(),    // User's surname
-                userTask.getTask().getName(),
-                userTask.getUserTaskStatus().toString()
+                userTask.getUser().getName(),       // User's name to whom the task is assigned
+                userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                userTask.getTask().getName(),       // Task's name
+                userTask.getUserTaskStatus().toString(), // User task status
+                userTask.getAssigner().getName(),   // Assigner's name
+                userTask.getAssigner().getSurname() // Assigner's surname
         );
     }
 
@@ -111,10 +115,17 @@ public class UserTaskService implements IUserTaskService {
 
     @Override
     @Transactional
-    public void deleteUserTaskByID(Long id) {
+    public void cancelUserTaskByID(Long id) {
+        LOGGER.info("Attempting to cancel userTask with id: " + id);
+
         UserTask userTask = userTaskRepository.findById(id)
                 .orElseThrow(() -> new CustomNotFoundException("UserTask id [" + id + "] not found"));
-        userTaskRepository.delete(userTask);
-        LOGGER.info("UserTask with id [" + id + "] successfully deleted.");
+
+        // Update UserTask status to CANCELED
+        userTask.setUserTaskStatus(UserTaskStatus.CANCELED);
+
+        userTaskRepository.save(userTask);
+        LOGGER.info("UserTask with id [" + id + "] successfully updated to CANCELED.");
     }
+
 }

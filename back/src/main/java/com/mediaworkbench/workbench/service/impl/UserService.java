@@ -59,10 +59,12 @@ public class UserService implements IUserService {
             List<UserTaskResponse> userTaskResponses = user.getAssignedTasks().stream().map(userTask -> new UserTaskResponse(
                     userTask.getId(),
                     userTask.getAssignmentDate(),
-                    userTask.getAssigner().getName(), // Assigner's name
-                    userTask.getAssigner().getSurname(), // Assigner's surname
-                    userTask.getTask().getName(), // Task's name
-                    userTask.getUserTaskStatus().toString() // UserTask status
+                    userTask.getUser().getName(),       // User's name to whom the task is assigned
+                    userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                    userTask.getTask().getName(),       // Task's name
+                    userTask.getUserTaskStatus().toString(), // UserTask status
+                    userTask.getAssigner().getName(),   // Assigner's name
+                    userTask.getAssigner().getSurname() // Assigner's surname
             )).collect(Collectors.toList());
 
             return new UserResponse(
@@ -85,10 +87,12 @@ public class UserService implements IUserService {
         List<UserTaskResponse> userTaskResponses = user.getAssignedTasks().stream().map(userTask -> new UserTaskResponse(
                 userTask.getId(),
                 userTask.getAssignmentDate(),
-                userTask.getAssigner().getName(), // Assigner's name
-                userTask.getAssigner().getSurname(), // Assigner's surname
-                userTask.getTask().getName(), // Task's name
-                userTask.getUserTaskStatus().toString() // UserTask status
+                userTask.getUser().getName(),       // User's name to whom the task is assigned
+                userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                userTask.getTask().getName(),       // Task's name
+                userTask.getUserTaskStatus().toString(), // UserTask status
+                userTask.getAssigner().getName(),   // Assigner's name
+                userTask.getAssigner().getSurname() // Assigner's surname
         )).collect(Collectors.toList());
 
         return new UserResponse(

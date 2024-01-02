@@ -5,6 +5,7 @@ import com.mediaworkbench.workbench.dto.usertask.UpdateUserTaskRequest;
 import com.mediaworkbench.workbench.dto.usertask.UserTaskResponse;
 import com.mediaworkbench.workbench.service.IUserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +50,14 @@ public class UserTaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserTask(@PathVariable Long id) {
-        userTaskService.deleteUserTaskByID(id);
-        String message = "User task deleted successfully!";
-        return ResponseEntity.ok().body(message);
+    public ResponseEntity<String> cancelUserTask(@PathVariable Long id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("task_canceled", "true");
+        String message = "User task with id [" + id + "] canceled successfully!";
+
+        userTaskService.cancelUserTaskByID(id);
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .body(message);
     }
 }
