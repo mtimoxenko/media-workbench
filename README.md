@@ -42,4 +42,4 @@ For any queries or suggestions, please reach out to project maintainers at mtimo
 
 ## Entity-Relationship (ER) Model
 Below is the ER model of the Media-Workbench project:
-![ER Model](_docs/eer.png)
+![ER Model](_docs/er_diagram.png)
