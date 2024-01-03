@@ -55,7 +55,7 @@ public class CommentService implements ICommentService {
 
         Comment comment = new Comment();
         comment.setText(createCommentRequest.text());
-        comment.setTimestamp(createCommentRequest.timestamp());
+//        comment.setTimestamp(createCommentRequest.timestamp());
         comment.setUser(user);
         comment.setTask(task);
 

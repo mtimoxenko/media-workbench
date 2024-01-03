@@ -27,6 +27,11 @@ public class Comment {
     @Schema(description = "Timestamp when the Comment was posted.", example = "2023-07-21T15:03:00", required = true)
     private LocalDateTime timestamp;
 
+    @PrePersist
+    protected void onCreate() {
+        timestamp = LocalDateTime.now();
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @Schema(description = "The user who posted the Comment.", required = true)

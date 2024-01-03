@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record CreateCommentRequest(
         String text,
-        LocalDateTime timestamp,
+//        LocalDateTime timestamp,
         Long userId,
         Long taskId
 ) { }

@@ -32,11 +32,17 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     @Schema(description = "Current status of the Task.", example = "ACTIVE", required = true)
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.ACTIVE;
+
 
     @Column(name = "creation_date")
     @Schema(description = "Date and time when the Task was created.", example = "2023-07-21T15:03:00", required = true)
     private LocalDateTime creationDate;
+
+    @PrePersist
+    protected void onCreate() {
+        creationDate = LocalDateTime.now();
+    }
 
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
