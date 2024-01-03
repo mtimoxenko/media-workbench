@@ -51,7 +51,7 @@ public class UserTaskService implements IUserTaskService {
         userTask.setTask(task);
 
         userTaskRepository.save(userTask);
-        LOGGER.info("New user task created [" + task.getName() + "] for user [" + user.getName() + "]");
+        LOGGER.info("New user task created [" + task.getName() + "] for user [" + user.getName() + " " + user.getSurname() + "]");
     }
 
     @Override

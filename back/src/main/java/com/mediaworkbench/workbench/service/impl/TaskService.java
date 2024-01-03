@@ -55,7 +55,7 @@ public class TaskService implements ITaskService {
         task.setCreator(creator);
 
         taskRepository.save(task);
-        LOGGER.info("New task [" + task.getName() + "] was registered by " + creator.getName() + " " + creator.getSurname());
+        LOGGER.info("New task [" + task.getName() + "] was registered by [" + creator.getName() + " " + creator.getSurname() + "]");
     }
 
 
