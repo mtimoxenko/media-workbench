@@ -10,7 +10,7 @@ window.addEventListener('load', function () {
   // const token = JSON.parse(localStorage.jwt);
 
   const endpointDate = './json/turno.json'
-  const endpointDentist = 'http://localhost:8080/task'
+  const endpointDentist = 'http://localhost:8080/tasks'
   // const endpointPatient = 'http://localhost:8080/patient'
   // const endpointAppointment = 'http://localhost:8080/appointment'  
 

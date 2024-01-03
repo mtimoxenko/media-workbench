@@ -1,97 +1,75 @@
 window.addEventListener('load', function () {
-
-    const form = document.querySelector('form')
-    const email = document.querySelector('#inputEmail')
-    const password = document.querySelector('#inputPassword')
-    const endpointLogin = 'http://localhost:8080/user/login'
-
+    const form = document.querySelector('form');
+    const email = document.querySelector('#inputEmail');
+    const password = document.querySelector('#inputPassword');
+    const endpointLogin = 'http://localhost:8080/users/login';
 
     form.addEventListener('submit', function (event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        const payload = {
-            email: email.value,
-            password: password.value
+        if (validateInput(email, password)) {
+            const payload = {
+                email: email.value,
+                password: password.value
+            };
+
+            loginUser(payload);
         }
+    });
 
-        const config = {
+    function validateInput(email, password) {
+        if (email.value.trim() === '' || password.value.trim() === '') {
+            displayMessage('Please complete all fields correctly.', true);
+            return false;
+        }
+        return true;
+    }
+
+    function loginUser(payload) {
+        fetch(endpointLogin, {
             method: 'POST',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify(payload),   
-        }
-
-        if(payload.email == '' || payload.email.includes(' ')){
-            errorMessage()
-        }
-        else if (payload.password == '' || payload.password.includes(' ')) {
-            errorMessage()
-        }
-        else{
-            loginUser(config)            
-        }
-
-        form.reset()
-    })
-
-
-    function loginUser(config) {
-
-        fetch(endpointLogin, config)
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-
-            if (data.token) {
-                sessionStorage.setItem('userName', JSON.stringify(data.userName))
-                sessionStorage.setItem('jwt', JSON.stringify(data.token))
-
-                if (data.token == 33) {
-                    location.replace('./admin.html')
-                }
-                else if (data.token == 1){
-                    location.replace('./tasks.html')                    
-                }
-            }
-            else{
-                errorResponse()
-            }
-
-        }).catch(err => {
-            console.log("Promise rejected...")
-            console.log(err)
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
+            body: JSON.stringify(payload)
         })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    throw new Error(text || 'Invalid credentials or server error');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            handleLoginSuccess(data);
+        })
+        .catch(err => {
+            displayMessage(err.message, true);
+        });
     }
 
+    function handleLoginSuccess(data) {
+        sessionStorage.setItem('userName', JSON.stringify(data.userName));
+        sessionStorage.setItem('jwt', JSON.stringify(data.token));
 
-    function errorMessage(){
-        const bugBox = document.querySelector('#errores')
-    
-        if (bugBox) {
-            bugBox.remove()
+        const redirectUrl = data.token === 33 ? './admin.html' : './tasks.html';
+        location.replace(redirectUrl);
+    }
+
+    function displayMessage(message, isError = false) {
+        const messageBox = document.querySelector('#errores') || createMessageBox();
+        messageBox.innerHTML = `<p><small>${message}</small></p>`;
+        if (isError) {
+            messageBox.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+        } else {
+            messageBox.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
         }
-    
-        const divTemplate = document.createElement('div')
-        divTemplate.setAttribute('id', 'errores')
-        divTemplate.style = "background:rgba(255, 0, 0, 0.3);padding:.5em 1em;color: white;margin-top: 1em;"
-        divTemplate.innerHTML += `<p><small>You must complete data correctly, without leaving empty fields or spaces</small></p>`
-        form.appendChild(divTemplate)
     }
 
-    function errorResponse(){
-        const bugBox = document.querySelector('#errores')
-    
-        if (bugBox) {
-            bugBox.remove()
-        }
-    
-        const divTemplate = document.createElement('div')
-        divTemplate.setAttribute('id', 'errores')
-        divTemplate.style = "background:rgba(255, 0, 0, 0.3);padding:.5em 1em;color: white;margin-top: 1em;"
-        divTemplate.innerHTML += `<p><small>Invalid data entered. User not found.</small></p>`
-        form.appendChild(divTemplate)
+    function createMessageBox() {
+        const divTemplate = document.createElement('div');
+        divTemplate.setAttribute('id', 'errores');
+        divTemplate.style = 'padding:.5em 1em;color: white;margin-top: 1em;';
+        form.appendChild(divTemplate);
+        return divTemplate;
     }
-
-    
-})
+});
