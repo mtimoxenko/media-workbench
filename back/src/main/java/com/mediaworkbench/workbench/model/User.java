@@ -37,7 +37,7 @@ public class User {
 
     @Column(name = "is_admin", nullable = false)
     @Schema(description = "Flag to indicate if the User is an admin.", example = "true")
-    private Boolean isAdmin;
+    private Boolean isAdmin = false;
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

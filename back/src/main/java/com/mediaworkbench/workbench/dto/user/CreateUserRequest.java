@@ -4,6 +4,5 @@ public record CreateUserRequest(
         String name,
         String surname,
         String email,
-        String password,
-        Boolean isAdmin
+        String password
 ) { }

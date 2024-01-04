@@ -229,4 +229,21 @@ form {
     text-align: center;
     /* Add other anchor tag styles as needed */
   }
+
+  .message-box {
+    display: none; /* Hidden by default */
+    padding: .5em 1em;
+    color: white;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.success-message {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.error-message {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
   

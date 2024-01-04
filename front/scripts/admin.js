@@ -7,7 +7,6 @@ window.addEventListener('load', function () {
     /* ------------------------- AOS lib. init -------------------------------- */
     AOS.init();
   
-
     // const token = JSON.parse(localStorage.jwt);
     
     const endpointDentist = 'http://localhost:8080/dentist'

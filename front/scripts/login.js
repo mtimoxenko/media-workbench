@@ -48,12 +48,19 @@ window.addEventListener('load', function () {
     }
 
     function handleLoginSuccess(data) {
+        displayMessage('Login successful. Redirecting...', false);
+    
+        // Store the user name and token in sessionStorage
         sessionStorage.setItem('userName', JSON.stringify(data.userName));
         sessionStorage.setItem('jwt', JSON.stringify(data.token));
-
-        const redirectUrl = data.token === 33 ? './admin.html' : './tasks.html';
-        location.replace(redirectUrl);
+    
+        // Set a delay before redirecting to allow the user to see the success message
+        setTimeout(() => {
+            const redirectUrl = data.token === 33 ? './admin.html' : './tasks.html';
+            location.replace(redirectUrl);
+        }, 2000); // Redirect after 2 seconds
     }
+    
 
     function displayMessage(message, isError = false) {
         const messageBox = document.querySelector('#errores') || createMessageBox();
