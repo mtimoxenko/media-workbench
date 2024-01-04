@@ -1,45 +1,89 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400&family=Montserrat:wght@400;700&display=swap');
 
 :root {
-  --negro: #000000ff;
+  --negro: #000000;
   --oscuro: #1c1c1f;
-
   --app-grey: #F2F2F2;
-  --azul: #3333ffff;
-  --azul-hover: rgb(40, 40, 197);
-  --verde: #00cc7eff;
-  --rosa: #ff76e2ff;
-  --lila: #8a6df1ff;
-  --laranja: #ff7059ff;
-  --amarelo: #ffc51aff;
+  --azul: #3333ff;
+  --azul-hover: #2828c5; /* Use hex for consistency */
+  --verde: #00cc7e;
+  --rosa: #ff76e2;
+  --lila: #8a6df1;
+  --laranja: #ff7059;
+  --amarelo: #ffc51a;
 }
 
-* {
+/* Resetting default margins and paddings */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box; /* Ensures consistent box sizing */
+}
+
+/* Font and typography styles */
+body,
+button,
+input,
+textarea {
   font-family: 'Montserrat', 'Archivo', sans-serif;
   font-weight: 300;
-  box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1, h2, h3, h4 {
   font-family: 'Montserrat', sans-serif;
+  font-weight: 700; /* Assuming you want your headers to be bold */
 }
 
+/* Color scheme for text */
 body {
-  min-height: 100vh;
-  color: white;
+  color: var(--app-grey);
+  min-height: 100vh; /* Full height */
+  background-color: var(--oscuro); /* Default background color */
 }
 
+/* Button styles */
 button {
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  font-family: inherit; /* Buttons inherit font from body */
+  font-weight: 400; /* Standard font weight for buttons */
+  padding: 0.5rem 1rem; /* Default padding for buttons */
+  transition: background-color 0.3s; /* Smooth transition for hover effects */
 }
 
+button:hover {
+  background-color: var(--azul-hover);
+}
+
+/* Utility classes */
 .rounded {
   border-radius: 3px;
+}
+
+/* Layout and structural styles */
+.container {
+  width: 100%;
+  max-width: 1200px; /* Maximum width of the container */
+  margin: 0 auto; /* Center the container */
+  padding: 0 1rem; /* Padding on the sides */
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

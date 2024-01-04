@@ -1,18 +1,15 @@
-// if (!sessionStorage.jwt || sessionStorage.jwt != 1 ) {
-//   location.replace('./index.html');
-// }
+if (!sessionStorage.jwt || sessionStorage.jwt != 1 ) {
+  location.replace('./index.html');
+}
 
 
 window.addEventListener('load', function () {
   /* ------------------------- AOS lib. init -------------------------------- */
   AOS.init();
 
-  // const token = JSON.parse(localStorage.jwt);
 
-  const endpointDate = './json/turno.json'
   const endpointDentist = 'http://localhost:8080/tasks'
-  // const endpointPatient = 'http://localhost:8080/patient'
-  // const endpointAppointment = 'http://localhost:8080/appointment'  
+
 
   const formAddAppointment = document.querySelector('.new-appointment')
   const btnCloseApp = document.querySelector('#closeApp')

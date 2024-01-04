@@ -9,35 +9,27 @@
   <link rel="icon" type="image/x-icon" href="./assets/DH_Logo_Black.png">
   <meta name="description" content="Book Dental Care with DentalCura" />
 
-  <!-- ----------------------------- CSS ----------------------------- -->
+  <!-- CSS -->
   <link rel="stylesheet" href="./css/tasksStyles.css">
 
-  <!-- ------------------- Fontawesome -------------------- -->
+  <!-- Fontawesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- ------------------------------ css libraries ------------------------------ -->
   <!-- Sweet Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Animate on scroll -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-
-  <!-- ------------------------- webpage logic ------------------------- -->
-  <script src="./scripts/utils.js"></script>
-  <script src="./scripts/taks.js"></script>
-
 </head>
 
 <body>
-
-  <!-- navbar -->
+  <!-- Navbar -->
   <header class="contain">
     <nav>
       <h1>NOC-ME Workbench</h1>
-
       <div class="user-info">
         <p>username</p>
         <div class="user-image"></div>
@@ -45,171 +37,52 @@
       </div>
     </nav>
   </header>
-  
 
   <main class="container">
-
-    <div class="forms">
-
-        <form class="new-userTask">
-          <div>
-            <h2>Add Appointment</h2>        
-          </div>
-
-          <div class="select">
-            <fieldset id="select-task">
-              <legend>Select Patient</legend>
-            </fieldset>
-
-            <fieldset id="select-comment">
-              <legend>Select Dentist</legend>
-            </fieldset>
-
-            <fieldset id="select-date">
-                <legend>Select Date</legend>
-                <div class="dateList">
-                    <tr>
-                    <th>
-                    <select id="year">
-                        <option value="000"></option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                    </select>
-                    </th>
-                    <th>
-                    <select id="month">
-                        <option value="000"></option>
-                        <option value="01">1</option>
-                        <option value="02">2</option> 
-                        <option value="03">3</option>
-                        <option value="04">4</option> 
-                        <option value="05">5</option> 
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                    </th>
-                    <th>
-                        <select id="day">
-                        <option value="000"></option>
-                        <option value="01">1</option> 
-                        <option value="02">2</option> 
-                        <option value="03">3</option>
-                        <option value="04">4</option> 
-                        <option value="05">5</option> 
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                        <option value="29">29</option>
-                        <option value="30">30</option>
-                        <option value="31">31</option>
-                    </select>
-                    </th>
-                    </tr>
-                </div>
-                <legend>Select Time</legend>
-                <div class="dateList">
-                  <tr>
-                    <th>
-                    <select id="time">
-                        <option value="000"></option>
-                        <option value="08:30">08:30</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
-                        <option value="14:30">14:30</option>
-                        <option value="15:00">15:00</option>
-                        <option value="15:30">15:30</option>
-                        <option value="16:00">16:00</option>
-                        <option value="16:30">16:30</option>
-                        <option value="17:00">17:00</option>
-                        <option value="17:30">17:30</option>
-                    </select>
-                    </th>
-                  </tr>
-                </div>
-            </fieldset>
-
-          </div>
-
-            <button type="submit"><i class="fa-solid fa-pencil"></i> Add Appointment</button>
-        </form>
+    <div class="cards-container">
       
+      <div id="newAssignedTasks" class="task-list card" onclick="cardClickHandler()">
+        <div class="card-header">
+          <h2>New Assigned</h2>
+          <span class="card-count">2</span>
+        </div>
+      </div>
 
-        <section class="update-form">
-
-            <h2>Appointment Update</h2>
-            <form class="userTask-search">
-                <label>ID</label>
-                <input id="inputAppointmentId" type="text">
-                <button type="submit" class="search-button">Search</button>
-            </form>
-
-            
-            <form class="userTask-update">
-          
-                <label>Dentist</label>
-                <p id="dentistLabel">/</p>
-
-                <label>Patient</label>
-                <p id="patientLabel">/</p>
-
-                <label>Date</label>
-                <input id="inputDate" type="text">
-
-                <button type="submit" class="update-button">Update</button>
-                <button id="delete-button">Delete</button>
-            </form>
-        </section>
+      <div id="tasksInProgress" class="task-list card" onclick="cardClickHandler()">
+        <div class="card-header">
+          <h2>Tasks In Progress</h2>
+          <span class="card-count">1</span>
+        </div>
+      </div>
+      
+      <div id="completedTasks" class="task-list card" onclick="cardClickHandler()">
+        <div class="card-header">
+          <h2>Completed Tasks</h2>
+          <span class="card-count">3</span>
+        </div>
+      </div>
+  
+      <!-- New Active Tasks card -->
+      <div id="activeTasks" class="task-list card" onclick="cardClickHandler()">
+        <div class="card-header">
+          <h2>Available Work</h2>
+          <span class="card-count">4</span>
+        </div>
+      </div>
     </div>
-
-
-    <div class="list-div">
-      <h2>Appointment</h2>
-      <div class='labels'><h3>ID /Date</h3><h3>Dentist</h3><h3>Patient</h3></div>
-      <ul id="userTask-list">
-      </ul>
-    </div>
-
-
   </main>
-
+  
 
   <footer>
-    <img src="./assets/DH_Logo_White.png" alt="">
+    <img src="./assets/DH_Logo_White.png" alt="Workbench Logo">
   </footer>
+
+  <script>
+    function cardClickHandler() {
+      // Display a message or perform an action when a card is clicked
+      alert('This is a placeholder action for card click.');
+    }
+  </script>
 </body>
 
 </html>

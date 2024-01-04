@@ -1,49 +1,96 @@
 @import url('./globalStyles.css');
 
+:root {
+    --color-bg-main: rgb(30, 33, 43);
+    --color-main-text: rgb(179, 179, 190);
+    --negro: #000000;
+    --oscuro: #1c1c1f;
+    --app-grey: #F2F2F2;
+    --azul: #3333ff;
+    --azul-hover: #2828c5;
+    --verde: #00cc7e;
+    --rosa: #ff76e2;
+    --lila: #8a6df1;
+    --laranja: #ff7059;
+    --amarelo: #ffc51a;
+}
 
 body {
     background-color: var(--oscuro);
     background-image: url('../assets/2.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-attachment: fixed;
+    background-position: center center;
     background-size: cover;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .6);
+    min-height: 100vh;
+    font-family: 'Montserrat', 'Archivo', sans-serif;
+    font-weight: 300;
+    color: var(--app-grey);
 }
 
 header {
     background-color: var(--negro);
-    height: 5rem;
-    margin-bottom: 2rem;
-}
-
-nav {
-    padding: 1rem;
-    height: 100%;
+    padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Added to ensure header is positioned correctly */
+}
+
+nav {
+    width: 100%; /* Ensure the nav takes the full width of its container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 {
+    margin-right: auto; /* This will push the rest of the elements to the right */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align items to the end (right) */
+    gap: 10px; /* Adds space between username, icon, and button */
+    margin-left: auto; /* This will push the .user-info to the right */
+    padding-right: 1rem; /* Space from the right border */
 }
 
 nav .user-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+}
+
+.user-info p {
+    margin: 0; /* Reset margin for the username paragraph if needed */
+}
+
+.user-info .user-image {
+    width: 40px;
+    height: 40px;
+    background: url('../assets/user.png') no-repeat center center/cover;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.user-info button {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: .1rem;
+    font-size: 0.8rem;
+    display: flex; /* To align the icon properly */
+    align-items: center; /* Center the icon vertically */
 }
 
 nav .user-info .user-image {
     width: 40px;
     height: 40px;
-    background-color: rgba(255, 255, 255, 0.25);
-    background-image: url('../assets/user.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50vh;
-    margin-left: .5rem;
-}
-
-fieldset{
-    border: none;
+    background: url('../assets/user.png') no-repeat center center/cover, rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    margin: 0 .5rem;
 }
 
 nav .user-info button {
@@ -53,221 +100,99 @@ nav .user-info button {
     margin-left: 2rem;
     border-radius: .1rem;
     font-size: .8rem;
-    font-weight: 400;
 }
 
-.contain{
-    padding: 0 5%;
-}
-
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.forms{
-    background-color: transparent;
-    padding: 2rem 3rem 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-}
-
-.new-appointment{
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    position: relative;
-}
-
-.select{
-    display: flex;
-    flex-direction: row;
-    margin-top: 1%;
-    justify-content: space-around;
+    justify-content: flex-start;
+    /* padding: 200px; */
+    box-sizing: border-box;
     width: 100%;
-}
-
-legend{
-    margin-bottom: .2rem;
-}
-
-.dateList{
-    margin: .5rem;
-}
-
-#year, #month, #day, #time{
-    padding: .1rem;
-}
-
-#errores{
-    position: absolute;
-    bottom: 3.3rem;
-}
-
-.new-appointment button{
-    background-color: var(--azul);
-    color: white;
-    padding: .8rem 1.5rem;
-    border-radius: .1rem;
-    font-size: 1rem;
-    margin-top: 2rem;
-    font-weight: 400;
-    height: 3rem;
-    align-self: end;
-    position: absolute;
-    bottom: 3rem;
-}
-
-.update-form button{
-    background-color: var(--azul);
-    color: white;
-    padding: .2rem;
-    border-radius: .1rem;
-    font-size: 1rem;
-    font-weight: 400;
-}
-
-form button:hover{
-    background-color: var(--azul-hover);
-}
-
-.update-form{
-    display: flex;
-    box-sizing: border-box;
-    width: 30%;
-    padding: 0% 3%;
-    flex-direction: column;
-}
-
-.appointment-search{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-top: 5%;
-}
-
-.appointment-search label{
-    align-self: center;
-}
-
-.appointment-search input{
-    width: 20%;
-    margin: 1%;
-    padding: .3rem .5rem;
-}
-
-.appointment-search button{
-    margin: 0%;
-}
-
-.appointment-update{
-    background-color: var(--negro);
-    max-width: 24rem;
+    /* max-width: 1200px; */
     margin: 0 auto;
-    padding: 2rem 0rem;
-    border-radius: 1rem;
+}
+
+.cards-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.appointment-update label{
-    align-self: flex-start;
-    margin-bottom: .1rem;
-}
-
-.appointment-update input{
-    border-radius: .1rem;
-    margin-bottom: 1rem;
-    padding: .3rem .5rem;
-    border: 2px solid var(--app-grey);
-}
-
-.appointment-update p{
-    border-radius: .1rem;
-    margin-bottom: 1rem;
-    padding: .3rem .5rem;
-    border: 1px solid var(--app-grey);
-}
-
-.labels{
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-}
-
-.labels h3{
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-.ps{
-    display: flex;
-    box-sizing: border-box;
-    border-radius: .1rem;
-    margin-top: .5rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.ps p{
-    padding: .3rem .5rem;
-    margin: -1px -1px -1px 0px;
-    width: 33%;
-    border: 1px solid var(--app-grey);
-}
-
-#centerp{
-    border: 1px solid var(--app-grey);
-    width: 35%;
-    text-align: center;
-}
-
-#finalp{
-    text-align: end;
-}
-
-.appointment-update button{
-    background-color: var(--azul);
-    color: white;
-    padding: .2rem;
-    border-radius: .1rem;
-    font-size: 1rem;
-    font-weight: 400;
-    margin-top: 5%;
-}
-
-#delete-button{
-    background-color: rgb(202, 0, 0);
-}
-
-#delete-button:hover{
-    background-color: rgb(159, 0, 0);
-}
-
-main h2 {
-    margin: 0rem 0 .5rem 0;
-}
-
-.list-div{
+.card {
     background-color: transparent;
-    width: 80%;
-    padding: 1rem 2rem;
-    padding-bottom: 5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 180px; /* or any desired width */
+    transition: box-shadow 0.3s, opacity 0.3s;
+    cursor: pointer;
+    text-align: center;
+    display: flex; /* This makes it a flex container */
+    flex-direction: column; /* Aligns children vertically */
+    justify-content: center; /* Centers items along the main axis (vertically in this case) */
+    align-items: center; /* Centers items along the cross axis (horizontally in this case) */
+    height: 180px; /* or any desired height */
 }
 
-.list-div h2{
-    margin: .5rem;
+
+
+.card:hover {
+    opacity: 0.7;
 }
 
-#appointment-list{
+.card-header {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items along the main axis */
+    align-items: center; /* Center items along the cross axis */
+    padding: 15px;
+    border-radius: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+    gap: 10px; /* Adjust the value as needed */
+}
+
+
+
+.card-header h2 {
+    font-size: 16px;
+    /* margin: 5; */
+}
+
+.card-count {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#tasksInProgress .card-header { background: #6ecaff29; }
+#newAssignedTasks .card-header { background: #d5e97324; }
+#completedTasks .card-header { background: #6effd123; }
+#activeTasks .card-header { background: #6effd123; }
+
+#addNewTask {
+    order: 3;
+    width: 100%;
     display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    list-style-type: square;
+    justify-content: center;
 }
+
+.add-task-btn {
+    background-color: #4e72df90;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
 
 footer {
     height: 2rem;
