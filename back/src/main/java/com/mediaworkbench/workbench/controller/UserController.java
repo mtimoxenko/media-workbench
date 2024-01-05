@@ -45,18 +45,22 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "Create a User", description = "Creates a new user")
-    @ApiResponse(responseCode = "200", description = "User created successfully")
+    @Operation(summary = "Create a User", description = "Creates a new user and returns login information")
+    @ApiResponse(responseCode = "201", description = "User created and logged in successfully",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = LoginUserResponse.class)))
     @PostMapping
-    public ResponseEntity<String> createUser(
+    public ResponseEntity<LoginUserResponse> createUser(
             @Parameter(description = "User object to be created", required = true) @RequestBody CreateUserRequest createUserRequest) {
-        userService.insertUser(createUserRequest);
+        LoginUserResponse loginUserResponse = userService.insertUser(createUserRequest);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("user_created", "true");
-        return ResponseEntity.ok()
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
                 .headers(httpHeaders)
-                .body("User created successfully!");
+                .body(loginUserResponse);
     }
+
 
     @Operation(summary = "User Login", description = "Authenticates a user and returns login information")
     @ApiResponse(responseCode = "200", description = "Login successful",

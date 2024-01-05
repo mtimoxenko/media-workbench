@@ -32,7 +32,7 @@ window.addEventListener('load', function () {
 
     function submitForm(name, surname, email, password, isAdmin) {
         const payload = { name, surname, email, password, isAdmin };
-
+    
         fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -44,17 +44,30 @@ window.addEventListener('load', function () {
                     throw new Error(text);
                 });
             }
-            return response.text();
+            return response.json(); // Expecting JSON response now
         })
-        .then(message => {
-            displayMessage(message, false);
-            sessionStorage.setItem('userName', JSON.stringify(name));
-            sessionStorage.setItem('jwt', JSON.stringify(isAdmin ? 33 : 1));
+        .then(loginUserResponse => {
+            // Store the response details in sessionStorage
+            sessionStorage.setItem('userName', JSON.stringify(loginUserResponse.userName));
+            sessionStorage.setItem('jwt', JSON.stringify(loginUserResponse.token));
+            sessionStorage.setItem('userId', JSON.stringify(loginUserResponse.userId));
+    
+            // Display success message and redirect
+            Swal.fire({
+                title: 'User created successfully!',
+                text: 'Please wait, redirecting...',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500,
+            }).then(() => {
+                window.location.href = './tasks.html'; // Redirect based on user role if necessary
+            });
         })
         .catch(error => {
             displayMessage(error.message, true);
         });
     }
+    
 
     function displayMessage(message, isError) {
         // Remove any existing error message

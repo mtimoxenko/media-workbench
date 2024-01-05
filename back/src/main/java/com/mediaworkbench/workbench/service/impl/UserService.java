@@ -36,7 +36,7 @@ public class UserService implements IUserService {
     private ObjectMapper mapper;
 
     @Override
-    public void insertUser(CreateUserRequest createUserRequest) {
+    public LoginUserResponse insertUser(CreateUserRequest createUserRequest) {
 
         if (isEmailDuplicated(createUserRequest.email(), null)) {
             throw new DuplicateEmailException("Email [" + createUserRequest.email() + "] is already in use.");
@@ -45,7 +45,12 @@ public class UserService implements IUserService {
         User user = mapper.convertValue(createUserRequest, User.class);
         userRepository.save(user);
         LOGGER.info("New user was registered [" + user.getName() + " " + user.getSurname() + "]");
+
+        // Create a LoginUserResponse for the new user
+        int token = user.getIsAdmin() ? 33 : 1; // Token generation logic, can be modified as needed
+        return new LoginUserResponse(token, user.getName(), user.getId());
     }
+
 
 
 

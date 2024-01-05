@@ -2,10 +2,10 @@
 INSERT INTO usr (name, surname, email, password, is_admin)
 VALUES
     ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false),
-    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', true),
+    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', false),
     ('Brian', 'Silva', 'basilva@noc.com', 'password789', false),
     ('Sebastian', 'Lopez', 'seblopez@noc.com', 'password101', false),
-    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', true);
+    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', false);
 
 -- Insert 5 specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status)

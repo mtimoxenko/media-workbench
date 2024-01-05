@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IUserService {
 
-    void insertUser(CreateUserRequest createUserRequest);
+    LoginUserResponse insertUser(CreateUserRequest createUserRequest);
     List<UserResponse> selectAllUser();
     UserResponse selectUserByID(Long id);
     void updateUserByID(UpdateUserRequest updateUserRequest);

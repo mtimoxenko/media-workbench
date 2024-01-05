@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,10 +23,9 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-
-  <script src="./scripts/tasks.js"></script>
+  <!-- Task JavaScript Logic -->
+  <script src="./scripts/tasks.js" defer></script>
 </head>
-
 <body>
   <!-- Navbar -->
   <header class="contain">
@@ -44,48 +42,31 @@
   <main class="container">
     <div class="cards-container">
       
-      <div data-aos="zoom-in-right"
-           data-aos-duration="1000"
-           id="newAssignedTasks" 
-           class="task-list card" 
-           onclick="cardClickHandler()">
+      <div data-aos="zoom-in-right" data-aos-duration="1000" id="newAssignedTasks" class="task-list card">
         <div class="card-header">
           <h2>New Assigned</h2>
-          <span class="card-count">2</span>
-        </div>
-      </div>
-
-      <div data-aos="zoom-in"
-           data-aos-duration="1000"
-           id="tasksInProgress" 
-           class="task-list card" 
-           onclick="cardClickHandler()">
-        <div class="card-header">
-          <h2>Tasks In Progress</h2>
-          <span class="card-count">1</span>
-        </div>
-      </div>
-      
-      <div data-aos="zoom-in"
-           data-aos-duration="1000"
-           id="completedTasks" 
-           class="task-list card" 
-           onclick="cardClickHandler()">
-        <div class="card-header">
-          <h2>Completed Tasks</h2>
-          <span class="card-count">3</span>
+          <span id="newAssignedCount" class="card-count"></span>
         </div>
       </div>
   
-      <!-- New Active Tasks card -->
-      <div data-aos="zoom-in-left"
-           data-aos-duration="1000"
-           id="activeTasks" 
-           class="task-list card" 
-           onclick="cardClickHandler()">
+      <div data-aos="zoom-in" data-aos-duration="1000" id="tasksInProgress" class="task-list card">
+        <div class="card-header">
+          <h2>Tasks In Progress</h2>
+          <span id="tasksInProgressCount" class="card-count"></span>
+        </div>
+      </div>
+      
+      <div data-aos="zoom-in" data-aos-duration="1000" id="completedTasks" class="task-list card">
+        <div class="card-header">
+          <h2>Completed Tasks</h2>
+          <span id="completedTasksCount" class="card-count"></span>
+        </div>
+      </div>
+  
+      <div data-aos="zoom-in-left" data-aos-duration="1000" id="activeTasks" class="task-list card">
         <div class="card-header">
           <h2>Available Work</h2>
-          <span class="card-count">4</span>
+          <span id="activeTasksCount" class="card-count"></span>
         </div>
       </div>
     </div>
@@ -95,13 +76,5 @@
   <footer>
     <img src="./assets/DH_Logo_White.png" alt="Workbench Logo">
   </footer>
-
-  <script>
-    function cardClickHandler() {
-      // Display a message or perform an action when a card is clicked
-      alert('This is a placeholder action for card click.');
-    }
-  </script>
 </body>
-
 </html>
