@@ -20,26 +20,47 @@ function cardClickHandler(event) {
   alert('This is a placeholder action for card click.');
 }
 
-// Function to fetch tasks and update counts
-function fetchAndDisplayAssignedTasksCount() {
-  // Retrieve the userId from session storage
+// Function to render assigned tasks into the tasks-container
+function renderAssignedTasks(assignedTasks) {
+  const tasksContainer = document.querySelector('.tasks-container');
+  
+  // Clear any existing tasks in the container
+  tasksContainer.innerHTML = '';
+
+  assignedTasks.forEach(task => {
+      const taskElement = document.createElement('div');
+      taskElement.classList.add('task-detail');
+      taskElement.innerHTML = `
+          <div class="task-name">Task: ${task.taskName}</div>
+          <div class="task-assigner">Assigned by: ${task.assignerName} ${task.assignerSurname}</div>
+      `;
+      tasksContainer.appendChild(taskElement);
+  });
+}
+
+// Function to fetch tasks and update counts for a given task status
+function fetchAndDisplayTasksCount(status, countElementId) {
   const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-  // Fetch the user data from the endpoint
   fetch(`http://localhost:8080/users/${userId}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(userData => {
-      const assignedTasksCount = userData.assignedTasks.filter(task => task.userTaskStatus === 'ASSIGNED').length;
-      document.querySelector('#newAssignedCount').textContent = assignedTasksCount;
-    })
-    .catch(error => {
-      console.error('Error fetching assigned tasks:', error);
-    });
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(userData => {
+          const tasksCount = userData.assignedTasks.filter(task => task.userTaskStatus === status).length;
+          document.querySelector(countElementId).textContent = tasksCount;
+
+          // Render assigned tasks if status is 'ASSIGNED'
+          if (status === 'ASSIGNED') {
+              renderAssignedTasks(userData.assignedTasks.filter(task => task.userTaskStatus === 'ASSIGNED'));
+          }
+      })
+      .catch(error => {
+          console.error(`Error fetching tasks for status ${status}:`, error);
+      });
 }
 
 // Event listener for DOMContentLoaded to ensure the DOM is fully loaded
@@ -50,8 +71,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // Update username display
   updateUsernameDisplay();
 
-  // Fetch and display the count of new assigned tasks
-  fetchAndDisplayAssignedTasksCount();
+  // Fetch and display the count of tasks based on their status and render assigned tasks
+  fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+  fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
+  fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
 
   // Logout button event listener
   const btnCloseApp = document.getElementById('closeApp');
