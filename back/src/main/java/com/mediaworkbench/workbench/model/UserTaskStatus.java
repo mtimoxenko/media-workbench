@@ -4,7 +4,6 @@ public enum UserTaskStatus {
     ASSIGNED,
     IN_PROGRESS,
     COMPLETED,
-    PENDING,
     CANCELED
 }
 
