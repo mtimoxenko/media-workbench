@@ -22,33 +22,32 @@ function cardClickHandler(event) {
 
 // Function to render assigned tasks into the tasks-container
 function renderAssignedTasks(assignedTasks) {
-  const tasksContainer = document.querySelector('.tasks-container');
-  tasksContainer.innerHTML = ''; // Clear any existing tasks
+    const tasksContainer = document.querySelector('.tasks-container');
+    tasksContainer.innerHTML = ''; // Clear any existing tasks
 
-  assignedTasks.forEach(task => {
-      const taskCard = document.createElement('div');
-      taskCard.classList.add('task-card');
+    assignedTasks.forEach(task => {
+        const taskCard = document.createElement('div');
+        taskCard.classList.add('task-card');
 
-      const taskProgress = (task.progress || 0) + '%'; // Replace with actual progress
+        taskCard.innerHTML = `
+            <img src="${task.imageUrl || 'placeholder-image-url.png'}" alt="Task Image" class="task-card-image"/>
+            <div class="task-card-content">
+                <h3 class="task-card-headline">${task.taskName}</h3>
+                <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
+                <p class="task-card-body">${task.description}</p>
+            </div>
+            <div class="task-card-footer">
+                <button class="task-card-button secondary">Secondary</button>
+                <button class="task-card-button primary">Primary</button>
+            </div>
+        `;
 
-      taskCard.innerHTML = `
-          <div class="task-card-status">ASSIGNED</div>
-          <h3 class="task-card-title">${task.taskName}</h3>
-          <p class="task-card-description">${task.description}</p>
-          <div class="task-card-progress">
-              <div class="task-card-progress-bar" style="width: ${taskProgress};"></div>
-          </div>
-          <div class="task-card-subtasks">SUB-TASKS: 4</div> <!-- Replace with actual subtasks count -->
-          <div class="task-card-actions">
-              <button class="task-card-button cancel">✕</button>
-              <button class="task-card-button edit">✎</button>
-              <button class="task-card-button done">✔</button>
-          </div>
-      `;
-
-      tasksContainer.appendChild(taskCard);
-  });
+        tasksContainer.appendChild(taskCard);
+    });
 }
+
+
+
 
 
 
