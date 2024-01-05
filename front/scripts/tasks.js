@@ -23,20 +23,34 @@ function cardClickHandler(event) {
 // Function to render assigned tasks into the tasks-container
 function renderAssignedTasks(assignedTasks) {
   const tasksContainer = document.querySelector('.tasks-container');
-  
-  // Clear any existing tasks in the container
-  tasksContainer.innerHTML = '';
+  tasksContainer.innerHTML = ''; // Clear any existing tasks
 
   assignedTasks.forEach(task => {
-      const taskElement = document.createElement('div');
-      taskElement.classList.add('task-detail');
-      taskElement.innerHTML = `
-          <div class="task-name">Task: ${task.taskName}</div>
-          <div class="task-assigner">Assigned by: ${task.assignerName} ${task.assignerSurname}</div>
+      const taskCard = document.createElement('div');
+      taskCard.classList.add('task-card');
+
+      const taskProgress = (task.progress || 0) + '%'; // Replace with actual progress
+
+      taskCard.innerHTML = `
+          <div class="task-card-status">ASSIGNED</div>
+          <h3 class="task-card-title">${task.taskName}</h3>
+          <p class="task-card-description">${task.description}</p>
+          <div class="task-card-progress">
+              <div class="task-card-progress-bar" style="width: ${taskProgress};"></div>
+          </div>
+          <div class="task-card-subtasks">SUB-TASKS: 4</div> <!-- Replace with actual subtasks count -->
+          <div class="task-card-actions">
+              <button class="task-card-button cancel">✕</button>
+              <button class="task-card-button edit">✎</button>
+              <button class="task-card-button done">✔</button>
+          </div>
       `;
-      tasksContainer.appendChild(taskElement);
+
+      tasksContainer.appendChild(taskCard);
   });
 }
+
+
 
 // Function to fetch tasks and update counts for a given task status
 function fetchAndDisplayTasksCount(status, countElementId) {
