@@ -50,9 +50,6 @@ window.addEventListener('load', function () {
             displayMessage(message, false);
             sessionStorage.setItem('userName', JSON.stringify(name));
             sessionStorage.setItem('jwt', JSON.stringify(isAdmin ? 33 : 1));
-            setTimeout(() => {
-                window.location.href = './tasks.html';
-            }, 2000);
         })
         .catch(error => {
             displayMessage(error.message, true);
@@ -60,10 +57,36 @@ window.addEventListener('load', function () {
     }
 
     function displayMessage(message, isError) {
-        const messageBox = document.querySelector('#messageBox') || createMessageBox();
-        messageBox.innerHTML = `<p><small>${message}</small></p>`;
-        messageBox.className = isError ? 'error-message' : 'success-message';
+        // Remove any existing error message
+        const existingError = document.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+    
+        if (isError) {
+            // Create a new error message element
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.innerHTML = `<p><small>${message}</small></p>`;
+    
+            // Insert the error message after the form
+            const form = document.querySelector('form');
+            form.insertAdjacentElement('afterend', errorMessage);
+        } else {
+            // Use SweetAlert for success messages with customized text and no "OK" button
+            Swal.fire({
+                title: message,
+                text: 'Please wait, redirecting...',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500,
+            }).then(() => {
+                window.location.href = './tasks.html';
+            });
+        }
     }
+    
+    
 
     function createMessageBox() {
         const messageBox = document.createElement('div');

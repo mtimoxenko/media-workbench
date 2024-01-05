@@ -53,6 +53,7 @@ window.addEventListener('load', function () {
         // Store the user name and token in sessionStorage
         sessionStorage.setItem('userName', JSON.stringify(data.userName));
         sessionStorage.setItem('jwt', JSON.stringify(data.token));
+        sessionStorage.setItem('userId', JSON.stringify(data.userId));
     
         // Set a delay before redirecting to allow the user to see the success message
         setTimeout(() => {

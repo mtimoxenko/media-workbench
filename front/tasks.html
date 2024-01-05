@@ -44,21 +44,33 @@
   <main class="container">
     <div class="cards-container">
       
-      <div id="newAssignedTasks" class="task-list card" onclick="cardClickHandler()">
+      <div data-aos="zoom-in-right"
+           data-aos-duration="1000"
+           id="newAssignedTasks" 
+           class="task-list card" 
+           onclick="cardClickHandler()">
         <div class="card-header">
           <h2>New Assigned</h2>
           <span class="card-count">2</span>
         </div>
       </div>
 
-      <div id="tasksInProgress" class="task-list card" onclick="cardClickHandler()">
+      <div data-aos="zoom-in"
+           data-aos-duration="1000"
+           id="tasksInProgress" 
+           class="task-list card" 
+           onclick="cardClickHandler()">
         <div class="card-header">
           <h2>Tasks In Progress</h2>
           <span class="card-count">1</span>
         </div>
       </div>
       
-      <div id="completedTasks" class="task-list card" onclick="cardClickHandler()">
+      <div data-aos="zoom-in"
+           data-aos-duration="1000"
+           id="completedTasks" 
+           class="task-list card" 
+           onclick="cardClickHandler()">
         <div class="card-header">
           <h2>Completed Tasks</h2>
           <span class="card-count">3</span>
@@ -66,7 +78,11 @@
       </div>
   
       <!-- New Active Tasks card -->
-      <div id="activeTasks" class="task-list card" onclick="cardClickHandler()">
+      <div data-aos="zoom-in-left"
+           data-aos-duration="1000"
+           id="activeTasks" 
+           class="task-list card" 
+           onclick="cardClickHandler()">
         <div class="card-header">
           <h2>Available Work</h2>
           <span class="card-count">4</span>

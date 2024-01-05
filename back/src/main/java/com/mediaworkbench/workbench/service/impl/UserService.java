@@ -171,7 +171,7 @@ public class UserService implements IUserService {
         LOGGER.info("User [" + user.getName() + " " + user.getSurname() + "] logged in successfully.");
 
         int token = user.getIsAdmin() ? 33 : 1;
-        return new LoginUserResponse(token, user.getName());
+        return new LoginUserResponse(token, user.getName(), user.getId());
     }
 
 

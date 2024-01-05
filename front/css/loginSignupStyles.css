@@ -42,6 +42,15 @@ nav img {
     padding: 0 5%;
 }
 
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; /* Adjust the height as needed */
+}
+
+
 /* Form Styles */
 form {
     background-color: transparent;
@@ -52,6 +61,12 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.form-button {
+    width: 140px;
+    /* Other styles... */
+}
+
 
 .form-header {
     display: flex;
@@ -218,7 +233,7 @@ form {
   
   /* Center the button */
   form button {
-    width: 50%; /* Adjust the width of the button if needed */
+    width: 140px; 
     margin-top: 20px; /* Space above the button */
     /* Add other button styles as needed */
   }
@@ -243,7 +258,14 @@ form {
 }
 
 .error-message {
-    background-color: rgba(255, 0, 0, 0.3);
+    color: rgb(255, 255, 255); /* Text color */
+    background-color: rgba(255, 0, 0, 0.3); /* Background color */
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    /* Other styling as needed */
 }
+
+
 
   
