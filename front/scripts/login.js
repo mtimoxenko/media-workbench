@@ -59,7 +59,7 @@ window.addEventListener('load', function () {
         setTimeout(() => {
             const redirectUrl = data.token === 33 ? './admin.html' : './tasks.html';
             location.replace(redirectUrl);
-        }, 2000); // Redirect after 2 seconds
+        }, 1700); // Redirect after 1 second
     }
     
 
