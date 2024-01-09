@@ -21,46 +21,79 @@ function updateUsernameDisplay() {
 
 // Function to cancel the task
 function cancelTask(taskId) {
-    fetch(`http://localhost:8080/usertasks/${taskId}`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`, // Assuming you use Bearer token
+    // Prompt user for a comment before canceling the task
+    Swal.fire({
+        title: 'Comment Required',
+        // text: 'Enter a comment to proceed with cancellation.',
+        input: 'textarea',
+        inputPlaceholder: 'Your comment...',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value.trim()) {
+                return 'Comment cannot be empty.';
+            }
         }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            // User provided a comment and confirmed the cancellation
+            fetch(`http://localhost:8080/usertasks/${taskId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`, // Assuming you use Bearer token
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ comment: result.value }) // Send comment along with the request
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Use text() instead of json() because the response is a string
+            })
+            .then(message => {
+                console.log('Task cancelled:', message);
+                fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount'); // Re-fetch and display tasks
+                Swal.fire({
+                    title: 'Task Cancelled!',
+                    icon: 'success',
+                    timer: 2500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                });
+            })
+            .catch(error => {
+                console.error('Error cancelling task:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Could not cancel the task. Please try again.',
+                    icon: 'error',
+                    timer: 2500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                });
+            });
+        } else {
+            // User did not provide a comment or cancelled the prompt
+            Swal.fire({
+                title: 'Cancellation Aborted',
+                text: 'Task cancellation requires a comment.',
+                icon: 'info',
+                timer: 2000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
         }
-        return response.text(); // Use text() instead of json() because the response is a string
-    })
-    .then(message => {
-        console.log('OK!', message);
-        fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount'); // Re-fetch and display tasks
-        Swal.fire({
-            title: 'Task Canceled!', // Title from the server's response
-            icon: 'success',
-            timer: 2500, // Alert will close after 2.5 seconds
-            showConfirmButton: false, // Hides the confirm button
-            allowOutsideClick: false, // Prevents closing by clicking outside
-            allowEscapeKey: false, // Prevents closing by pressing the escape key
-            allowEnterKey: false // Prevents closing by pressing the enter key
-        });
-        
-    })
-    .catch(error => {
-        console.error('Error cancelling task:', error);
-        Swal.fire({ // Display an error message
-            title: 'Error!',
-            text: 'Could not cancel the task. Please try again.',
-            icon: 'error',
-            timer: 1500,
-            showConfirmButton: false, // Hides the confirm button
-            allowOutsideClick: false, // Prevents closing by clicking outside
-            allowEscapeKey: false, // Prevents closing by pressing the escape key
-            allowEnterKey: false // Prevents closing by pressing the enter key
-        });
     });
 }
+
 // Function to initiate the task
 function initiateTask(taskId) {
     fetch(`http://localhost:8080/usertasks`, {
@@ -118,63 +151,88 @@ function initiateTask(taskId) {
         });
     });
 }
-// Function to complete a task
+
+
+// Function to complete a task with a comment
 function completeTask(taskId) {
-    fetch(`http://localhost:8080/usertasks`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
-        },
-        body: JSON.stringify({
-            id: taskId,
-            userTaskStatus: 'COMPLETED'
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    // Prompt user for a comment before marking the task as completed
+    Swal.fire({
+        title: 'Completion Comment Required',
+        input: 'textarea',
+        inputPlaceholder: 'Enter a completion comment...',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value.trim()) {
+                return 'Comment cannot be empty.';
+            }
         }
-        return response.text();
-    })
-    .then(message => {
-        console.log('Task completed:', message);
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            // User provided a comment and confirmed completion
+            fetch(`http://localhost:8080/usertasks`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
+                },
+                body: JSON.stringify({
+                    id: taskId,
+                    userTaskStatus: 'COMPLETED'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(message => {
+                console.log('Task completed:', message);
 
-        // Remove the task card from UI
-        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
-        taskCard.remove();
+                // Remove the task card from UI
+                const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
+                if (taskCard) {
+                    taskCard.remove();
+                }
 
-        // Update task counts
-        fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
-        fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
+                // Update task counts
+                fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
+                fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
 
-        // Optionally, display a success message to the user
-        Swal.fire({
-            title: 'Task Completed!',
-            // text: message,
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false, // Hides the confirm button
-            allowOutsideClick: false, // Prevents closing by clicking outside
-            allowEscapeKey: false, // Prevents closing by pressing the escape key
-            allowEnterKey: false // Prevents closing by pressing the enter key
-        });
-    })
-    .catch(error => {
-        console.error('Error completing task:', error);
-        // Optionally, display an error message to the user
-        Swal.fire({
-            title: 'Error!',
-            text: 'Could not complete the task. Please try again.',
-            icon: 'error',
-            timer: 1500,
-            showConfirmButton: false, // Hides the confirm button
-            allowOutsideClick: false, // Prevents closing by clicking outside
-            allowEscapeKey: false, // Prevents closing by pressing the escape key
-            allowEnterKey: false // Prevents closing by pressing the enter key
-        });
+                // Optionally, display a success message to the user
+                Swal.fire({
+                    title: 'Task Completed!',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                });
+            })
+            .catch(error => {
+                console.error('Error completing task:', error);
+                // Optionally, display an error message to the user
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Could not complete the task. Please try again.',
+                    icon: 'error',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false
+                });
+            });
+        } else {
+            // User did not provide a comment or cancelled the prompt
+            // No action needed, the task remains in progress
+        }
     });
 }
+
 
 
 
