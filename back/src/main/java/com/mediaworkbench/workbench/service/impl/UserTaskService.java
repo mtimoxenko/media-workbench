@@ -93,7 +93,7 @@ public class UserTaskService implements IUserTaskService {
         userTask.setUserTaskStatus(updateUserTaskRequest.userTaskStatus());
 
         userTaskRepository.save(userTask);
-        LOGGER.info("UserTask id [" + updateUserTaskRequest.id() + "] updated successfully!");
+        LOGGER.info("UserTask id [" + updateUserTaskRequest.id() + "] " + updateUserTaskRequest.userTaskStatus());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class UserTaskService implements IUserTaskService {
         userTask.setUserTaskStatus(UserTaskStatus.CANCELED);
 
         userTaskRepository.save(userTask);
-        LOGGER.info("UserTask with id [" + id + "] successfully updated to CANCELED.");
+        LOGGER.info("UserTask id [" + id + "] CANCELED");
     }
 
 }
