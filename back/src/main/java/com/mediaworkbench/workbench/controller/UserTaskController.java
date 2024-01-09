@@ -69,6 +69,7 @@ public class UserTaskController {
         return ResponseEntity.ok("User task updated successfully!");
     }
 
+
     @Operation(summary = "Cancel User Task", description = "Cancels an assigned user task")
     @ApiResponse(responseCode = "200", description = "User task canceled successfully")
     @DeleteMapping("/{id}")

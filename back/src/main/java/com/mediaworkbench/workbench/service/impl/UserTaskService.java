@@ -90,24 +90,7 @@ public class UserTaskService implements IUserTaskService {
         UserTask userTask = userTaskRepository.findById(updateUserTaskRequest.id())
                 .orElseThrow(() -> new CustomNotFoundException("UserTask id [" + updateUserTaskRequest.id() + "] not found"));
 
-        userTask.setAssignmentDate(updateUserTaskRequest.assignmentDate());
         userTask.setUserTaskStatus(updateUserTaskRequest.userTaskStatus());
-
-        if (updateUserTaskRequest.assignerId() != null) {
-            User assigner = userRepository.findById(updateUserTaskRequest.assignerId())
-                    .orElseThrow(() -> new CustomNotFoundException("Assigner id [" + updateUserTaskRequest.assignerId() + "] not found"));
-            userTask.setAssigner(assigner);
-        }
-        if (updateUserTaskRequest.userId() != null) {
-            User user = userRepository.findById(updateUserTaskRequest.userId())
-                    .orElseThrow(() -> new CustomNotFoundException("User id [" + updateUserTaskRequest.userId() + "] not found"));
-            userTask.setUser(user);
-        }
-        if (updateUserTaskRequest.taskId() != null) {
-            Task task = taskRepository.findById(updateUserTaskRequest.taskId())
-                    .orElseThrow(() -> new CustomNotFoundException("Task id [" + updateUserTaskRequest.taskId() + "] not found"));
-            userTask.setTask(task);
-        }
 
         userTaskRepository.save(userTask);
         LOGGER.info("UserTask id [" + updateUserTaskRequest.id() + "] updated successfully!");
