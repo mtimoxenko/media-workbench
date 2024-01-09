@@ -342,3 +342,57 @@ footer img {
     left: 10px;
     z-index: 2;
 }
+
+
+/* Styles for the 'No' button when cancelling or initiating a task */
+.cancel-no, .initiate-no {
+    background-color: #dc3545; /* Bootstrap's danger color for a standard 'No' button */
+    color: white;
+}
+
+/* Styles for the 'Yes' button when cancelling a task */
+.cancel-yes {
+    background-color: #28a745; /* Bootstrap's success color for a standard 'Yes' button */
+    color: white;
+}
+
+/* Styles for the 'Yes' button when initiating a task */
+.initiate-yes {
+    background-color: #007bff; /* Bootstrap's primary color for a standard 'Yes' button */
+    color: white;
+}
+
+
+/* Add a hover effect for both buttons for better user interaction */
+.cancel-no:hover, .initiate-no:hover, .cancel-yes:hover, .initiate-yes:hover {
+    opacity: 0.85;
+    filter: brightness(110%);
+}
+
+/* Add some padding and border radius to make the buttons look better */
+.cancel-no, .initiate-no, .cancel-yes, .initiate-yes {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin: 0 5px; /* Give some space between the buttons */
+}
+
+
+
+
+/* New styles for the buttons */
+.task-card-button.cancel-no {
+    background-color: #dc3545; /* Bootstrap 'danger' red */
+    margin: 0;
+}
+
+.task-card-button.cancel-yes {
+    background-color: #28a745; /* Bootstrap 'success' green */
+}
+/* Optional: Add a transition to button colors for a smooth color change */
+.task-card-button {
+    transition: background-color 0.3s ease;
+}

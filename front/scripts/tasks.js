@@ -54,11 +54,53 @@ function cancelTask(taskId) {
 }
 
 
+// Function to initiate the task
+function initiateTask(taskId) {
+    fetch(`http://localhost:8080/usertasks`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
+        },
+        body: JSON.stringify({
+            id: taskId,
+            userTaskStatus: 'IN_PROGRESS'
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text(); // Handle text response
+    })
+    .then(message => {
+        console.log('Task initiated:', message);
+        fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+        fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
+        fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
+    })
+    .catch(error => {
+        console.error('Error initiating task:', error);
+    });
+}
+
+
+
+
+
+
+
 
 // Function to handle card clicks
 function cardClickHandler(event) {
     alert('This is a placeholder action for card click.');
 }
+
+
+
+
+
+
 
 // Function to render assigned tasks into the tasks-container
 function renderAssignedTasks(assignedTasks) {
@@ -90,34 +132,67 @@ function renderAssignedTasks(assignedTasks) {
         `;
 
         tasksContainer.appendChild(taskCard);
-    });
 
-    // Add event listener for cancel buttons
-    tasksContainer.querySelectorAll('.secondary').forEach(button => {
-        button.addEventListener('click', function(event) {
-            const taskId = event.target.getAttribute('data-task-id');
-            Swal.fire({
-                title: 'You are about to cancel the task.',
-                // text: 'You are about to cancel the task.',
-                icon: 'warning',
-                // background: 'rgba(0, 123, 255, 0.9)', // Semi-transparent dark blue
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, cancel it!',
-                cancelButtonText: 'No, keep it'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    if (result.isConfirmed) {
-                        cancelTask(taskId);
-                    }
-                    console.log('Task cancelled:', taskId);
-                    // Remove the task card or update the status as needed
-                }
-            });
+        // Event listener for 'Cancel' buttons
+        taskCard.querySelector('.secondary').addEventListener('click', function(event) {
+            // Update card content for cancellation confirmation
+            taskCard.querySelector('.task-card-headline').textContent = 'Cancel Task?';
+            taskCard.querySelector('.task-card-subhead').textContent = 'This action cannot be undone.';
+            taskCard.querySelector('.task-card-body').textContent = 'Do you want to proceed?';
+
+            // Update buttons for confirmation
+            const cancelButton = taskCard.querySelector('.secondary');
+            const initiateButton = taskCard.querySelector('.primary');
+
+            cancelButton.textContent = 'No';
+            initiateButton.textContent = 'Yes';
+
+            // Change button classes for styling
+            cancelButton.classList.remove('secondary');
+            cancelButton.classList.add('cancel-no');
+            initiateButton.classList.remove('primary');
+            initiateButton.classList.add('cancel-yes');
+
+            // Add event listeners for confirmation buttons
+            cancelButton.onclick = () => renderAssignedTasks(assignedTasks); // Resets the card
+            initiateButton.onclick = () => {
+                cancelTask(task.id);
+                taskCard.remove();
+            };
+        });
+
+        // Event listener for the 'Initiate' button
+        taskCard.querySelector('.primary').addEventListener('click', function(event) {
+            // Update card content for initiation confirmation
+            taskCard.querySelector('.task-card-headline').textContent = 'Initiate Task?';
+            taskCard.querySelector('.task-card-subhead').textContent = 'Ready to start this task?';
+            taskCard.querySelector('.task-card-body').textContent = 'Confirm to proceed.';
+
+            // Update buttons for confirmation
+            const cancelButton = taskCard.querySelector('.secondary');
+            const initiateButton = taskCard.querySelector('.primary');
+
+            cancelButton.textContent = 'No';
+            initiateButton.textContent = 'Yes';
+
+            // Change button classes for styling
+            cancelButton.classList.remove('secondary');
+            cancelButton.classList.add('initiate-no');
+            initiateButton.classList.remove('primary');
+            initiateButton.classList.add('initiate-yes');
+
+            // Add event listeners for confirmation buttons
+            cancelButton.onclick = () => renderAssignedTasks(assignedTasks); // Resets the card
+            initiateButton.onclick = () => {
+                initiateTask(task.id);
+                taskCard.remove();
+            };
         });
     });
 }
+
+
+
 
 
 // Function to fetch tasks and update counts for a given task status
