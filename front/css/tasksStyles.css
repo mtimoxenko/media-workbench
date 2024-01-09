@@ -396,3 +396,32 @@ footer img {
 .task-card-button {
     transition: background-color 0.3s ease;
 }
+
+
+
+
+
+/* No new assigned tasks message */
+
+.no-tasks-message {
+    text-align: center;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    margin: 20px auto; /* Centering the message */
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    max-width: 600px; /* Maximum width for readability */
+}
+
+.no-tasks-message h2 {
+    color: #00cc7e; /* A fresh color for the heading */
+    margin-bottom: 15px;
+    font-size: 24px; /* Slightly larger font size for heading */
+}
+
+.no-tasks-message p {
+    margin-bottom: 10px; /* Spacing between paragraphs */
+    line-height: 1.6; /* Line height for better readability */
+}

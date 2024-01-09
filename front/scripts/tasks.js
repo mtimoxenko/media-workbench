@@ -210,8 +210,10 @@ function fetchAndDisplayTasksCount(status, countElementId) {
             const tasksCount = userData.assignedTasks.filter(task => task.userTaskStatus === status).length;
             document.querySelector(countElementId).textContent = tasksCount;
 
-            // Render assigned tasks if status is 'ASSIGNED'
-            if (status === 'ASSIGNED') {
+            // If there are no "New Assigned" tasks, display a message
+            if (status === 'ASSIGNED' && tasksCount === 0) {
+                displayNoTasksMessage();
+            } else if (status === 'ASSIGNED') {
                 const filteredAndSortedTasks = userData.assignedTasks.filter(task => task.userTaskStatus === status);
                 renderAssignedTasks(filteredAndSortedTasks);
             }
@@ -220,6 +222,29 @@ function fetchAndDisplayTasksCount(status, countElementId) {
             console.error(`Error fetching tasks for status ${status}:`, error);
         });
 }
+
+// Function to display a message when there are no "New Assigned" tasks
+function displayNoTasksMessage() {
+    const tasksContainer = document.querySelector('.tasks-container');
+    tasksContainer.innerHTML = `
+        <div class="no-tasks-message">
+            <h2>No New Assigned Tasks</h2>
+            <p>It looks like you're all caught up! 👍</p>
+            <p>Check "Tasks in Progress" for ongoing work, or see "Available Work" to pick up new tasks.</p>
+        </div>
+    `;
+    // Add styling as needed, e.g., centering the text, adding padding, etc.
+}
+
+// Ensure to call fetchAndDisplayTasksCount for 'ASSIGNED' somewhere in your code to trigger the check.
+
+
+
+
+
+
+
+
 
 // Event listener for DOMContentLoaded to ensure the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
