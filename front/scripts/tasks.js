@@ -21,10 +21,11 @@ function updateUsernameDisplay() {
 
 // Function to cancel the task
 function cancelTask(taskId) {
+    const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+
     // Prompt user for a comment before canceling the task
     Swal.fire({
         title: 'Comment Required',
-        // text: 'Enter a comment to proceed with cancellation.',
         input: 'textarea',
         inputPlaceholder: 'Your comment...',
         showCancelButton: true,
@@ -38,61 +39,78 @@ function cancelTask(taskId) {
     }).then((result) => {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the cancellation
-            fetch(`http://localhost:8080/usertasks/${taskId}`, {
-                method: 'DELETE',
+            // Start by creating the comment in the database
+            return fetch(`http://localhost:8080/comments`, {
+                method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`, // Assuming you use Bearer token
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ comment: result.value }) // Send comment along with the request
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text(); // Use text() instead of json() because the response is a string
-            })
-            .then(message => {
-                console.log('Task cancelled:', message);
-                fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount'); // Re-fetch and display tasks
-                Swal.fire({
-                    title: 'Task Cancelled!',
-                    icon: 'success',
-                    timer: 2500,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false
-                });
-            })
-            .catch(error => {
-                console.error('Error cancelling task:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Could not cancel the task. Please try again.',
-                    icon: 'error',
-                    timer: 2500,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false
-                });
+                body: JSON.stringify({
+                    text: result.value,
+                    userId: userId,
+                    taskId: taskId
+                })
             });
         } else {
-            // User did not provide a comment or cancelled the prompt
-            Swal.fire({
-                title: 'Cancellation Aborted',
-                text: 'Task cancellation requires a comment.',
-                icon: 'info',
-                timer: 2000,
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false
-            });
+            throw new Error('Cancellation Aborted: No comment was provided.');
         }
+    }).then(response => {
+        if (!response.ok) {
+            // If the server responds with an error status, throw an error
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text(); // Expect a text response from the server
+    }).then(commentResponse => {
+        console.log('Comment created:', commentResponse);
+        // Comment created successfully, proceed to cancel the task
+        return fetch(`http://localhost:8080/usertasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
+            }
+        });
+    }).then(response => {
+        if (!response.ok) {
+            // If the server responds with an error status, throw an error
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text(); // Expect a text response from the server
+    }).then(cancelResponse => {
+        console.log('Task cancelled:', cancelResponse);
+        // Task cancelled successfully, now remove the task card from UI
+        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+        if (taskCard && taskCard.parentNode) {
+            taskCard.parentNode.removeChild(taskCard);
+        }
+        // Update task counts
+        fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+        // Display a success message to the user
+        Swal.fire({
+            title: 'Task Cancelled!',
+            icon: 'success',
+            timer: 2500,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
+    }).catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Cancellation aborted!',
+            // text: 'There was a problem cancelling the task.',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
     });
 }
+
+
 
 // Function to initiate the task
 function initiateTask(taskId) {
@@ -155,6 +173,8 @@ function initiateTask(taskId) {
 
 // Function to complete a task with a comment
 function completeTask(taskId) {
+    const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+
     // Prompt user for a comment before marking the task as completed
     Swal.fire({
         title: 'Completion Comment Required',
@@ -171,67 +191,148 @@ function completeTask(taskId) {
     }).then((result) => {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed completion
-            fetch(`http://localhost:8080/usertasks`, {
-                method: 'PUT',
+            // Start by creating the comment in the database
+            return fetch(`http://localhost:8080/comments`, {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    id: taskId,
-                    userTaskStatus: 'COMPLETED'
+                    text: result.value,
+                    userId: userId,
+                    taskId: taskId
                 })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(message => {
-                console.log('Task completed:', message);
-
-                // Remove the task card from UI
-                const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
-                if (taskCard) {
-                    taskCard.remove();
-                }
-
-                // Update task counts
-                fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
-                fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
-
-                // Optionally, display a success message to the user
-                Swal.fire({
-                    title: 'Task Completed!',
-                    icon: 'success',
-                    timer: 1500,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false
-                });
-            })
-            .catch(error => {
-                console.error('Error completing task:', error);
-                // Optionally, display an error message to the user
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Could not complete the task. Please try again.',
-                    icon: 'error',
-                    timer: 1500,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false
-                });
             });
         } else {
-            // User did not provide a comment or cancelled the prompt
-            // No action needed, the task remains in progress
+            // If the user cancels or the input is empty, do not proceed with creating a comment
+            return Promise.reject('Completion Aborted: No comment was provided.');
         }
+    }).then(response => {
+        if (!response.ok) {
+            // If the server responds with an error status, throw an error
+            return response.text().then(text => Promise.reject(text));
+        }
+        // Return text response since the server sends a string
+        return response.text();
+    }).then(commentMessage => {
+        console.log('Comment created:', commentMessage);
+        // Comment created successfully, now update the task status to 'COMPLETED'
+        return fetch(`http://localhost:8080/usertasks`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
+            },
+            body: JSON.stringify({
+                id: taskId,
+                userTaskStatus: 'COMPLETED'
+            })
+        });
+    }).then(response => {
+        if (!response.ok) {
+            // If the server responds with an error status, throw an error
+            return response.text().then(text => Promise.reject(text));
+        }
+        // Return text response since that is what your server sends
+        return response.text();
+    }).then(updateMessage => {
+        console.log('Task status updated:', updateMessage);
+        // Task status updated to 'COMPLETED', now remove the task card from UI
+        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
+        if (taskCard) {
+            taskCard.remove();
+        }
+        // Update task counts
+        fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
+        fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
+        // Display a success message to the user
+        Swal.fire({
+            title: 'Task Completed!',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
+    }).catch(error => {
+        console.error('Error:', error);
+        // Display an error message to the user
+        Swal.fire({
+            title: 'Completion aborted!',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
     });
 }
+// Function to add a comment to a task
+function addCommentToTask(taskId) {
+    const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+
+    // Prompt user for a comment before adding it to the task
+    Swal.fire({
+        title: 'Add New Comment',
+        input: 'textarea',
+        inputPlaceholder: 'Enter your comment...',
+        showCancelButton: true,
+        confirmButtonText: 'Add Comment',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value.trim()) {
+                return 'Comment cannot be empty.';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            // User provided a comment and confirmed the action
+            // Proceed with creating the comment in the database
+            return fetch(`http://localhost:8080/comments`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: result.value,
+                    userId: userId,
+                    taskId: taskId
+                })
+            });
+        } else {
+            // If the user cancels or the input is empty, do not proceed with creating a comment
+            return Promise.reject('Comment addition aborted: No comment was provided.');
+        }
+    }).then(response => {
+        if (!response.ok) {
+            // If the server responds with an error status, throw an error
+            return response.text().then(text => Promise.reject(text));
+        }
+        return response.text(); // Return text response from the server
+    }).then(commentMessage => {
+        console.log('Comment added:', commentMessage);
+        // Possibly update the UI to show the new comment
+        // ...
+    }).catch(error => {
+        console.error('Error:', error);
+        // Display an error message to the user
+        Swal.fire({
+            title: 'Comment addition aborted!',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
+    });
+}
+
+
 
 
 
@@ -462,10 +563,17 @@ function renderInProgressTasks(inProgressTasks) {
                 <h3 class="task-card-headline">${task.taskName}</h3>
                 <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
                 <p class="task-card-body">${formattedDate}</p>
+                
             </div>
-            <div class="task-card-footer">
-                <button class="task-card-button primary" data-task-id="${task.id}">Complete Task</button>
-            </div>
+            <div class="task-card-footer-progress">
+                <button class="icon-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
+                <button class="task-card-button primary" data-task-id="${task.id}">
+                    Complete Task
+                </button>
+             </div>
+        
         `;
 
         tasksContainer.appendChild(taskCard);
