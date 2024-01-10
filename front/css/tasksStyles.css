@@ -309,7 +309,7 @@ footer img {
 .task-card-footer-progress {
     display: flex;
     justify-content: flex-start;
-    gap: 20px;
+    gap: 28px;
     padding: 16px;
     background: rgba(143, 177, 231, 0.436); /* Same color for footer */
     border-bottom-left-radius: 10px;

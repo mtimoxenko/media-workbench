@@ -270,6 +270,7 @@ function completeTask(taskId) {
         });
     });
 }
+
 // Function to add a comment to a task
 function addCommentToTask(taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
@@ -304,33 +305,31 @@ function addCommentToTask(taskId) {
                 })
             });
         } else {
-            // If the user cancels or the input is empty, do not proceed with creating a comment
-            return Promise.reject('Comment addition aborted: No comment was provided.');
+            // If the user cancels or the input is empty, simply close the alert
+            return Promise.resolve('No action taken.'); // Resolve the promise with a message
         }
     }).then(response => {
-        if (!response.ok) {
-            // If the server responds with an error status, throw an error
+        if (response.ok) {
+            // If the server responds with a success status, parse the response
+            return response.text();
+        } else if (response) {
+            // If response is a simple message, just log it (e.g., 'No action taken.')
+            console.log(response);
+        } else {
+            // If there's an actual error response from the server, handle it
             return response.text().then(text => Promise.reject(text));
         }
-        return response.text(); // Return text response from the server
-    }).then(commentMessage => {
-        console.log('Comment added:', commentMessage);
-        // Possibly update the UI to show the new comment
-        // ...
+    }).then(message => {
+        if (message) {
+            // Handle your successful comment addition or other messages here
+            console.log(message);
+        }
     }).catch(error => {
-        console.error('Error:', error);
-        // Display an error message to the user
-        Swal.fire({
-            title: 'Comment addition aborted!',
-            icon: 'info',
-            timer: 2000,
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false
-        });
+        // If there was an error other than the user cancelling, you can handle it here
+        // If you want to do nothing, you can leave this catch block empty
     });
 }
+
 
 
 
@@ -546,46 +545,49 @@ function fetchAndDisplayInProgressTasks() {
 // Function to render in-progress tasks
 function renderInProgressTasks(inProgressTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
-    tasksContainer.innerHTML = '';
+    tasksContainer.innerHTML = ''; // Clear the tasks container before rendering
 
-    inProgressTasks.sort((a, b) => new Date(b.assignmentDate) - new Date(a.assignmentDate));
+    if (inProgressTasks.length === 0) {
+        // If there are no tasks in progress, display the no tasks message
+        displayNoInProgressTasksMessage();
+    } else {
+        // Otherwise, render the in-progress tasks
+        inProgressTasks.sort((a, b) => new Date(b.assignmentDate) - new Date(a.assignmentDate));
 
-    inProgressTasks.forEach(task => {
-        const taskCard = document.createElement('div');
-        taskCard.classList.add('task-card');
+        inProgressTasks.forEach(task => {
+            const taskCard = document.createElement('div');
+            taskCard.classList.add('task-card');
 
-        const assignmentDate = new Date(task.assignmentDate);
-        const formattedDate = `${assignmentDate.getDate().toString().padStart(2, '0')}/${(assignmentDate.getMonth() + 1).toString().padStart(2, '0')}/${assignmentDate.getFullYear().toString().substr(-2)} ${assignmentDate.getHours().toString().padStart(2, '0')}:${assignmentDate.getMinutes().toString().padStart(2, '0')}`;
+            const assignmentDate = new Date(task.assignmentDate);
+            const formattedDate = `${assignmentDate.getDate().toString().padStart(2, '0')}/${(assignmentDate.getMonth() + 1).toString().padStart(2, '0')}/${assignmentDate.getFullYear().toString().substr(-2)} ${assignmentDate.getHours().toString().padStart(2, '0')}:${assignmentDate.getMinutes().toString().padStart(2, '0')}`;
 
-        taskCard.innerHTML = `
-            <div class="task-card-status">${task.userTaskStatus}</div>
-            <div class="task-card-content">
-                <h3 class="task-card-headline">${task.taskName}</h3>
-                <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
-                <p class="task-card-body">${formattedDate}</p>
-                
-            </div>
-            <div class="task-card-footer-progress">
-                <button class="icon-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
-                    <i class="fa-solid fa-pencil"></i>
-                </button>
-                <button class="task-card-button primary" data-task-id="${task.id}">
-                    Complete Task
-                </button>
-             </div>
-        
-        `;
+            taskCard.innerHTML = `
+                <div class="task-card-status">${task.userTaskStatus}</div>
+                <div class="task-card-content">
+                    <h3 class="task-card-headline">${task.taskName}</h3>
+                    <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
+                    <p class="task-card-body">${formattedDate}</p>
+                </div>
+                <div class="task-card-footer-progress">
+                    <button class="icon-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                    <button class="task-card-button primary" data-task-id="${task.id}">
+                        Complete Task
+                    </button>
+                </div>
+            `;
 
-        tasksContainer.appendChild(taskCard);
+            tasksContainer.appendChild(taskCard);
 
-        // Event listener for the 'Complete Task' button
-        taskCard.querySelector('.primary').addEventListener('click', function(event) {
-            // Logic to mark the task as complete
-            // This could involve sending a request to your backend to update the task status
-            completeTask(task.id);
+            // Event listener for the 'Complete Task' button
+            taskCard.querySelector('.primary').addEventListener('click', function(event) {
+                completeTask(task.id);
+            });
         });
-    });
+    }
 }
+
 
 
 
