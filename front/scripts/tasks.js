@@ -110,8 +110,6 @@ function cancelTask(taskId) {
     });
 }
 
-
-
 // Function to initiate the task
 function initiateTask(taskId) {
     fetch(`http://localhost:8080/usertasks`, {
@@ -169,7 +167,6 @@ function initiateTask(taskId) {
         });
     });
 }
-
 
 // Function to complete a task with a comment
 function completeTask(taskId) {
@@ -244,8 +241,8 @@ function completeTask(taskId) {
             taskCard.remove();
         }
         // Update task counts
-        fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
-        fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
+            fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
+            fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
         // Display a success message to the user
         Swal.fire({
             title: 'Task Completed!',
@@ -256,6 +253,7 @@ function completeTask(taskId) {
             allowEscapeKey: false,
             allowEnterKey: false
         });
+        fetchAndDisplayInProgressTasks();
     }).catch(error => {
         console.error('Error:', error);
         // Display an error message to the user
@@ -330,7 +328,31 @@ function addCommentToTask(taskId) {
     });
 }
 
-
+// Function to fetch task information and display it
+function fetchTaskInfo(taskId) {
+    fetch(`http://localhost:8080/tasks/${taskId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(taskInfo => {
+            // Use Swal.fire to display the task description
+            Swal.fire({
+                title: taskInfo.name,
+                html: `<p style="color:#fff;">${taskInfo.description}</p>`, // Using html to inject inline styles
+                icon: 'info',
+                background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
+                confirmButtonColor: '#3085d6', // Use a blue color for the confirm button
+                confirmButtonText: 'Close'
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching task info:', error);
+            // Optionally, handle errors or display a message if the fetch fails
+        });
+}
 
 
 
@@ -445,10 +467,17 @@ function renderAssignedTasks(assignedTasks) {
         const formattedDate = `${assignmentDate.getDate().toString().padStart(2, '0')}/${(assignmentDate.getMonth() + 1).toString().padStart(2, '0')}/${assignmentDate.getFullYear().toString().substr(-2)} ${assignmentDate.getHours().toString().padStart(2, '0')}:${assignmentDate.getMinutes().toString().padStart(2, '0')}`;
 
         taskCard.innerHTML = `
-            <div class="task-card-status">${task.userTaskStatus}</div>
+            <div class="task-card-header">
+                <div class="task-card-status">${task.userTaskStatus}</div>
+                <div class="task-card-info">
+                    <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+            </div>
             <div class="task-card-content">
                 <h3 class="task-card-headline">${task.taskName}</h3>
-                <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
+                    <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
                 <p class="task-card-body">${formattedDate}</p>
             </div>
             <div class="task-card-footer">
@@ -542,6 +571,7 @@ function fetchAndDisplayInProgressTasks() {
             console.error(`Error fetching in-progress tasks:`, error);
         });
 }
+
 // Function to render in-progress tasks
 function renderInProgressTasks(inProgressTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -562,21 +592,31 @@ function renderInProgressTasks(inProgressTasks) {
             const formattedDate = `${assignmentDate.getDate().toString().padStart(2, '0')}/${(assignmentDate.getMonth() + 1).toString().padStart(2, '0')}/${assignmentDate.getFullYear().toString().substr(-2)} ${assignmentDate.getHours().toString().padStart(2, '0')}:${assignmentDate.getMinutes().toString().padStart(2, '0')}`;
 
             taskCard.innerHTML = `
-                <div class="task-card-status">${task.userTaskStatus}</div>
+                <div class="task-card-header">
+                    <div class="task-card-status">${task.userTaskStatus}</div>
+                    <div class="task-card-info">
+                        <button class="icon-button comment-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                        <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
+                </div>
                 <div class="task-card-content">
                     <h3 class="task-card-headline">${task.taskName}</h3>
                     <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>
                     <p class="task-card-body">${formattedDate}</p>
                 </div>
                 <div class="task-card-footer-progress">
-                    <button class="icon-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
-                        <i class="fa-solid fa-pencil"></i>
-                    </button>
                     <button class="task-card-button primary" data-task-id="${task.id}">
                         Complete Task
                     </button>
                 </div>
             `;
+            
+        
+        
 
             tasksContainer.appendChild(taskCard);
 
@@ -633,7 +673,14 @@ function renderCompletedTasks(completedTasks) {
         const formattedDate = `${assignmentDate.getDate().toString().padStart(2, '0')}/${(assignmentDate.getMonth() + 1).toString().padStart(2, '0')}/${assignmentDate.getFullYear().toString().substr(-2)} ${assignmentDate.getHours().toString().padStart(2, '0')}:${assignmentDate.getMinutes().toString().padStart(2, '0')}`;
 
         taskCard.innerHTML = `
-            <div class="task-card-status">${task.userTaskStatus}</div>
+            <div class="task-card-header">
+                <div class="task-card-status">${task.userTaskStatus}</div>
+                <div class="task-card-info">
+                    <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+            </div>
             <div class="task-card-content">
                 <h3 class="task-card-headline">${task.taskName}</h3>
                 <h4 class="task-card-subhead">Assigned by: ${task.assignerName} ${task.assignerSurname}</h4>

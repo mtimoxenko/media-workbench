@@ -308,8 +308,8 @@ footer img {
 
 .task-card-footer-progress {
     display: flex;
-    justify-content: flex-start;
-    gap: 28px;
+    justify-content: space-evenly;
+    /* gap: 28px; */
     padding: 16px;
     background: rgba(143, 177, 231, 0.436); /* Same color for footer */
     border-bottom-left-radius: 10px;
@@ -341,17 +341,7 @@ footer img {
     opacity: 0.9;
 }
 
-.task-card-status {
-    color: white;
-    background-color: rgba(0, 160, 0, 0.526);
-    padding: 5px 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 2;
-}
+
 
 
 /* Styles for the 'No' button when cancelling or initiating a task */
@@ -442,40 +432,108 @@ footer img {
 }
 
 
-/* COMMENT */
 
+
+
+
+
+
+
+/* TASK CARD HEADER */
+.task-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Adjust as needed */
+    background-color: rgba(143, 177, 231, 0.436);
+}
+
+/* General styles for any icon-button */
 .icon-button {
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
-    /* margin-bottom: 5px; */
-    margin-top: 3px;
-    margin-left: 6px;
     transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
 }
 
-.icon-button i {
-    color: #88c1d0; /* A soft blue that matches the screen's color scheme */
-    font-size: 1.5em; /* Icon size, adjust as needed */
-    transition: color 0.3s ease; /* Smooth transition for icon color */
-}
 
-.icon-button:hover {
-    background: transparent; /* Maintain a transparent background on hover */
-    transform: translateY(-3px) scale(1.2); /* A subtle lift and grow effect on hover */
-}
 
-.icon-button:hover i {
-    color: #a8def0; /* A lighter blue for hover, to give a subtle interactive feedback */
-}
-
-.icon-button:focus {
+.comment-button:focus {
     outline: none;
 }
 
+/* Styles specifically for info buttons */
+.info-button {
+    padding: 5px; /* Provide some padding around the icon */
+    border-radius: 50%; /* Round the button */
+    display: flex; /* To center the icon inside the button */
+    justify-content: center;
+    align-items: center;
+    /* Removed position absolute, top, and right properties */
+    z-index: 2; /* Ensure it's above other content */
+}
 
 
 
+.info-button:focus {
+    outline: none; /* You may want to add a custom focus style for accessibility */
+}
+
+.task-card-status {
+    color: white;
+    background-color: rgba(0, 160, 0, 0.526);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    /* Removed position absolute, top, and left properties */
+    z-index: 2;
+}
+
+/* INFO BUTTON */
+.info-button i {
+    color: #58a6ff; /* A brighter blue for better visibility */
+    font-size: 1.5em;
+}
+
+.info-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2); /* Light background for visibility */
+}
+
+.info-button:hover i {
+    color: #1d4ed8; /* A deeper blue for interactive feedback */
+}
+
+/* COMMENT BUTTON */
+.comment-button i {
+    color: #34d399; /* A bright green that complements the blue */
+    font-size: 1.5em;
+}
+
+.comment-button:hover {
+    background: transparent;
+    transform: translateY(-3px) scale(1.2);
+}
+
+.comment-button:hover i {
+    color: #059669; /* A darker shade of green for interactive feedback */
+}
 
 
+/* TASK CARD INFO */
+.task-card-info {
+    display: flex; /* Align children inline */
+    justify-content: space-between; /* Space between the children */
+    align-items: center; /* Vertically center items */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    gap: 10px;
+}
+
+/* Adjust the right margin of the comment button if needed to add spacing */
+.comment-button {
+    margin-right: 10px; /* Adjust as needed */
+}
