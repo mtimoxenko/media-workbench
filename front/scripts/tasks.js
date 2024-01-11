@@ -274,9 +274,18 @@ function completeTask(userTaskId, taskId) {
     });
 }
 
+
+
+
+
+
+
+
+
 // Function to add a comment to a task
 function addCommentToTask(taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+
 
     // Prompt user for a comment before adding it to the task
     Swal.fire({
@@ -332,6 +341,17 @@ function addCommentToTask(taskId) {
         // If you want to do nothing, you can leave this catch block empty
     });
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // Function to fetch task information and display it
 function fetchTaskInfo(taskId) {
@@ -520,6 +540,7 @@ function renderAssignedTasks(assignedTasks) {
             }
         });
     });
+    
 }
 
 function updateTaskCardForConfirmation(taskCard, action) {
@@ -552,9 +573,6 @@ function updateTaskCardForConfirmation(taskCard, action) {
 
 
 
-
-
-
 // Function to fetch and display in-progress tasks
 function fetchAndDisplayInProgressTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
@@ -579,6 +597,16 @@ function fetchAndDisplayInProgressTasks() {
             console.error(`Error fetching in-progress tasks:`, error);
         });
 }
+
+
+
+
+
+
+
+
+
+
 
 // Function to render in-progress tasks
 function renderInProgressTasks(inProgressTasks) {
@@ -634,7 +662,61 @@ function renderInProgressTasks(inProgressTasks) {
             });
         });
     }
+    setupCommentHoverEffect();
 }
+// This function should be called whenever new task cards are created and added to the DOM
+function setupCommentHoverEffect() {
+    // Select all pencil buttons
+    const pencilButtons = document.querySelectorAll('.icon-button.comment-button');
+
+    pencilButtons.forEach(button => {
+        const taskId = button.getAttribute('data-task-id');
+        const contentContainer = button.closest('.task-card').querySelector('.task-card-content');
+        const originalContent = contentContainer.innerHTML;
+
+        // Function to handle hover effect
+        function handleHover() {
+            fetch(`http://localhost:8080/tasks/${taskId}`)
+                .then(response => response.json())
+                .then(task => {
+                    // Get the last 3 comments, if there are less than 3 comments, get all available
+                    const lastThreeComments = task.comments.slice(-3);
+                    const commentsHtml = lastThreeComments.map(comment => {
+                        const date = new Date(comment.commentTimestamp);
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        const monthAcronym = monthNames[date.getMonth()];
+                        const hours = date.getHours().toString().padStart(2, '0');
+                        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+                        return `
+                            <div class="comment">
+                                <p class="comment-timestamp cursive">${monthAcronym} ${day} ${hours}:${minutes} @ ${comment.userName} ${comment.userSurname}</p>
+                                <p class="comment-text stylish-text">${comment.commentText}</p>
+                            </div>
+                        `;
+                    }).join('');
+
+                    contentContainer.innerHTML = `
+                        <div class="comments-section">
+                            ${commentsHtml}
+                        </div>
+                    `;
+                })
+                .catch(error => console.error('Error fetching comments:', error));
+        }
+
+        // Function to handle hover end
+        function handleHoverEnd() {
+            contentContainer.innerHTML = originalContent;
+        }
+
+        // Attach the hover handlers
+        button.addEventListener('mouseover', handleHover);
+        button.addEventListener('mouseout', handleHoverEnd);
+    });
+}
+
 
 
 
@@ -748,3 +830,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Additional event listeners and functions can be added here
 });
+
+
+
+
+
+
+

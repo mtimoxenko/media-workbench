@@ -537,3 +537,19 @@ footer img {
 .comment-button {
     margin-right: 10px; /* Adjust as needed */
 }
+
+.comment {
+    margin-top: 10px;
+}
+
+.cursive {
+    font-style: italic;
+    text-align: center;
+    font-weight: bold;
+    /* Additional styles here */
+}
+
+.stylish-text {
+    /* Define your custom styles here */
+    text-align: center;
+}
