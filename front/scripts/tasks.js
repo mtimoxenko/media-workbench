@@ -20,8 +20,11 @@ function updateUsernameDisplay() {
 
 
 // Function to cancel the task
-function cancelTask(taskId) {
+function cancelTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
+    // console.log("taskId", taskId);
+    // console.log("userTaskId", userTaskId);
+
 
     // Prompt user for a comment before canceling the task
     Swal.fire({
@@ -64,7 +67,7 @@ function cancelTask(taskId) {
     }).then(commentResponse => {
         console.log('Comment created:', commentResponse);
         // Comment created successfully, proceed to cancel the task
-        return fetch(`http://localhost:8080/usertasks/${taskId}`, {
+        return fetch(`http://localhost:8080/usertasks/${userTaskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
@@ -79,7 +82,7 @@ function cancelTask(taskId) {
     }).then(cancelResponse => {
         console.log('Task cancelled:', cancelResponse);
         // Task cancelled successfully, now remove the task card from UI
-        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+        const taskCard = document.querySelector(`[data-user-task-id="${userTaskId}"]`);
         if (taskCard && taskCard.parentNode) {
             taskCard.parentNode.removeChild(taskCard);
         }
@@ -111,7 +114,7 @@ function cancelTask(taskId) {
 }
 
 // Function to initiate the task
-function initiateTask(taskId) {
+function initiateTask(userTaskId, taskId) {
     fetch(`http://localhost:8080/usertasks`, {
         method: 'PUT',
         headers: {
@@ -119,7 +122,7 @@ function initiateTask(taskId) {
             'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
         },
         body: JSON.stringify({
-            id: taskId,
+            id: userTaskId,
             userTaskStatus: 'IN_PROGRESS'
         })
     })
@@ -133,7 +136,9 @@ function initiateTask(taskId) {
         console.log('Task initiated:', message);
 
         // Remove the task card from UI
+        // console.log(userTaskId);
         const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
+        
         taskCard.remove();
 
         // Update task counts
@@ -169,7 +174,7 @@ function initiateTask(taskId) {
 }
 
 // Function to complete a task with a comment
-function completeTask(taskId) {
+function completeTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
 
     // Prompt user for a comment before marking the task as completed
@@ -222,7 +227,7 @@ function completeTask(taskId) {
                 'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
             },
             body: JSON.stringify({
-                id: taskId,
+                id: userTaskId,
                 userTaskStatus: 'COMPLETED'
             })
         });
@@ -236,7 +241,7 @@ function completeTask(taskId) {
     }).then(updateMessage => {
         console.log('Task status updated:', updateMessage);
         // Task status updated to 'COMPLETED', now remove the task card from UI
-        const taskCard = document.querySelector(`[data-task-id="${taskId}"]`).parentNode.parentNode;
+        const taskCard = document.querySelector(`[data-user-task-id="${userTaskId}"]`).parentNode.parentNode;
         if (taskCard) {
             taskCard.remove();
         }
@@ -470,7 +475,7 @@ function renderAssignedTasks(assignedTasks) {
             <div class="task-card-header">
                 <div class="task-card-status">${task.userTaskStatus}</div>
                 <div class="task-card-info">
-                    <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                    <button class="icon-button info-button" data-task-id="${task.taskId}" onclick="fetchTaskInfo(${task.taskId})">
                         <i class="fa-solid fa-circle-info"></i>
                     </button>
                 </div>
@@ -481,8 +486,8 @@ function renderAssignedTasks(assignedTasks) {
                 <p class="task-card-body">${formattedDate}</p>
             </div>
             <div class="task-card-footer">
-                <button class="task-card-button secondary" data-task-id="${task.id}">Cancel</button>
-                <button class="task-card-button primary" data-task-id="${task.id}">Initiate</button>
+                <button class="task-card-button secondary" data-user-task-id="${task.id}" data-task-id="${task.taskId}">Cancel</button>
+                <button class="task-card-button primary" data-user-task-id="${task.id}" data-task-id="${task.taskId}">Initiate</button>
             </div>
         `;
 
@@ -492,6 +497,7 @@ function renderAssignedTasks(assignedTasks) {
         const taskCardFooter = taskCard.querySelector('.task-card-footer');
         taskCardFooter.addEventListener('click', function(event) {
             const clickedButton = event.target;
+            const userTaskId = clickedButton.getAttribute('data-user-task-id');
             const taskId = clickedButton.getAttribute('data-task-id');
 
             if (clickedButton.classList.contains('cancel-no') || clickedButton.classList.contains('initiate-no')) {
@@ -499,10 +505,12 @@ function renderAssignedTasks(assignedTasks) {
                 renderAssignedTasks(assignedTasks);
             } else if (clickedButton.classList.contains('cancel-yes')) {
                 // Cancel the task if 'Yes' is clicked
-                cancelTask(taskId);
+                // console.log("taskId", taskId);
+                // console.log("userTaskId", userTaskId);
+                cancelTask(userTaskId, taskId);
             } else if (clickedButton.classList.contains('initiate-yes')) {
                 // Initiate the task if 'Yes' is clicked
-                initiateTask(taskId);
+                initiateTask(userTaskId, taskId);
             } else if (clickedButton.classList.contains('secondary')) {
                 // Change to cancel confirmation state
                 updateTaskCardForConfirmation(taskCard, 'Cancel');
@@ -595,10 +603,10 @@ function renderInProgressTasks(inProgressTasks) {
                 <div class="task-card-header">
                     <div class="task-card-status">${task.userTaskStatus}</div>
                     <div class="task-card-info">
-                        <button class="icon-button comment-button" data-task-id="${task.id}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
+                        <button class="icon-button comment-button" data-task-id="${task.taskId}" onclick="addCommentToTask(this.getAttribute('data-task-id'))">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
-                        <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                        <button class="icon-button info-button" data-task-id="${task.taskId}" onclick="fetchTaskInfo(${task.taskId})">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
                     </div>
@@ -609,7 +617,7 @@ function renderInProgressTasks(inProgressTasks) {
                     <p class="task-card-body">${formattedDate}</p>
                 </div>
                 <div class="task-card-footer-progress">
-                    <button class="task-card-button primary" data-task-id="${task.id}">
+                    <button class="task-card-button primary" data-user-task-id="${task.id}" data-task-id="${task.taskId}">
                         Complete Task
                     </button>
                 </div>
@@ -622,7 +630,7 @@ function renderInProgressTasks(inProgressTasks) {
 
             // Event listener for the 'Complete Task' button
             taskCard.querySelector('.primary').addEventListener('click', function(event) {
-                completeTask(task.id);
+                completeTask(task.id, task.taskId);
             });
         });
     }
@@ -676,7 +684,7 @@ function renderCompletedTasks(completedTasks) {
             <div class="task-card-header">
                 <div class="task-card-status">${task.userTaskStatus}</div>
                 <div class="task-card-info">
-                    <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                    <button class="icon-button info-button" data-task-id="${task.taskId}" onclick="fetchTaskInfo(${task.taskId})">
                         <i class="fa-solid fa-circle-info"></i>
                     </button>
                 </div>
