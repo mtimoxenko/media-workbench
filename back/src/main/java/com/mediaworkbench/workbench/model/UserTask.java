@@ -23,11 +23,16 @@ public class UserTask {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_task_status", nullable = false)
     @Schema(description = "The status of the task as it relates to the user.", example = "ASSIGNED", required = true)
-    private UserTaskStatus userTaskStatus;
+    private UserTaskStatus userTaskStatus = UserTaskStatus.ASSIGNED;
 
     @Column(name = "assignment_date", nullable = false)
     @Schema(description = "The date and time when the task was assigned to the user.", example = "2023-07-21T15:03:00", required = true)
     private LocalDateTime assignmentDate;
+
+    @PrePersist
+    protected void onCreate() {
+        assignmentDate = LocalDateTime.now();
+    }
 
     @ManyToOne
     @JoinColumn(name = "assigned_by", nullable = false)

@@ -66,6 +66,7 @@ public class UserService implements IUserService {
                     userTask.getAssignmentDate(),
                     userTask.getUser().getName(),       // User's name to whom the task is assigned
                     userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                    userTask.getTask().getId(),         // Task's ID
                     userTask.getTask().getName(),       // Task's name
                     userTask.getUserTaskStatus().toString(), // UserTask status
                     userTask.getAssigner().getName(),   // Assigner's name
@@ -94,6 +95,7 @@ public class UserService implements IUserService {
                 userTask.getAssignmentDate(),
                 userTask.getUser().getName(),       // User's name to whom the task is assigned
                 userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                userTask.getTask().getId(),         // Task's ID
                 userTask.getTask().getName(),       // Task's name
                 userTask.getUserTaskStatus().toString(), // UserTask status
                 userTask.getAssigner().getName(),   // Assigner's name

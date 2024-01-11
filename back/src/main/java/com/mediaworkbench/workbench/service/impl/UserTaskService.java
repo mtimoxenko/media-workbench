@@ -36,8 +36,6 @@ public class UserTaskService implements IUserTaskService {
     @Override
     public void insertUserTask(CreateUserTaskRequest createUserTaskRequest) {
         UserTask userTask = new UserTask();
-        userTask.setAssignmentDate(createUserTaskRequest.assignmentDate());
-        userTask.setUserTaskStatus(UserTaskStatus.ASSIGNED); // Set default status as ASSIGNED
 
         User assigner = userRepository.findById(createUserTaskRequest.assignerId())
                 .orElseThrow(() -> new CustomNotFoundException("Assigner id [" + createUserTaskRequest.assignerId() + "] not found"));
@@ -62,6 +60,7 @@ public class UserTaskService implements IUserTaskService {
                 userTask.getAssignmentDate(),
                 userTask.getUser().getName(), // User's name to whom the task is assigned
                 userTask.getUser().getSurname(), // User's surname to whom the task is assigned
+                userTask.getTask().getId(), // Task's ID
                 userTask.getTask().getName(), // Task's name
                 userTask.getUserTaskStatus().toString(), // User task status
                 userTask.getAssigner().getName(), // Assigner's name
@@ -78,6 +77,7 @@ public class UserTaskService implements IUserTaskService {
                 userTask.getAssignmentDate(),
                 userTask.getUser().getName(),       // User's name to whom the task is assigned
                 userTask.getUser().getSurname(),    // User's surname to whom the task is assigned
+                userTask.getTask().getId(),         // Task's ID
                 userTask.getTask().getName(),       // Task's name
                 userTask.getUserTaskStatus().toString(), // User task status
                 userTask.getAssigner().getName(),   // Assigner's name

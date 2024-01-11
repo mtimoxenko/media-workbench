@@ -7,6 +7,7 @@ public record UserTaskResponse(
         LocalDateTime assignmentDate,
         String userName,           // Name of the user to whom the task is assigned
         String userSurname,        // Surname of the user to whom the task is assigned
+        Long taskId,                // Include task's id
         String taskName,           // Include task's name
         String userTaskStatus,     // Updated to represent status as a string
         String assignerName,       // Name of the user who assigned the task
