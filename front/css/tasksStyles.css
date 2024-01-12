@@ -295,6 +295,7 @@ footer img {
 .task-card-body {
     font-size: 14px;
     margin-bottom: 16px;
+    text-align: center;
 }
 
 .task-card-footer {
@@ -494,6 +495,7 @@ footer img {
 .info-button i {
     color: #58a6ff; /* A brighter blue for better visibility */
     font-size: 1.5em;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
 }
 
 .info-button:hover {
@@ -502,8 +504,11 @@ footer img {
 }
 
 .info-button:hover i {
+    transform: scale(1.1); /* Only scaling, no translation */
     color: #1d4ed8; /* A deeper blue for interactive feedback */
 }
+
+
 
 /* COMMENT BUTTON */
 .comment-button i {

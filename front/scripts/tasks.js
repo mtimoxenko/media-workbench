@@ -16,9 +16,6 @@ function updateUsernameDisplay() {
 
 
 
-
-
-
 // Function to cancel the task
 function cancelTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
@@ -112,7 +109,6 @@ function cancelTask(userTaskId, taskId) {
         });
     });
 }
-
 // Function to initiate the task
 function initiateTask(userTaskId, taskId) {
     fetch(`http://localhost:8080/usertasks`, {
@@ -172,7 +168,6 @@ function initiateTask(userTaskId, taskId) {
         });
     });
 }
-
 // Function to complete a task with a comment
 function completeTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
@@ -277,11 +272,6 @@ function completeTask(userTaskId, taskId) {
 
 
 
-
-
-
-
-
 // Function to add a comment to a task
 function addCommentToTask(taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
@@ -341,18 +331,6 @@ function addCommentToTask(taskId) {
         // If you want to do nothing, you can leave this catch block empty
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
 // Function to fetch task information and display it
 function fetchTaskInfo(taskId) {
     fetch(`http://localhost:8080/tasks/${taskId}`)
@@ -378,7 +356,54 @@ function fetchTaskInfo(taskId) {
             // Optionally, handle errors or display a message if the fetch fails
         });
 }
+// Display comments on info hover
+function setupCommentHoverEffect() {
+    // Select all info buttons
+    const infoButtons = document.querySelectorAll('.icon-button.info-button');
 
+    infoButtons.forEach(button => {
+        const taskId = button.getAttribute('data-task-id');
+        const contentContainer = button.closest('.task-card').querySelector('.task-card-content');
+        const originalContent = contentContainer.innerHTML;
+
+        // Function to handle hover effect
+        function handleHover() {
+            // Check if comments are already rendered
+            if (!contentContainer.classList.contains("comments-loaded")) {
+                fetch(`http://localhost:8080/tasks/${taskId}`)
+                    .then(response => response.json())
+                    .then(task => {
+                        const lastThreeComments = task.comments.slice(-2);
+                        const commentsHtml = lastThreeComments.map(comment => {
+                            const date = new Date(comment.commentTimestamp);
+                            const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().substr(-2)} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+                            return `
+                                <div class="comment">
+                                    <p class="comment-timestamp cursive">${formattedDate} @ ${comment.userName} ${comment.userSurname}</p>
+                                    <p class="comment-text stylish-text">${comment.commentText}</p>
+                                </div>
+                            `;
+                        }).join('');
+
+                        contentContainer.innerHTML = `<div class="comments-section">${commentsHtml}</div>`;
+                        contentContainer.classList.add("comments-loaded"); // Mark as loaded
+                    })
+                    .catch(error => console.error('Error fetching comments:', error));
+            }
+        }
+
+        // Function to handle hover end
+        function handleHoverEnd() {
+            contentContainer.innerHTML = originalContent;
+            contentContainer.classList.remove("comments-loaded"); // Remove loaded mark
+        }
+
+        // Attach the hover handlers to the info button
+        button.addEventListener('mouseenter', handleHover);
+        button.addEventListener('mouseleave', handleHoverEnd);
+    });
+}
 
 
 
@@ -390,33 +415,48 @@ function displayNoTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No New Assigned Tasks</h2>
-            <p>It looks like you're all caught up! 👍</p>
-            <p>Check "Tasks in Progress" for ongoing work, or see "Available Work" to pick up new tasks.</p>
+            <h2>No New Assigned Tasks 🌟</h2>
+            <p>Great job! You're all caught up! 👍</p>
+            <p>Why not check "Tasks in Progress" or explore "Available Work" for new opportunities?</p>
         </div>
     `;
-    // Add styling as needed, e.g., centering the text, adding padding, etc.
+    // Add additional styling as needed
 }
+
 // Function to display a message when there are no tasks in progress
 function displayNoInProgressTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No Tasks In Progress</h2>
-            <p>You don't have any tasks currently in progress.</p>
-            <p>Check "New Assigned Tasks" for new assignments, or "Completed Tasks" to review your completed work.</p>
+            <h2>No Tasks In Progress 💪</h2>
+            <p>Take a moment to relax, you've earned it! 😊</p>
+            <p>Ready for more? See "New Assigned Tasks" or dive into "Completed Tasks" to review your achievements.</p>
         </div>
     `;
     // Add additional styling as needed
 }
+
 // Function to display a message when there are no completed tasks
 function displayNoCompletedTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No Completed Tasks</h2>
-            <p>You don't have any completed tasks at the moment.</p>
-            <p>Check "New Assigned Tasks" for new assignments, or "Tasks In Progress" to continue working on ongoing tasks.</p>
+            <h2>No Completed Tasks Yet 🚀</h2>
+            <p>You're on the path to great achievements! 🌟</p>
+            <p>Check out "New Assigned Tasks" or "Tasks In Progress" to keep the momentum going!</p>
+        </div>
+    `;
+    // Add additional styling as needed
+}
+
+// Function to display a message when there are no available work tasks
+function displayNoAvailableWorkMessage() {
+    const tasksContainer = document.querySelector('.tasks-container');
+    tasksContainer.innerHTML = `
+        <div class="no-tasks-message">
+            <h2>No Available Work Right Now 🤔</h2>
+            <p>No tasks on the horizon? Use this time to brainstorm and create a new task! 🌱</p>
+            <p>Alternatively, check "New Assigned Tasks" or "Tasks in Progress" for more activities.</p>
         </div>
     `;
     // Add additional styling as needed
@@ -439,12 +479,6 @@ function cardClickHandler(event) {
         fetchAndDisplayCompletedTasks();
     }
 }
-
-
-
-
-
-
 
 // Function to fetch tasks and update counts for a given task status
 function fetchAndDisplayTasksCount(status, countElementId) {
@@ -473,6 +507,27 @@ function fetchAndDisplayTasksCount(status, countElementId) {
             console.error(`Error fetching tasks for status ${status}:`, error);
         });
 }
+// Function to fetch and update the count of available work tasks
+function fetchAndUpdateAvailableWorkCount() {
+    fetch('http://localhost:8080/tasks')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(allTasks => {
+            // Filter to get only 'ACTIVE' tasks
+            const activeTasksCount = allTasks.filter(task => task.status === 'ACTIVE').length;
+            // Update the count in the DOM
+            document.getElementById('activeTasksCount').textContent = activeTasksCount;
+        })
+        .catch(error => {
+            console.error('Error fetching available work tasks:', error);
+        });
+}
+
+
 
 
 // Function to render assigned tasks into the tasks-container
@@ -540,7 +595,7 @@ function renderAssignedTasks(assignedTasks) {
             }
         });
     });
-    
+    setupCommentHoverEffect();
 }
 
 function updateTaskCardForConfirmation(taskCard, action) {
@@ -597,17 +652,6 @@ function fetchAndDisplayInProgressTasks() {
             console.error(`Error fetching in-progress tasks:`, error);
         });
 }
-
-
-
-
-
-
-
-
-
-
-
 // Function to render in-progress tasks
 function renderInProgressTasks(inProgressTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -664,61 +708,6 @@ function renderInProgressTasks(inProgressTasks) {
     }
     setupCommentHoverEffect();
 }
-// This function should be called whenever new task cards are created and added to the DOM
-function setupCommentHoverEffect() {
-    // Select all pencil buttons
-    const pencilButtons = document.querySelectorAll('.icon-button.comment-button');
-
-    pencilButtons.forEach(button => {
-        const taskId = button.getAttribute('data-task-id');
-        const contentContainer = button.closest('.task-card').querySelector('.task-card-content');
-        const originalContent = contentContainer.innerHTML;
-
-        // Function to handle hover effect
-        function handleHover() {
-            fetch(`http://localhost:8080/tasks/${taskId}`)
-                .then(response => response.json())
-                .then(task => {
-                    // Get the last 3 comments, if there are less than 3 comments, get all available
-                    const lastThreeComments = task.comments.slice(-3);
-                    const commentsHtml = lastThreeComments.map(comment => {
-                        const date = new Date(comment.commentTimestamp);
-                        const day = date.getDate().toString().padStart(2, '0');
-                        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                        const monthAcronym = monthNames[date.getMonth()];
-                        const hours = date.getHours().toString().padStart(2, '0');
-                        const minutes = date.getMinutes().toString().padStart(2, '0');
-
-                        return `
-                            <div class="comment">
-                                <p class="comment-timestamp cursive">${monthAcronym} ${day} ${hours}:${minutes} @ ${comment.userName} ${comment.userSurname}</p>
-                                <p class="comment-text stylish-text">${comment.commentText}</p>
-                            </div>
-                        `;
-                    }).join('');
-
-                    contentContainer.innerHTML = `
-                        <div class="comments-section">
-                            ${commentsHtml}
-                        </div>
-                    `;
-                })
-                .catch(error => console.error('Error fetching comments:', error));
-        }
-
-        // Function to handle hover end
-        function handleHoverEnd() {
-            contentContainer.innerHTML = originalContent;
-        }
-
-        // Attach the hover handlers
-        button.addEventListener('mouseover', handleHover);
-        button.addEventListener('mouseout', handleHoverEnd);
-    });
-}
-
-
-
 
 
 
@@ -780,7 +769,190 @@ function renderCompletedTasks(completedTasks) {
 
         tasksContainer.appendChild(taskCard);
     });
+    setupCommentHoverEffect();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to fetch and display available tasks
+function fetchAndDisplayAvailableTasks() {
+    fetch('http://localhost:8080/tasks')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(allTasks => {
+            const activeTasks = allTasks.filter(task => task.status === 'ACTIVE');
+            renderAvailableTasks(activeTasks);
+        })
+        .catch(error => {
+            console.error('Error fetching available tasks:', error);
+        });
+}
+
+// Function to render available (active) tasks
+function renderAvailableTasks(activeTasks) {
+    const tasksContainer = document.querySelector('.tasks-container');
+    tasksContainer.innerHTML = ''; // Clear existing tasks
+
+    if (activeTasks.length === 0) {
+        displayNoAvailableWorkMessage();
+    } else {
+        // Sort tasks by ID in descending order to display the latest tasks first
+        activeTasks.sort((a, b) => b.id - a.id);
+
+        activeTasks.forEach(task => {
+            const taskCard = document.createElement('div');
+            taskCard.classList.add('task-card');
+            taskCard.setAttribute('data-task-id', task.id);
+
+            const taskCardHTML = `
+                <div class="task-card-header">
+                    <div class="task-card-status">ACTIVE</div>
+                    <div class="task-card-info">
+                        <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="task-card-content">
+                    <h3 class="task-card-headline">${task.name}</h3>
+                    <p class="task-card-body">${task.description}</p>
+                    <p>Created by: ${task.creatorName} ${task.creatorSurname}</p>
+                </div>
+                <div class="task-card-footer">
+                    <button class="task-card-button primary" id="assignBtn${task.id}">
+                        Assign Task
+                    </button>
+                </div>
+            `;
+
+            taskCard.innerHTML = taskCardHTML;
+            tasksContainer.appendChild(taskCard);
+
+            // Event listener for the 'Assign Task' button
+            const assignBtn = document.getElementById(`assignBtn${task.id}`);
+            assignBtn.addEventListener('click', () => assignTaskToUser(task.id));
+        });
+    }
+}
+// Function to assign a task to the current user with a required comment
+function assignTaskToUser(taskId) {
+    // Prompt user for a comment before assigning the task
+    Swal.fire({
+        title: 'Comment Required',
+        input: 'textarea',
+        inputPlaceholder: 'Your comment...',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        inputValidator: (value) => {
+            if (!value.trim()) {
+                return 'Comment cannot be empty.';
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            // User provided a comment and confirmed the assignment
+            return fetch(`http://localhost:8080/comments`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: result.value,
+                    userId: sessionStorage.getItem('userId'),
+                    taskId: taskId
+                })
+            });
+        } else {
+            throw new Error('Assignment Aborted: No comment was provided.');
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    }).then(commentResponse => {
+        console.log('Comment created:', commentResponse);
+
+        // Update the task status to 'IN_PROGRESS'
+        return fetch(`http://localhost:8080/tasks`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: taskId,
+                status: 'IN_PROGRESS'
+            })
+        });
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    }).then(updateResponse => {
+        console.log('Task status updated:', updateResponse);
+
+        // Create a new UserTask
+        return fetch(`http://localhost:8080/usertasks`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                assignerId: sessionStorage.getItem('userId'),
+                userId: sessionStorage.getItem('userId'),
+                taskId: taskId
+            })
+        });
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    }).then(createResponse => {
+        console.log('UserTask created:', createResponse);
+
+        // Re-fetch Available Work tasks to reflect the changes
+        fetchAndDisplayAvailableTasks();
+
+        // Re-fetch and update the counter for 'New Assigned' tasks
+        fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+
+        // Also, re-fetch and update the counter for 'Available Work' tasks
+        fetchAndUpdateAvailableWorkCount();
+
+    }).catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Assignment aborted!',
+            icon: 'error',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
+    });
+}
+
+
+
 
 
 
@@ -796,6 +968,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
     fetchAndDisplayTasksCount('IN_PROGRESS', '#tasksInProgressCount');
     fetchAndDisplayTasksCount('COMPLETED', '#completedTasksCount');
+    fetchAndUpdateAvailableWorkCount();
 
     // Logout button event listener
     const btnCloseApp = document.getElementById('closeApp');
@@ -828,12 +1001,13 @@ document.addEventListener('DOMContentLoaded', function () {
         card.addEventListener('click', cardClickHandler);
     });
 
-    // Additional event listeners and functions can be added here
+    // Attach event listener to the "Available Work" card
+    const availableWorkCard = document.getElementById('activeTasks');
+    if (availableWorkCard) {
+        availableWorkCard.addEventListener('click', function() {
+            // This function will be triggered when the "Available Work" card is clicked
+            fetchAndDisplayAvailableTasks();
+        });
+    }
+    
 });
-
-
-
-
-
-
-
