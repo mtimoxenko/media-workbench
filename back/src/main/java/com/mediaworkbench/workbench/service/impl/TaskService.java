@@ -17,10 +17,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,8 +83,6 @@ public class TaskService implements ITaskService {
                 .orElseThrow(() -> new CustomNotFoundException("Task id [" + updateTaskRequest.id() + "] not found."));
 
         // Update task fields from request
-        existingTask.setName(updateTaskRequest.name());
-        existingTask.setDescription(updateTaskRequest.description());
         existingTask.setStatus(updateTaskRequest.status()); // Update the status of the task
 
         // No need to update creation date or creator as they should remain constant after initial creation
