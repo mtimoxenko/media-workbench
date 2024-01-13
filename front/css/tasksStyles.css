@@ -29,9 +29,6 @@ body {
     color: var(--app-grey);
 }
 
-main {
-    /* gap: 100px; */
-}
 
 header {
     background-color: var(--negro);
@@ -600,8 +597,8 @@ footer img {
     font-style: italic;
     text-align: start;
     font-weight: bold;
-    /* Additional styles here */
     font-size: small;
+    color: #000000b7;
 }
 
 .stylish-text {
@@ -635,7 +632,7 @@ footer img {
 .add-task-card {
     background: #4caf4fa0; /* Green background for distinction */
     color: white; /* White text for better contrast */
-    border: 2px solid  #fe000076; 
+    border: 2px solid  #fe000076;
 }
 
 .add-task-header {
@@ -673,6 +670,13 @@ footer img {
 .add-template-task-button:hover {
     background: #2e7d32; /* Even darker green on hover */
     opacity: 0.9;
+}
+
+.tasks-from-template {
+    display: flex; /* To center the icon inside the button */
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 
@@ -1001,4 +1005,23 @@ footer img {
     align-items: center; /* Adjust as needed */
     gap: 20px; /* Space between items */
     /* Add any other necessary styling */
+}
+
+
+/* GENERATED TEMPLATE TASKS BUTTONS */
+
+.generated-task-button {
+    background-color: #4a90e2; /* A blue that matches the card headers */
+    color: #ffffff; /* White text for contrast */
+    border: none; /* Assuming no border is needed */
+    padding: 10px 20px; /* Adjustable based on your size preference */
+    font-size: 1em; /* Adjust to match your app's typography */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.generated-task-button:hover {
+    background-color: #357ab8; /* A slightly darker blue for the hover effect */
+    cursor: pointer; /* Change cursor to signify clickable button */
 }

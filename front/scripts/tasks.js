@@ -790,7 +790,7 @@ function renderAddNewTaskCard(tasksContainer) {
     addTaskCard.classList.add('task-card', 'add-task-card');
     addTaskCard.innerHTML = `
         <div class="task-card-header">
-            <div class="task-card-status custom-status">CUSTOM TASK</div>
+            <div class="task-card-status custom-status">CUSTOM CARD</div>
             <div class="task-card-info">
                 <button class="icon-button new-info-button" onclick="displayNewTaskInfo()">
                     <i class="fa-solid fa-circle-info"></i>
@@ -938,14 +938,14 @@ function renderAddNewTemplateTaskCard(tasksContainer) {
     addTemplateTaskCard.classList.add('task-card', 'add-template-task-card');
     addTemplateTaskCard.innerHTML = `
         <div class="task-card-header">
-            <div class="task-card-status template-status">TEMPLATE TASK</div>
+            <div class="task-card-status template-status">TEMPLATE CARD</div>
             <div class="task-card-info">
                 <button class="icon-button template-info-button" onclick="displayTemplateTaskInfo()">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
             </div>
         </div>
-        <div class="new-task-card-content">
+        <div class="new-task-card-content" id="template-task-content">
             <h3>Select a Template for Quick Task Creation</h3>
             <p>Choose from a range of predefined templates.</p>
         </div>
@@ -957,7 +957,7 @@ function renderAddNewTemplateTaskCard(tasksContainer) {
     // Attach the event listener
     const addTemplateTaskBtn = addTemplateTaskCard.querySelector('.add-template-task-button');
     if (addTemplateTaskBtn) {
-        addTemplateTaskBtn.addEventListener('click', createNewTemplateTask);
+        addTemplateTaskBtn.addEventListener('click', createTemplateTaskButton);
     }
 
     tasksContainer.append(addTemplateTaskCard); // Append the card at the end
@@ -973,15 +973,148 @@ function displayTemplateTaskInfo() {
         color: '#fff'
     });
 }
-// Handles the creation of a template task form
-function createNewTemplateTask() {
-    // Logic to create a template task form
-    // Similar to createNewTask but specific to template tasks
+
+// Handles the creation of a template task buttons
+function createTemplateTaskButton() {
+    fetch('../templates/tasks.json') // Replace with the correct path to your tasks.json file
+        .then(response => response.json())
+        .then(templates => {
+            const newTaskCardContent = document.querySelector('#template-task-content');
+            newTaskCardContent.innerHTML = `
+                <h3>Choose a template.</h3>
+                <div class="tasks-from-template">
+                    ${templates.map(template => `
+                        <button class="generated-task-button" onclick="renderTemplateDetails(${template.id})">
+                            ${template.btn}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        })
+        .catch(error => console.error('Error fetching templates:', error));
 }
-// Function to submit a template task
-function submitTemplateTask() {
-    // Logic to submit the template task data to the server
+
+function renderTemplateDetails(templateId) {
+    fetch('../templates/tasks.json')
+        .then(response => response.json())
+        .then(templates => {
+            const template = templates.find(t => t.id === templateId);
+            if (template) {
+                const taskDetailsContainer = document.querySelector('.add-template-task-card');
+                
+
+                // Update the task details container with the selected template's details
+                taskDetailsContainer.innerHTML = `
+                                            
+                <div class="task-card-header">
+                    <div class="task-card-status template-status">TEMPLATE TASK</div>
+                    <div class="task-card-info">
+                        <button class="icon-button template-info-button" onclick="displayTemplateTaskInfo()">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="new-task-card-content" id="template-task-content">
+                    <h3>${template.name}</h3>
+                    <p>${template.description}</p>
+                </div>
+                <div class="task-card-footer">
+                    <button class="task-card-button cancel-task-button" onclick="resetTemplateTaskCard()">Cancel</button>
+                    <button class="task-card-button submit-task-button" onclick="submitTemplateTask(1)">Submit</button>
+                </div>
+
+                `;
+
+                const taskCardFooter = document.querySelector('.task-card-footer');
+
+                // Adjust the footer to space the buttons appropriately
+                taskCardFooter.style.display = 'flex';
+                taskCardFooter.style.justifyContent = 'space-around';
+                taskCardFooter.style.alignItems = 'center';
+                taskCardFooter.style.gap = '10px';
+
+            }
+        })
+        .catch(error => console.error('Error fetching template details:', error));
 }
+
+function resetTemplateTaskCard() {
+    const taskDetailsContainer = document.querySelector('.add-template-task-card');
+    taskDetailsContainer.innerHTML = `
+        <div class="task-card-header">
+            <div class="task-card-status template-status">TEMPLATE CARD</div>
+            <div class="task-card-info">
+                <button class="icon-button template-info-button" onclick="displayTemplateTaskInfo()">
+                    <i class="fa-solid fa-circle-info"></i>
+                </button>
+            </div>
+        </div>
+        <div class="new-task-card-content" id="template-task-content">
+            <h3>Select a Template for Quick Task Creation</h3>
+            <p>Choose from a range of predefined templates.</p>
+        </div>
+        <div class="task-card-footer">
+            <button class="task-card-button add-template-task-button">+ Template Task</button>
+        </div>
+    `;
+
+    // Reattach the event listener to the '+ Template Task' button
+    const addTemplateTaskBtn = taskDetailsContainer.querySelector('.add-template-task-button');
+    if (addTemplateTaskBtn) {
+        addTemplateTaskBtn.addEventListener('click', createTemplateTaskButton);
+    }
+}
+
+
+// This function is specifically for submitting a template task
+function submitTemplateTask(templateId) {
+    fetch('../templates/tasks.json') // Replace with the actual path to your tasks.json file
+        .then(response => response.json())
+        .then(templates => {
+            const template = templates.find(t => t.id === templateId);
+            if (!template) {
+                throw new Error('Template not found.');
+            }
+
+            // Construct the task data from the template
+            const taskData = {
+                name: template.name,
+                description: template.description,
+                creatorId: sessionStorage.getItem('userId') // Assuming the creatorId is stored as a string
+            };
+
+            // Proceed with the fetch request to submit the task data
+            return fetch('http://localhost:8080/tasks', { // Make sure this is the correct endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(taskData)
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text(); // Expecting a text response, not JSON
+        })
+        .then(result => {
+            alert(`Task Submitted: ${result}`);
+            // Add any additional logic here for after a successful submission
+            // For example, updating the UI or redirecting the user
+                    // Re-fetch the available work count and cards
+            fetchAndDisplayAvailableTasks();
+            // Re-fetch and update the counter for 'Available Work' tasks
+            fetchAndUpdateAvailableWorkCount();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(`An error occurred while submitting the task: ${error.message}`);
+        });
+}
+
+
+
 
 
 
@@ -1065,10 +1198,11 @@ function renderAvailableTasks(activeTasks) {
             // Event listener for the 'Assign Task' button
             const assignBtn = document.getElementById(`assignBtn${task.id}`);
             assignBtn.addEventListener('click', () => assignTaskToUser(task.id));
+
+
         });
     }
 }
-
 // Assigns a task to the current user with a required comment
 function assignTaskToUser(taskId) {
     // Prompt user for a comment before assigning the task
@@ -1231,3 +1365,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderAddNewTaskCard(tasksContainer);
     
 });
+
+
+
+
