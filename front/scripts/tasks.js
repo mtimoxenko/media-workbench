@@ -1,9 +1,9 @@
-// Check if JWT is not set or not equal to 1, redirect to index.html
+// Redirects to index.html if JWT is not set or not equal to 1
 if (!sessionStorage.getItem('jwt') || JSON.parse(sessionStorage.getItem('jwt')) !== 1) {
     window.location.replace('./index.html');
 }
 
-// Function to update the displayed username from session storage
+// Updates the displayed username from session storage
 function updateUsernameDisplay() {
     const userNameDisplay = document.querySelector('.user-info p');
     const storedUsername = sessionStorage.getItem('userName');
@@ -16,7 +16,7 @@ function updateUsernameDisplay() {
 
 
 
-// Function to cancel the task
+// Cancels a user task with a required comment
 function cancelTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
     // console.log("taskId", taskId);
@@ -109,7 +109,7 @@ function cancelTask(userTaskId, taskId) {
         });
     });
 }
-// Function to initiate the task
+// Initiates a task, updating its status to 'IN_PROGRESS'
 function initiateTask(userTaskId, taskId) {
     fetch(`http://localhost:8080/usertasks`, {
         method: 'PUT',
@@ -168,7 +168,7 @@ function initiateTask(userTaskId, taskId) {
         });
     });
 }
-// Function to complete a task with a comment
+// Completes a task with a required comment
 function completeTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
 
@@ -272,7 +272,7 @@ function completeTask(userTaskId, taskId) {
 
 
 
-// Function to add a comment to a task
+// Adds a comment to a task
 function addCommentToTask(taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
 
@@ -331,7 +331,7 @@ function addCommentToTask(taskId) {
         // If you want to do nothing, you can leave this catch block empty
     });
 }
-// Function to fetch task information and display it
+// Sets up hover effect to display comments on task info buttons
 function fetchTaskInfo(taskId) {
     fetch(`http://localhost:8080/tasks/${taskId}`)
         .then(response => {
@@ -344,7 +344,8 @@ function fetchTaskInfo(taskId) {
             // Use Swal.fire to display the task description
             Swal.fire({
                 title: taskInfo.name,
-                html: `<p style="color:#fff;">${taskInfo.description}</p>`, // Using html to inject inline styles
+                html: `<p class="task-description">${taskInfo.description}</p>
+                       <p class="task-creator-info">Created by @${taskInfo.creatorName} ${taskInfo.creatorSurname}</p>`, // Including creator's information
                 icon: 'info',
                 background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
                 confirmButtonColor: '#3085d6', // Use a blue color for the confirm button
@@ -356,7 +357,7 @@ function fetchTaskInfo(taskId) {
             // Optionally, handle errors or display a message if the fetch fails
         });
 }
-// Display comments on info hover
+// Displays a message when there are no new assigned tasks
 function setupCommentHoverEffect() {
     // Select all info buttons
     const infoButtons = document.querySelectorAll('.icon-button.info-button');
@@ -373,14 +374,15 @@ function setupCommentHoverEffect() {
                 fetch(`http://localhost:8080/tasks/${taskId}`)
                     .then(response => response.json())
                     .then(task => {
-                        const lastThreeComments = task.comments.slice(-2);
+                        const lastThreeComments = task.comments.slice(-3);
                         const commentsHtml = lastThreeComments.map(comment => {
                             const date = new Date(comment.commentTimestamp);
-                            const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().substr(-2)} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-
+                            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} at ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                            
                             return `
                                 <div class="comment">
-                                    <p class="comment-timestamp cursive">${formattedDate} @ ${comment.userName} ${comment.userSurname}</p>
+                                    <p class="comment-timestamp cursive">${formattedDate} @${comment.userName} ${comment.userSurname}</p>
                                     <p class="comment-text stylish-text">${comment.commentText}</p>
                                 </div>
                             `;
@@ -410,7 +412,7 @@ function setupCommentHoverEffect() {
 
 
 
-// Function to display a message when there are no "New Assigned" tasks
+// Displays a message when there are no new assigned tasks
 function displayNoTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
@@ -422,8 +424,7 @@ function displayNoTasksMessage() {
     `;
     // Add additional styling as needed
 }
-
-// Function to display a message when there are no tasks in progress
+// Displays a message when there are no tasks in progress
 function displayNoInProgressTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
@@ -435,8 +436,7 @@ function displayNoInProgressTasksMessage() {
     `;
     // Add additional styling as needed
 }
-
-// Function to display a message when there are no completed tasks
+// Displays a message when there are no completed tasks
 function displayNoCompletedTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
@@ -448,18 +448,15 @@ function displayNoCompletedTasksMessage() {
     `;
     // Add additional styling as needed
 }
-
-// Function to display a message when there are no available work tasks
-function displayNoAvailableWorkMessage() {
-    const tasksContainer = document.querySelector('.tasks-container');
-    tasksContainer.innerHTML = `
+// Displays a message when there are no available work tasks
+function displayNoAvailableWorkMessage(container) {
+    container.innerHTML = `
         <div class="no-tasks-message">
             <h2>No Available Work Right Now 🤔</h2>
-            <p>No tasks on the horizon? Use this time to brainstorm and create a new task! 🌱</p>
-            <p>Alternatively, check "New Assigned Tasks" or "Tasks in Progress" for more activities.</p>
+            <p>Looking for something to do? Create a new task using the Custom or Template Task cards above! 🌱</p>
+            <p>You can also check "New Assigned Tasks" or "Tasks in Progress" to find other activities.</p>
         </div>
     `;
-    // Add additional styling as needed
 }
 
 
@@ -467,7 +464,8 @@ function displayNoAvailableWorkMessage() {
 
 
 
-// Function to handle card clicks
+
+// Handles clicks on task cards
 function cardClickHandler(event) {
     const cardId = event.currentTarget.id;
 
@@ -480,7 +478,7 @@ function cardClickHandler(event) {
     }
 }
 
-// Function to fetch tasks and update counts for a given task status
+// Fetches and displays task counts based on status
 function fetchAndDisplayTasksCount(status, countElementId) {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
@@ -507,7 +505,7 @@ function fetchAndDisplayTasksCount(status, countElementId) {
             console.error(`Error fetching tasks for status ${status}:`, error);
         });
 }
-// Function to fetch and update the count of available work tasks
+// Fetches and updates the count of available work tasks
 function fetchAndUpdateAvailableWorkCount() {
     fetch('http://localhost:8080/tasks')
         .then(response => {
@@ -530,10 +528,13 @@ function fetchAndUpdateAvailableWorkCount() {
 
 
 
-// Function to render assigned tasks into the tasks-container
+// Renders assigned tasks into the tasks container
 function renderAssignedTasks(assignedTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = ''; // Clear any existing tasks
+
+    // Remove the 'available-work-container' class
+    tasksContainer.classList.remove('available-work-container');
 
     // Sort the tasks by assignmentDate, most recent first
     assignedTasks.sort((a, b) => new Date(b.assignmentDate) - new Date(a.assignmentDate));
@@ -597,7 +598,7 @@ function renderAssignedTasks(assignedTasks) {
     });
     setupCommentHoverEffect();
 }
-
+// Updates a task card to show confirmation options
 function updateTaskCardForConfirmation(taskCard, action) {
     const headline = taskCard.querySelector('.task-card-headline');
     const subhead = taskCard.querySelector('.task-card-subhead');
@@ -628,7 +629,7 @@ function updateTaskCardForConfirmation(taskCard, action) {
 
 
 
-// Function to fetch and display in-progress tasks
+// Fetches and displays in-progress tasks
 function fetchAndDisplayInProgressTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
@@ -652,10 +653,13 @@ function fetchAndDisplayInProgressTasks() {
             console.error(`Error fetching in-progress tasks:`, error);
         });
 }
-// Function to render in-progress tasks
+// Renders in-progress tasks
 function renderInProgressTasks(inProgressTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = ''; // Clear the tasks container before rendering
+
+    // Remove the 'available-work-container' class
+    tasksContainer.classList.remove('available-work-container');
 
     if (inProgressTasks.length === 0) {
         // If there are no tasks in progress, display the no tasks message
@@ -713,7 +717,7 @@ function renderInProgressTasks(inProgressTasks) {
 
 
 
-// Function to fetch and display completed tasks
+// Fetches and displays completed tasks
 function fetchAndDisplayCompletedTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
@@ -737,10 +741,13 @@ function fetchAndDisplayCompletedTasks() {
             console.error(`Error fetching completed tasks:`, error);
         });
 }
-// Function to render completed tasks
+// Renders completed tasks
 function renderCompletedTasks(completedTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = '';
+
+    // Remove the 'available-work-container' class
+    tasksContainer.classList.remove('available-work-container');
 
     completedTasks.sort((a, b) => new Date(b.assignmentDate) - new Date(a.assignmentDate));
 
@@ -776,6 +783,205 @@ function renderCompletedTasks(completedTasks) {
 
 
 
+// CUSTOM TASKS
+// Renders 'Add New Task' card for exclusively creating custom tasks
+function renderAddNewTaskCard(tasksContainer) {
+    const addTaskCard = document.createElement('div');
+    addTaskCard.classList.add('task-card', 'add-task-card');
+    addTaskCard.innerHTML = `
+        <div class="task-card-header">
+            <div class="task-card-status custom-status">CUSTOM TASK</div>
+            <div class="task-card-info">
+                <button class="icon-button new-info-button" onclick="displayNewTaskInfo()">
+                    <i class="fa-solid fa-circle-info"></i>
+                </button>
+            </div>
+        </div>
+        <div class="new-task-card-content">
+            <h3>Create Your Custom Task</h3>
+            <p>Personalize tasks to fit your specific needs.</p>
+        </div>
+        <div class="task-card-footer">
+            <button class="task-card-button add-task-button">+ Custom Task</button>
+        </div>
+    `;
+
+    // Attach the event listener right after creating the button
+    const addTaskBtn = addTaskCard.querySelector('.add-task-button');
+    if (addTaskBtn) {
+        addTaskBtn.addEventListener('click', createNewTask);
+    }
+
+    tasksContainer.prepend(addTaskCard); // Place the card at the beginning
+}
+// Displays a custom message for the new task info button
+function displayNewTaskInfo() {
+    Swal.fire({
+        title: 'Create Your Custom Task',
+        html: "<p style='color:#fff;'>Use the '+ New Task' button to design tasks tailored to your specific requirements and objectives.</p>",
+        icon: 'info',
+        confirmButtonText: 'Got it!',
+        background: 'rgba(0, 0, 0, 0.8)',
+        color: '#fff'
+    });
+}
+// Handles the creation of a custom task form when '+ New Task' is clicked
+function createNewTask() {
+    // Change task card status to CUSTOM
+    const taskCardStatus = document.querySelector('.task-card-status');
+    taskCardStatus.textContent = 'CUSTOM TASK';
+
+    // Set new inner HTML with form-like inputs for custom task
+    const newTaskCardContent = document.querySelector('.new-task-card-content');
+    newTaskCardContent.style.position = 'relative'; // Ensure relative positioning for absolute child
+    newTaskCardContent.innerHTML = `
+        <div class="custom-field two">
+            <input type="text" id="taskName" placeholder="Task Name" required>
+            <label class="placeholder" for="taskName"></label>
+        </div>
+        <div class="custom-field two">
+            <input type="text" id="taskDescription" placeholder="Task Description" required>
+            <label class="placeholder" for="taskDescription"></label>
+        </div>
+    `;
+
+    // Transform the '+ New Task' button into 'Cancel' and 'Submit' buttons in the footer
+    const taskCardFooter = document.querySelector('.task-card-footer');
+    taskCardFooter.innerHTML = `
+        <button class="task-card-button cancel-task-button">Cancel</button>
+        <button class="task-card-button submit-task-button">Submit</button>
+    `;
+
+    // Adjust the footer to space the buttons appropriately
+    taskCardFooter.style.display = 'flex';
+    taskCardFooter.style.justifyContent = 'space-around';
+    taskCardFooter.style.alignItems = 'center';
+    taskCardFooter.style.gap = '10px';
+
+    // Add event listeners to Cancel and Submit buttons
+    document.querySelector('.cancel-task-button').addEventListener('click', resetTaskCard);
+    document.querySelector('.submit-task-button').addEventListener('click', submitTask);
+}
+// Resets the task card to its original state for custom tasks
+function resetTaskCard() {
+    // Reset the content of the .new-task-card-content div to its original state
+    const newTaskCardContent = document.querySelector('.new-task-card-content');
+    newTaskCardContent.innerHTML = `
+        <h3>Create Your Custom Task</h3>
+        <p>Personalize tasks to fit your specific needs.</p>
+    `;
+    // Reset task card status to CUSTOM TASK
+    const taskCardStatus = document.querySelector('.task-card-status');
+    taskCardStatus.textContent = 'CUSTOM TASK';
+
+    // Transform the 'Cancel' button back to '+ New Task'
+    const taskCardFooter = document.querySelector('.task-card-footer');
+    taskCardFooter.innerHTML = `
+        <button class="task-card-button add-task-button">+ New Task</button>
+    `;
+
+    // Attach event listener to the '+ New Task' button
+    document.querySelector('.add-task-button').addEventListener('click', createNewTask);
+}
+// Handles the 'Custom' button click to create inputs for a new task
+function handleCustomButton() {
+    createNewTask(); // Call createNewTask to revert to the custom task creation form
+}
+// Submits a new task to the server after validating the input fields are not empty
+function submitTask() {
+    // Get values from input fields
+    const taskName = document.getElementById('taskName').value.trim();
+    const taskDescription = document.getElementById('taskDescription').value.trim();
+    
+    // Check if inputs are empty
+    if (!taskName || !taskDescription) {
+        alert('Please fill in both the task name and description.');
+        return; // Exit the function if validation fails
+    }
+
+    // Prepare the task data with the user ID from session storage
+    const taskData = {
+        name: taskName,
+        description: taskDescription,
+        creatorId: JSON.parse(sessionStorage.getItem('userId'))
+    };
+
+    // Continue with the fetch request if validation is successful
+    fetch('http://localhost:8080/tasks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskData)
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert(`Response: ${result}`);
+        // Re-fetch the available work count and cards
+        fetchAndDisplayAvailableTasks();
+        // Re-fetch and update the counter for 'Available Work' tasks
+        fetchAndUpdateAvailableWorkCount();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+
+
+// TEMPLATE TASKS
+// Renders 'Add New Template Task' card
+function renderAddNewTemplateTaskCard(tasksContainer) {
+    const addTemplateTaskCard = document.createElement('div');
+    addTemplateTaskCard.classList.add('task-card', 'add-template-task-card');
+    addTemplateTaskCard.innerHTML = `
+        <div class="task-card-header">
+            <div class="task-card-status template-status">TEMPLATE TASK</div>
+            <div class="task-card-info">
+                <button class="icon-button template-info-button" onclick="displayTemplateTaskInfo()">
+                    <i class="fa-solid fa-circle-info"></i>
+                </button>
+            </div>
+        </div>
+        <div class="new-task-card-content">
+            <h3>Select a Template for Quick Task Creation</h3>
+            <p>Choose from a range of predefined templates.</p>
+        </div>
+        <div class="task-card-footer">
+            <button class="task-card-button add-template-task-button">+ Template Task</button>
+        </div>
+    `;
+
+    // Attach the event listener
+    const addTemplateTaskBtn = addTemplateTaskCard.querySelector('.add-template-task-button');
+    if (addTemplateTaskBtn) {
+        addTemplateTaskBtn.addEventListener('click', createNewTemplateTask);
+    }
+
+    tasksContainer.append(addTemplateTaskCard); // Append the card at the end
+}
+// Displays a custom message for the template task info button
+function displayTemplateTaskInfo() {
+    Swal.fire({
+        title: 'Use Templates for Efficiency',
+        html: "<p style='color:#fff;'>Select from existing templates to quickly set up common task types.</p>",
+        icon: 'info',
+        confirmButtonText: 'Understood',
+        background: 'rgba(0, 0, 0, 0.8)',
+        color: '#fff'
+    });
+}
+// Handles the creation of a template task form
+function createNewTemplateTask() {
+    // Logic to create a template task form
+    // Similar to createNewTask but specific to template tasks
+}
+// Function to submit a template task
+function submitTemplateTask() {
+    // Logic to submit the template task data to the server
+}
 
 
 
@@ -784,7 +990,7 @@ function renderCompletedTasks(completedTasks) {
 
 
 
-// Function to fetch and display available tasks
+// Fetches and displays available tasks
 function fetchAndDisplayAvailableTasks() {
     fetch('http://localhost:8080/tasks')
         .then(response => {
@@ -801,14 +1007,33 @@ function fetchAndDisplayAvailableTasks() {
             console.error('Error fetching available tasks:', error);
         });
 }
-
-// Function to render available (active) tasks
+// Renders available (active) tasks
 function renderAvailableTasks(activeTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = ''; // Clear existing tasks
 
+    // Add the 'available-work-container' class
+    tasksContainer.classList.add('available-work-container');
+
+    // Create a container for special task cards (Custom and Template)
+    const specialTasksContainer = document.createElement('div');
+    specialTasksContainer.classList.add('special-tasks-container');
+
+    // Create a container for the rest of the active tasks
+    const activeTasksContainer = document.createElement('div');
+    activeTasksContainer.classList.add('active-tasks-container');
+
+    // Append the special task container and active task container to the tasks container
+    tasksContainer.appendChild(specialTasksContainer);
+    tasksContainer.appendChild(activeTasksContainer);
+
+    // Call function to render Custom Task card and Template Task card inside the special tasks container
+    renderAddNewTaskCard(specialTasksContainer);
+    // Assuming you have a similar function for Template Task card
+    renderAddNewTemplateTaskCard(specialTasksContainer);
+
     if (activeTasks.length === 0) {
-        displayNoAvailableWorkMessage();
+        displayNoAvailableWorkMessage(activeTasksContainer);
     } else {
         // Sort tasks by ID in descending order to display the latest tasks first
         activeTasks.sort((a, b) => b.id - a.id);
@@ -821,16 +1046,11 @@ function renderAvailableTasks(activeTasks) {
             const taskCardHTML = `
                 <div class="task-card-header">
                     <div class="task-card-status">ACTIVE</div>
-                    <div class="task-card-info">
-                        <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
-                    </div>
                 </div>
                 <div class="task-card-content">
                     <h3 class="task-card-headline">${task.name}</h3>
                     <p class="task-card-body">${task.description}</p>
-                    <p>Created by: ${task.creatorName} ${task.creatorSurname}</p>
+                    <p class="task-card-subhead">Created by: ${task.creatorName} ${task.creatorSurname}</p>
                 </div>
                 <div class="task-card-footer">
                     <button class="task-card-button primary" id="assignBtn${task.id}">
@@ -840,7 +1060,7 @@ function renderAvailableTasks(activeTasks) {
             `;
 
             taskCard.innerHTML = taskCardHTML;
-            tasksContainer.appendChild(taskCard);
+            activeTasksContainer.appendChild(taskCard);
 
             // Event listener for the 'Assign Task' button
             const assignBtn = document.getElementById(`assignBtn${task.id}`);
@@ -848,7 +1068,8 @@ function renderAvailableTasks(activeTasks) {
         });
     }
 }
-// Function to assign a task to the current user with a required comment
+
+// Assigns a task to the current user with a required comment
 function assignTaskToUser(taskId) {
     // Prompt user for a comment before assigning the task
     Swal.fire({
@@ -953,11 +1174,6 @@ function assignTaskToUser(taskId) {
 
 
 
-
-
-
-
-
 // Event listener for DOMContentLoaded to ensure the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     AOS.init(); // Initialize animations
@@ -1009,5 +1225,9 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchAndDisplayAvailableTasks();
         });
     }
+
+    // Assuming tasksContainer is defined and accessible here
+    const tasksContainer = document.querySelector('.tasks-container');
+    renderAddNewTaskCard(tasksContainer);
     
 });

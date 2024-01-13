@@ -29,6 +29,10 @@ body {
     color: var(--app-grey);
 }
 
+main {
+    /* gap: 100px; */
+}
+
 header {
     background-color: var(--negro);
     padding: 1rem 5%;
@@ -112,6 +116,7 @@ nav .user-info button {
     width: 100%;
     /* max-width: 1200px; */
     margin: 0 auto;
+    /* margin-bottom: 200px; */
 }
 
 .cards-container {
@@ -245,11 +250,11 @@ footer img {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-bottom: 50px;
 }
 
 .task-card {
     background: rgba(106, 142, 199, 0.157);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     width: 300px;
     height: 400px;
@@ -258,7 +263,16 @@ footer img {
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: box-shadow 0.3s ease; /* Smooth transition for the shadow effect */
 }
+
+.task-card:hover {
+    box-shadow: 0 4px 8px rgb(72, 169, 218); /* Subtle shadow */
+}
+
+
+
+
 
 .task-card-image {
     width: 100%;
@@ -280,6 +294,33 @@ footer img {
     color: #ffffff; /* White text for better contrast */
 }
 
+.new-task-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: row; /* Align items in a row */
+    flex-wrap: wrap; /* Wrap items to next line when there's no more space */
+    justify-content:space-around; /* Align items to the start of the container */
+    align-items: center; /* Vertically center items in their line */
+    text-align: center;
+    width: 100%; /* Take the full width of the parent container */
+    flex-grow: 1; /* Allow the container to grow if needed */
+    background: rgba(143, 177, 231, 0.436); /* Color for content */
+    color: #ffffff; /* White text for better contrast */
+    gap: 10px; /* Space between buttons */
+}
+
+.new-task-card-content .task-card-button {
+    margin: 5px; /* Give some space around buttons */
+    flex: 0 1 auto; /* Do not grow, allow shrinking, and base size on content */
+    padding: 10px 15px; /* Padding inside buttons */
+    white-space: nowrap; /* Prevent the text inside the button from wrapping */
+    overflow: hidden; /* Prevent content from spilling outside */
+    text-overflow: ellipsis; /* Add an ellipsis when text overflows */
+    width: 110px; /* Fixed width */
+    height: 40px; /* Fixed height */
+}
+
+
 .task-card-headline {
     font-size: 24px;
     margin-bottom: 8px;
@@ -288,8 +329,9 @@ footer img {
 }
 
 .task-card-subhead {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 16px;
+    font-style: italic;
 }
 
 .task-card-body {
@@ -316,6 +358,13 @@ footer img {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
+
+
+
+
+
+
 
 .task-card-button {
     border: none;
@@ -493,7 +542,7 @@ footer img {
 
 /* INFO BUTTON */
 .info-button i {
-    color: #58a6ff; /* A brighter blue for better visibility */
+    color: #7eb4f1; /* A brighter blue for better visibility */
     font-size: 1.5em;
     transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
 }
@@ -549,12 +598,407 @@ footer img {
 
 .cursive {
     font-style: italic;
-    text-align: center;
+    text-align: start;
     font-weight: bold;
     /* Additional styles here */
+    font-size: small;
 }
 
 .stylish-text {
     /* Define your custom styles here */
     text-align: center;
+}
+
+
+/* TASK INFO POPUP */
+
+/* Style for task description */
+.task-description {
+    color: #fff; /* White color for text */
+    /* Add any other styles you need for the task description */
+}
+
+/* Style for task creator information */
+.task-creator-info {
+    color: #fff; /* White color for text */
+    font-style: italic; /* Italicize the text */
+    text-align: center;
+    font-weight: bold;
+    /* Additional styles here */
+    font-size: small;
+    margin-top: 25px;
+}
+
+
+
+/* ADD NEW TASK CARD */
+.add-task-card {
+    background: #4caf4fa0; /* Green background for distinction */
+    color: white; /* White text for better contrast */
+    border: 2px solid  #fe000076; 
+}
+
+.add-task-header {
+    background: rgba(0, 0, 0, 0.1); /* Slightly darker header for visual separation */
+}
+
+.add-task-button {
+    background: #388e3c; /* Darker green for the button */
+    color: white;
+    border: 1px solid  #00000076;
+}
+
+.add-task-button:hover {
+    background: #2e7d32; /* Even darker green on hover */
+    opacity: 0.9;
+}
+
+.custom-status {
+    border: 1px solid  #00000076;
+}
+
+/* ADD NEW TEMPLATE TASK CARD */
+.add-template-task-card {
+    background: #dde02c99; /* Green background for distinction */
+    color: whitergba(219, 222, 28, 0.487);
+    border: 2px solid  #fe000076; 
+}
+
+.add-template-task-button {
+    background: #388e3c; /* Darker green for the button */
+    color: white;
+    border: 1px solid  #00000076;
+}
+
+.add-template-task-button:hover {
+    background: #2e7d32; /* Even darker green on hover */
+    opacity: 0.9;
+}
+
+
+
+
+/* NEW INFO BUTTON */
+.new-info-button i {
+    color: #24fda2; /* A brighter blue for better visibility */
+    font-size: 1.5em;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
+}
+
+.new-info-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2); /* Light background for visibility */
+}
+
+.new-info-button:hover i {
+    transform: scale(1.1); /* Only scaling, no translation */
+    color: #c3fcce; /* A deeper blue for interactive feedback */
+}
+
+.new-info-button {
+    padding: 5px; /* Provide some padding around the icon */
+    border-radius: 50%; /* Round the button */
+    display: flex; /* To center the icon inside the button */
+    justify-content: center;
+    align-items: center;
+    /* Removed position absolute, top, and right properties */
+    z-index: 2; /* Ensure it's above other content */
+}
+
+.new-info-button:focus {
+    outline: none; /* You may want to add a custom focus style for accessibility */
+}
+
+
+
+/* NEW INFO TEMPLATE */
+.template-info-button i {
+    color: #e8f929; /* A brighter blue for better visibility */
+    font-size: 1.5em;
+    transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for transform and color */
+}
+
+.template-info-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2); /* Light background for visibility */
+}
+
+.template-info-button:hover i {
+    transform: scale(1.1); /* Only scaling, no translation */
+    color: #fdffd3; /* A deeper blue for interactive feedback */
+}
+
+.template-info-button {
+    padding: 5px; /* Provide some padding around the icon */
+    border-radius: 50%; /* Round the button */
+    display: flex; /* To center the icon inside the button */
+    justify-content: center;
+    align-items: center;
+    /* Removed position absolute, top, and right properties */
+    z-index: 2; /* Ensure it's above other content */
+}
+
+.template-info-button:focus {
+    outline: none; /* You may want to add a custom focus style for accessibility */
+}
+
+
+
+.generated-task-button {
+    /* Styles for buttons generated from fetch */
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.cancel-task-button {
+    /* Unique styles for the Cancel button */
+    background-color: #e4453aa9; /* Red background */
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+.footer-task-button {
+    /* Styles to control the size of the buttons */
+    width: 100px;  /* Example width */
+    height: 40px;  /* Example height */
+    padding: 10px;
+    /* Other styling properties can go here */
+}
+
+
+
+
+/* TEMPLATE BUTTON */
+.template-task-button {
+    padding: 10px; /* Provide some padding around the icon */
+    border-radius: 50%; /* Round the button */
+    display: flex; /* To center the icon inside the button */
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Ensure it's above other content */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    background-color: transparent; /* Adjusted to match the card's blue theme */
+    border: none; /* No border */
+    cursor: pointer; /* Indicates an interactive element */
+    outline: none; /* Removes default focus outline */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    /* margin-top: 15px; */
+}
+
+.template-status {
+    border: 1px solid  #00000076;
+}
+
+.template-task-button i {
+    color: #82efef9b; /* White color for better contrast */
+    font-size: 1.5em; /* Adjust size as needed */
+}
+
+.template-task-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    background-color: #53e2ad40; /* Brighter blue for interactive feedback */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Increased shadow on hover for more depth */
+}
+
+.template-task-button:hover i {
+    color: #82efef; /* Maintains white color on hover for consistency */
+}
+
+
+/* CUSTOM2 BUTTON */
+.custom-2-button {
+    padding: 10px; /* Provide some padding around the icon */
+    border-radius: 50%; /* Round the button */
+    display: flex; /* To center the icon inside the button */
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Ensure it's above other content */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    background-color: transparent; /* Adjusted to match the card's blue theme */
+    border: none; /* No border */
+    cursor: pointer; /* Indicates an interactive element */
+    outline: none; /* Removes default focus outline */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    /* margin-bottom: 15px; */
+}
+
+.custom-2-button i {
+    color: #82efef9b; /* White color for better contrast */
+    font-size: 1.5em; /* Adjust size as needed */
+}
+
+.custom-2-button:hover {
+    transform: translateY(-3px) scale(1.1);
+    background-color: #53e2ad40; /* Brighter blue for interactive feedback */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Increased shadow on hover for more depth */
+}
+
+.custom-2-button:hover i {
+    color: #82efef; /* Maintains white color on hover for consistency */
+}
+
+
+
+
+
+/* Custom Field Styles */
+.custom-field {
+    position: relative;
+    font-size: 14px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: block; /* Change to block for full-width fields */
+    --field-padding: 12px;
+}
+
+.custom-field input, .custom-field textarea {
+    border: none;
+    background: transparent;
+    padding: var(--field-padding);
+    border-radius: 3px;
+    width: 80%; /* Adjusted to full width */
+    outline: none;
+    font-size: 12px;
+    text-align: center;
+}
+
+.custom-field .placeholder {
+    position: absolute;
+    left: var(--field-padding);
+    top: 22px;
+    transform: translateY(-50%);
+    transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+.custom-field.two input, .custom-field.two textarea {
+    background: linear-gradient(90deg, #6f6c6c, #6f6c6c) center bottom/0 0.15em no-repeat,
+                linear-gradient(90deg, rgba(144, 214, 96, 0.68), rgba(145, 177, 238, 0.69)) left bottom/100% 0.15em no-repeat,
+                linear-gradient(90deg, transparent, transparent) left bottom/100% no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.custom-field.two input:not(:placeholder-shown),
+.custom-field.two input:focus,
+.custom-field.two textarea:not(:placeholder-shown),
+.custom-field.two textarea:focus {
+    background-size: 100% 0.15em, 100% 0.1em, 100%;
+}
+
+
+
+/* Cancel button specific styles */
+.cancel-task-button {
+    background-color: #e57373; /* Red color for cancel button */
+    color: white;
+}
+
+.cancel-task-button:hover {
+    background-color: #ef5350; /* Slightly darker red on hover */
+}
+
+/* Submit button specific styles */
+.submit-task-button {
+    background-color: #4caf50; /* Green color for submit button */
+    color: white;
+}
+
+.submit-task-button:hover {
+    background-color: #43a047; /* Slightly darker green on hover */
+}
+
+
+/* Custom Button, similar to the Template button */
+.custom-task-button {
+    padding: 10px; /* Provide padding around the icon */
+    border-radius: 50%; /* Circular button */
+    display: flex; /* Center the icon */
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Above other content */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+    background-color: #4caf50; /* Green background to match the submit button */
+    border: none; /* No border for a cleaner look */
+    cursor: pointer; /* Indicate clickable button */
+    outline: none; /* No focus outline to keep the design clean */
+    position: absolute; /* Absolute position to place the button */
+    top: 50%; /* Center vertically */
+    left: 10px; /* Place to the left */
+    transform: translateY(-50%); /* Center vertically */
+}
+
+.custom-task-button i {
+    color: #fff; /* White color for the icon */
+    font-size: 1.5em; /* Size of the icon */
+}
+
+.custom-task-button:hover {
+    background-color: #43a047; /* Darker green for hover state */
+    transform: translateY(-3px) scale(1.1); /* Lift and enlarge on hover */
+}
+
+.custom-task-button:hover i {
+    color: #bbffbb; /* Slightly lighter green on hover for the icon */
+}
+
+/* Adjust the Submit and Cancel buttons to fit the new design */
+.submit-task-button,
+.cancel-task-button {
+    padding: 10px 20px; /* Padding to increase tap area */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #4caf50; /* Green background for submit */
+    color: white; /* White text */
+    border: none; /* No border */
+    cursor: pointer; /* Cursor pointer */
+    transition: background-color 0.3s; /* Smooth transition for background */
+}
+
+.submit-task-button:hover {
+    background-color: #43a047; /* Darker green on hover */
+}
+
+.cancel-task-button {
+    background-color: #f44336; /* Red background for cancel */
+}
+
+.cancel-task-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+
+/* SPECIAL CARDS CONTAINER */
+.special-tasks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.active-tasks-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+.available-work-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Adjust as needed */
+    gap: 20px; /* Space between items */
+    /* Add any other necessary styling */
 }

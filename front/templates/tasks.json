@@ -1,0 +1,27 @@
+[
+    {
+        "btn": "EDGE",
+        "name": "Mantenimiento EDGE",
+        "description": "Realizar mantenimiento de rutina y actualizaciones en la infraestructura de la red EDGE."
+    },
+    {
+        "btn": "FMC",
+        "name": "Alarmas FMC",
+        "description": "Monitorear y responder a las alarmas en el Centro de Gestión de Fallas (FMC)."
+    },
+    {
+        "btn": "GRFANA",
+        "name": "Controles de Salud Grafana",
+        "description": "Realizar revisiones regulares de salud y monitoreo de flujos de red utilizando Grafana."
+    },
+    {
+        "btn": "ICD",
+        "name": "TTs ICD Pendientes",
+        "description": "Resolver Tickets de Problemas pendientes relacionados con problemas y consultas de ICD."
+    },
+    {
+        "btn": "QWILT",
+        "name": "Gestión Tráfico con Filtro QWILT",
+        "description": "Gestionar y optimizar el exceso de tráfico utilizando técnicas de filtrado QWILT."
+    }
+]
