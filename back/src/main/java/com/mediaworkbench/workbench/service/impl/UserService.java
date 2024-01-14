@@ -1,6 +1,8 @@
 package com.mediaworkbench.workbench.service.impl;
 
 import com.mediaworkbench.workbench.dto.user.*;
+import com.mediaworkbench.workbench.model.UserRolStatus;
+import com.mediaworkbench.workbench.model.UserShiftStatus;
 import com.mediaworkbench.workbench.repository.IUserRepository;
 import com.mediaworkbench.workbench.dto.usertask.UserTaskResponse;
 import com.mediaworkbench.workbench.model.User;
@@ -48,12 +50,8 @@ public class UserService implements IUserService {
 
         // Create a LoginUserResponse for the new user
         int token = user.getIsAdmin() ? 33 : 1; // Token generation logic, can be modified as needed
-        return new LoginUserResponse(token, user.getName(), user.getId());
+        return new LoginUserResponse(token, user.getName(), user.getId(), user.getShift(), user.getRol());
     }
-
-
-
-
 
     @Override
     @Transactional
@@ -78,6 +76,8 @@ public class UserService implements IUserService {
                     user.getName(),
                     user.getSurname(),
                     user.getEmail(),
+                    user.getShift(),
+                    user.getRol(),
                     user.getIsAdmin(),
                     userTaskResponses // List of UserTaskResponses
             );
@@ -107,6 +107,8 @@ public class UserService implements IUserService {
                 user.getName(),
                 user.getSurname(),
                 user.getEmail(),
+                user.getShift(),
+                user.getRol(),
                 user.getIsAdmin(),
                 userTaskResponses // List of UserTaskResponses
         );
@@ -135,6 +137,8 @@ public class UserService implements IUserService {
         existingUser.setSurname(updateUserRequest.surname());
         existingUser.setEmail(updateUserRequest.email());
         existingUser.setPassword(updateUserRequest.password());
+        existingUser.setShift(updateUserRequest.shift());      // UserShiftStatus
+        existingUser.setRol(updateUserRequest.rol());    // UserRolStatus rol
         existingUser.setIsAdmin(updateUserRequest.isAdmin());
         // Do not replace collections, modify them if needed
 
@@ -178,7 +182,7 @@ public class UserService implements IUserService {
         LOGGER.info("User [" + user.getName() + " " + user.getSurname() + "] logged in successfully.");
 
         int token = user.getIsAdmin() ? 33 : 1;
-        return new LoginUserResponse(token, user.getName(), user.getId());
+        return new LoginUserResponse(token, user.getName(), user.getId(), user.getShift(), user.getRol());
     }
 
 

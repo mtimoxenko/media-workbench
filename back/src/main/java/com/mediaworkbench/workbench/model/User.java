@@ -32,8 +32,18 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    @Schema(description = "Password for the User account.", example = "password", required = true, accessMode = Schema.AccessMode.WRITE_ONLY)
+    @Schema(description = "Password for the User account.", example = "password123", required = true, accessMode = Schema.AccessMode.WRITE_ONLY)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    @Schema(description = "Rol related to tasks of the user", example = "ATTENDANT", required = true)
+    private UserRolStatus rol;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Schema(description = "Shift user work in", example = "EVENING", required = true)
+    private UserShiftStatus shift;
 
     @Column(name = "is_admin", nullable = false)
     @Schema(description = "Flag to indicate if the User is an admin.", example = "true")

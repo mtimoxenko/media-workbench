@@ -1,11 +1,11 @@
 -- Insert 5 random users
-INSERT INTO usr (name, surname, email, password, is_admin)
+INSERT INTO usr (name, surname, email, password, is_admin, rol, shift)
 VALUES
-    ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false),
-    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', false),
-    ('Brian', 'Silva', 'basilva@noc.com', 'password789', false),
-    ('Sebastian', 'Lopez', 'seblopez@noc.com', 'password101', false),
-    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', false);
+    ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false, 'ATTENDANT', 'DAY'),
+    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', false, 'REPORTER', 'NIGHT'),
+    ('Brian', 'Silva', 'basilva@noc.com', 'password789', false, 'HELPER', 'EVENING'),
+    ('Sebastian', 'Lopez', 'seblopez@noc.com', 'password101', false, 'ATTENDANT', 'NIGHT'),
+    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', false, 'REPORTER', 'NIGHT');
 
 -- Insert 5 specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status)
