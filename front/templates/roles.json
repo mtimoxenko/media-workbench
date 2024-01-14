@@ -1,0 +1,14 @@
+[
+    {
+        "rol": "ATTENDANT",
+        "description": "Metricas Grafana y FMC."
+    },
+    {
+        "rol": "REPORTER",
+        "description": "Reporte de Turno, Avisos de Falla y escalamiento a soporte."
+    },
+    {
+        "rol": "HELPER",
+        "description": "Realizacion de HealthChecks, seguimiento y ejecucion de tareas. Revision de TTs a proveedores."
+    }
+]

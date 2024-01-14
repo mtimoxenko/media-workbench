@@ -15,6 +15,13 @@
     --amarelo: #ffc51a;
 }
 
+html, body {
+    overflow-y: auto; /* Only show scrollbar when necessary */
+    height: 100%; /* Set the height to prevent unintended effects */
+  }
+  
+  
+
 body {
     background-color: var(--oscuro);
     background-image: url('../assets/2.jpg');
@@ -37,6 +44,8 @@ header {
     justify-content: space-between;
     align-items: center;
     position: relative; /* Added to ensure header is positioned correctly */
+    padding: 0 5%;
+    height: 70px;
 }
 
 nav {
@@ -53,10 +62,8 @@ nav h1 {
 .user-info {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Align items to the end (right) */
-    gap: 10px; /* Adds space between username, icon, and button */
-    margin-left: auto; /* This will push the .user-info to the right */
-    padding-right: 1rem; /* Space from the right border */
+    gap: 10px;
+    padding-right: 3rem; /* Space from the right border */
 }
 
 nav .user-info {
@@ -68,13 +75,80 @@ nav .user-info {
     margin: 0; /* Reset margin for the username paragraph if needed */
 }
 
-.user-info .user-image {
-    width: 40px;
-    height: 40px;
-    background: url('../assets/user.png') no-repeat center center/cover;
+
+/* USER ICON BUTTON */
+
+.fa-user-secret,
+.fa-user-injured,
+.fa-user-tie {
+    font-size: 20px; /* Smaller font size for the icon */
+    color: #a5c1e6e5;
+    background-color: transparent;
+    border: 1px solid #ffffff;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.25);
+    padding: 7px; /* Smaller padding for the icon */
+    display: inline-block;
+    width: 35px; /* Smaller width for the circle */
+    height: 35px; /* Smaller height for the circle */
+    text-align: center;
+    line-height: 35px; /* Adjust line height for vertical centering */
+    box-sizing: border-box;
 }
+
+/* User image button styling */
+.icon-button.user-image {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0; /* Remove padding if you want the clickable area to be smaller */
+}
+
+.icon-button.user-image:hover {
+    transform: scale(1.1);
+    background-color: transparent; /* Keep the background transparent on hover */
+}
+
+
+
+
+/* LOGOUT BUTTON */
+#closeApp {
+    background-color: #54a1e4c7; /* Semi-transparent blue background */
+    color: white; /* White text color for the button */
+    border: none; /* Remove default border */
+    padding: 5px 10px; /* Reduced padding around the text */
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 0.8rem; /* Reduced font size */
+    cursor: pointer; /* Change cursor to a pointer to indicate it's clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for the background color */
+    outline: none; /* Remove the outline to avoid a box appearance when clicked */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+    display: inline-flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+}
+
+#closeApp:hover {
+    background-color: #3b82f6; /* Change background color on hover for feedback */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Slightly larger shadow on hover for a "lifted" effect */
+}
+
+/* Optional: Add a FontAwesome icon to the button */
+#closeApp:before {
+    content: '\f2f5'; /* Unicode for 'fa-sign-out-alt' icon */
+    font-family: 'Font Awesome 5 Free'; /* Specify the font family if using FontAwesome 5 */
+    padding-right: 5px; /* Reduced space between the icon and text */
+    font-weight: 900; /* FontAwesome icon weight */
+}
+
+
+
+
+
+
+
+
 
 .user-info button {
     background-color: rgba(255, 255, 255, 0.3);
@@ -86,19 +160,11 @@ nav .user-info {
     align-items: center; /* Center the icon vertically */
 }
 
-nav .user-info .user-image {
-    width: 40px;
-    height: 40px;
-    background: url('../assets/user.png') no-repeat center center/cover, rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    margin: 0 .5rem;
-}
 
 nav .user-info button {
     background-color: rgba(255, 255, 255, 0.3);
     color: white;
     padding: .5rem 1rem;
-    margin-left: 2rem;
     border-radius: .1rem;
     font-size: .8rem;
 }

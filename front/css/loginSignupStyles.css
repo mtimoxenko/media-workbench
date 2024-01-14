@@ -15,13 +15,17 @@ body {
 
 header {
     background-color: var(--negro);
-    height: 5rem;
-    margin-bottom: 3rem;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Added to ensure header is positioned correctly */
+    padding: 0 5%;
+    height: 70px;
 }
 
 nav {
-    padding: 1rem;
-    height: 100%;
+    width: 100%; /* Ensure the nav takes the full width of its container */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -267,5 +271,41 @@ form {
 }
 
 
+
+  
+
+
+
+/* ROLE AND SHIFT TAG SELECTION */
+
+.role-tags, .shift-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the tags if you want */
+    margin-bottom: 10px; /* Spacing below the tag container */
+}
+  
+.role-tag, .shift-tag {
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem; /* Adjust font size as needed */
+}
+
+.role-tag:hover, .shift-tag:hover {
+    background-color:#7eacde79; /* Light blue background on hover */
+    color: #fff; /* White text color on hover */
+}
+
+.role-tag.selected, .shift-tag.selected {
+    color: #fff;
+    background-color: #007bff79; /* Slightly transparent blue background */
+    border-color: #007bff; /* Blue border to match the background */
+}
 
   

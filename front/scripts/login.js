@@ -54,6 +54,8 @@ window.addEventListener('load', function () {
         sessionStorage.setItem('userName', JSON.stringify(data.userName));
         sessionStorage.setItem('jwt', JSON.stringify(data.token));
         sessionStorage.setItem('userId', JSON.stringify(data.userId));
+        sessionStorage.setItem('shift', JSON.stringify(data.shift));
+        sessionStorage.setItem('rol', JSON.stringify(data.rol));
     
         // Set a delay before redirecting to allow the user to see the success message
         setTimeout(() => {

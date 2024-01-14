@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dental Cura</title>
+  <title>Workbench</title>
   <link rel="icon" type="image/x-icon" href="./assets/DH_Logo_Black.png">
-  <meta name="description" content="Book Dental Care with DentalCura" />
+  <meta name="description" content="NOC-ME Workbench" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="./css/tasksStyles.css">
@@ -25,15 +25,20 @@
   <script src="./scripts/tasks.js" defer></script>
 </head>
 <body>
+
   <!-- Navbar -->
   <header>
     <nav>
       <h1>NOC-ME Workbench</h1>
       <div class="user-info">
-        <p>username</p>
-        <div class="user-image"></div>
-        <button id="closeApp"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
-      </div>
+        <p id="username">username</p>
+        <button class="icon-button user-image" id="user-icon" onclick="showUserInfo()">
+          <!-- Icon will be set via JavaScript -->
+        </button>
+      </div>   
+      <button id="closeApp">
+        Logout
+      </button>       
     </nav>
   </header>
 

@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dental Cura</title>
+  <title>Workbench</title>
   <link rel="icon" type="image/x-icon" href="./assets/DH_Logo_Black.png">
-  <meta name="description" content="Book Dental Care with DentalCura"/>
+  <meta name="description" content="NOC-ME Workbench"/>
 
 
   <!-- ---------------- estilos compartidos de login y signup ---------------- -->
@@ -23,53 +23,63 @@
 </head>
 
 <body>
-  <header class="container">
+  <header>
     <nav>
       <h1>NOC-ME Workbench</h1>
     </nav>
   </header>
 
   <div class="signup-container">
-    <form class="flex-column center-items">
+    <form class="flex-column center-items" id="registrationForm">
       <div class="form-header">
         <p class="rounded">Register</p>
       </div>
-    
+  
       <div class="custom-field two">
         <input id="inputName" type="text" placeholder="Name" required>
         <label class="placeholder" for="inputName"></label>
       </div>
-    
+  
       <div class="custom-field two">
         <input id="inputSurname" type="text" placeholder="Surname" required>
         <label class="placeholder" for="inputSurname"></label>
       </div>
-    
+  
       <div class="custom-field two">
         <input id="inputEmail" type="text" placeholder="Email" required>
         <label class="placeholder" for="inputEmail"></label>
       </div>
-    
+  
       <div class="custom-field two">
         <input id="inputPassword" type="password" placeholder="Password" required>
         <label class="placeholder" for="inputPassword"></label>
       </div>
-    
-      <!-- <div class="custom-field two" id="role">
-        <input type="checkbox" name="role" id="admin">
-        <label for="admin">Admin</label>
-      </div> -->
-    
-      <button type="submit" class="form-button">Register Now</button>
-    
-    </form>
-    
-    
+  
+      <!-- Shift selection -->
+      <div class="shift-tags">
+        <span class="shift-tag" data-value="DAY">Day</span>
+        <span class="shift-tag" data-value="EVENING">Evening</span>
+        <span class="shift-tag" data-value="NIGHT">Night</span>
+      </div>
+      <input type="hidden" id="inputShift" name="shift" value="">
 
+      <!-- Role selection -->
+      <div class="role-tags">
+        <span class="role-tag" data-value="ATTENDANT">Attendant</span>
+        <span class="role-tag" data-value="REPORTER">Reporter</span>
+        <span class="role-tag" data-value="HELPER">Helper</span>
+      </div>
+      <input type="hidden" id="inputRole" name="role" value="">
+      
+  
+      <button type="submit" class="form-button">Register Now</button>
+    </form>
+  
     <div class="ingresarA">
       <a href="index.html">Already have an account?</a>
     </div>
   </div>
+  
 
 </body>
 

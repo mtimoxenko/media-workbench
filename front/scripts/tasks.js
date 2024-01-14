@@ -3,16 +3,101 @@ if (!sessionStorage.getItem('jwt') || JSON.parse(sessionStorage.getItem('jwt')) 
     window.location.replace('./index.html');
 }
 
-// Updates the displayed username from session storage
-function updateUsernameDisplay() {
-    const userNameDisplay = document.querySelector('.user-info p');
+// Updates the displayed username and user image from session storage
+function updateUserDisplay() {
+    const userNameDisplay = document.getElementById('username');
+    const userIcon = document.getElementById('user-icon');
+    
     const storedUsername = sessionStorage.getItem('userName');
+    const storedShift = sessionStorage.getItem('shift');
+    
     if (storedUsername) {
-        userNameDisplay.textContent = JSON.parse(storedUsername);
+      userNameDisplay.textContent = JSON.parse(storedUsername);
     } else {
-        console.error('User name not found in session storage.');
+      console.error('User name not found in session storage.');
+    }
+    
+    // Remove the role and shift display logic if you don't need it
+    
+    if (storedShift) {
+      switch (JSON.parse(storedShift)) {
+        case 'NIGHT':
+          userIcon.innerHTML = '<i class="fa-solid fa-user-secret"></i>';
+          break;
+        case 'EVENING':
+          userIcon.innerHTML = '<i class="fa-solid fa-user-injured"></i>';
+          break;
+        case 'DAY':
+          userIcon.innerHTML = '<i class="fa-solid fa-user-tie"></i>';
+          break;
+        default:
+          userIcon.innerHTML = '<i class="fa-solid fa-user"></i>'; // Default icon
+          break;
+      }
+    } else {
+      console.error('User shift not found in session storage.');
+      userIcon.innerHTML = '<i class="fa-solid fa-user"></i>'; // Default icon if shift is not found
     }
 }
+
+function showUserInfo() {
+    const storedRole = sessionStorage.getItem('rol');
+
+    if (storedRole) {
+        // Fetch the roles data from the JSON file
+        fetch('../templates/roles.json')
+            .then(response => response.json())
+            .then(roles => {
+                // Find the role that matches the stored role
+                const userRole = JSON.parse(storedRole);
+                const roleInfo = roles.find(role => role.rol === userRole);
+
+                if (roleInfo) {
+                    // Display the role and description in Swal.fire
+                    Swal.fire({
+                        title: `Your role is: ${userRole}`,
+                        text: roleInfo.description,
+                        color: '#fff',
+                        background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
+                        confirmButtonColor: '#3085d6', // Use a blue color for the confirm button
+                        icon: 'info',
+                        confirmButtonText: 'OK!'
+                    });
+                } else {
+                    // When rol is null or not set
+                    Swal.fire({
+                        title: 'Your role is not set.',
+                        text: 'No specific role has been assigned to you.',
+                        color: '#fff',
+                        background: 'rgba(36, 59, 85, 0.9)',
+                        confirmButtonColor: '#3085d6',
+                        icon: 'info',
+                        confirmButtonText: 'OK!'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching roles data:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Unable to fetch role information.',
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                });
+            });
+    } else {
+        console.error('User role not found in session storage.');
+        Swal.fire({
+            title: 'No Role Found',
+            text: 'User role not found in session storage.',
+            icon: 'error',
+            confirmButtonText: 'Close'
+        });
+    }
+}
+
+  
+  
 
 
 
@@ -829,7 +914,7 @@ function displayNewTaskInfo() {
 function createNewTask() {
     // Change task card status to CUSTOM
     const taskCardStatus = document.querySelector('.task-card-status');
-    taskCardStatus.textContent = 'CUSTOM TASK';
+    taskCardStatus.textContent = 'CUSTOM';
 
     // Set new inner HTML with form-like inputs for custom task
     const newTaskCardContent = document.querySelector('.new-task-card-content');
@@ -872,7 +957,7 @@ function resetTaskCard() {
     `;
     // Reset task card status to CUSTOM TASK
     const taskCardStatus = document.querySelector('.task-card-status');
-    taskCardStatus.textContent = 'CUSTOM TASK';
+    taskCardStatus.textContent = 'CUSTOM CARD';
 
     // Transform the 'Cancel' button back to '+ New Task'
     const taskCardFooter = document.querySelector('.task-card-footer');
@@ -1007,7 +1092,7 @@ function renderTemplateDetails(templateId) {
                 taskDetailsContainer.innerHTML = `
                                             
                 <div class="task-card-header">
-                    <div class="task-card-status template-status">TEMPLATE TASK</div>
+                    <div class="task-card-status template-status">TEMPLATE</div>
                     <div class="task-card-info">
                         <button class="icon-button template-info-button" onclick="displayTemplateTaskInfo()">
                             <i class="fa-solid fa-circle-info"></i>
@@ -1312,7 +1397,8 @@ function assignTaskToUser(taskId) {
 document.addEventListener('DOMContentLoaded', function () {
     AOS.init(); // Initialize animations
 
-    updateUsernameDisplay(); // Update username display
+    // Call this function when the page loads or when the relevant session storage items are updated
+    updateUserDisplay();
 
     // Fetch and display the count of tasks based on their status and render assigned tasks
     fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');

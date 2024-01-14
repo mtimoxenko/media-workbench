@@ -2,6 +2,34 @@ window.addEventListener('load', function () {
     const form = document.querySelector('form');
     const endpoint = 'http://localhost:8080/users';
 
+    // Attach click event listeners to role tags
+    document.querySelectorAll('.role-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            // Remove the 'selected' class from all tags
+            document.querySelectorAll('.role-tag').forEach(t => t.classList.remove('selected'));
+
+            // Add the 'selected' class to the clicked tag
+            this.classList.add('selected');
+
+            // Update the hidden input value
+            document.getElementById('inputRole').value = this.getAttribute('data-value');
+        });
+    });
+
+    // Attach click event listeners to shift tags
+    document.querySelectorAll('.shift-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            // Remove the 'selected' class from all shift tags
+            document.querySelectorAll('.shift-tag').forEach(t => t.classList.remove('selected'));
+
+            // Add the 'selected' class to the clicked shift tag
+            this.classList.add('selected');
+
+            // Update the hidden input value
+            document.getElementById('inputShift').value = this.getAttribute('data-value');
+        });
+    });
+
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -9,29 +37,58 @@ window.addEventListener('load', function () {
         const surname = document.querySelector('#inputSurname').value.trim();
         const email = document.querySelector('#inputEmail').value.trim();
         const password = document.querySelector('#inputPassword').value.trim();
-        const isAdmin = document.querySelector('[name=role]')?.checked || false;
+        // Retrieve the values from the hidden inputs
+        const shift = document.getElementById('inputShift').value || null;
+        const rol = document.getElementById('inputRole').value || null;
 
-        if (validateInput(name, surname, email, password)) {
-            submitForm(name, surname, email, password, isAdmin);
+        if (validateInput(name, surname, email, password, shift, rol)) {
+            submitForm(name, surname, email, password, shift, rol);
         }
     });
 
-    function validateInput(name, surname, email, password) {
-        if (!name || !surname || !email || !password) {
-            displayMessage('All fields are required.', true);
+
+    function validateInput(name, surname, email, password, shift, rol) {
+        // Check for empty required fields
+        if (!name || !surname || !email || !password || !shift) {
+            displayMessage('All fields except Role are required.', true);
             return false;
         }
-
+    
+        // Validate email format
         if (!/\S+@\S+\.\S+/.test(email)) {
             displayMessage('Invalid email format.', true);
             return false;
         }
-
+    
+        // If rol is provided, ensure it's a valid enum option
+        const validRoles = ['ATTENDANT', 'REPORTER', 'HELPER', '']; // '' represents no selection
+        if (rol && !validRoles.includes(rol)) {
+            displayMessage('Invalid role selected.', true);
+            return false;
+        }
+    
+        // Ensure shift is a valid enum option
+        const validShifts = ['DAY', 'EVENING', 'NIGHT'];
+        if (!validShifts.includes(shift)) {
+            displayMessage('Invalid shift selected.', true);
+            return false;
+        }
+    
         return true;
     }
+    
 
-    function submitForm(name, surname, email, password, isAdmin) {
-        const payload = { name, surname, email, password, isAdmin };
+    function submitForm(name, surname, email, password, shift, rol) {
+        // Include shift and rol in the payload, handling rol being optional
+        const payload = {
+            name,
+            surname,
+            email,
+            password,
+            shift,
+            // Include rol only if it's not null
+            ...(rol && { rol })
+        };
     
         fetch(endpoint, {
             method: 'POST',
@@ -51,6 +108,8 @@ window.addEventListener('load', function () {
             sessionStorage.setItem('userName', JSON.stringify(loginUserResponse.userName));
             sessionStorage.setItem('jwt', JSON.stringify(loginUserResponse.token));
             sessionStorage.setItem('userId', JSON.stringify(loginUserResponse.userId));
+            sessionStorage.setItem('shift', JSON.stringify(loginUserResponse.shift));
+            sessionStorage.setItem('rol', JSON.stringify(loginUserResponse.rol));
     
             // Display success message and redirect
             Swal.fire({
