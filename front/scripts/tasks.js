@@ -341,16 +341,6 @@ function completeTask(userTaskId, taskId) {
         fetchAndDisplayInProgressTasks();
     }).catch(error => {
         console.error('Error:', error);
-        // Display an error message to the user
-        Swal.fire({
-            title: 'Completion aborted!',
-            icon: 'info',
-            timer: 2000,
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false
-        });
     });
 }
 
@@ -369,6 +359,7 @@ function addCommentToTask(taskId) {
         inputPlaceholder: 'Enter your comment...',
         showCancelButton: true,
         confirmButtonText: 'Add Comment',
+        confirmButtonColor: '#3498dbbc',
         cancelButtonText: 'Cancel',
         inputValidator: (value) => {
             if (!value.trim()) {
@@ -554,6 +545,7 @@ function displayNoAvailableWorkMessage(container) {
 function cardClickHandler(event) {
     const cardId = event.currentTarget.id;
 
+    // Fetch and display the appropriate tasks based on the clicked card
     if (cardId === 'newAssignedTasks') {
         fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
     } else if (cardId === 'tasksInProgress') {
@@ -562,6 +554,8 @@ function cardClickHandler(event) {
         fetchAndDisplayCompletedTasks();
     }
 }
+
+
 
 // Fetches and displays task counts based on status
 function fetchAndDisplayTasksCount(status, countElementId) {
@@ -903,7 +897,7 @@ function renderAddNewTaskCard(tasksContainer) {
 function displayNewTaskInfo() {
     Swal.fire({
         title: 'Create Your Custom Task',
-        html: "<p style='color:#fff;'>Use the '+ New Task' button to design tasks tailored to your specific requirements and objectives.</p>",
+        html: "<p style='color:#fff;'>Design tasks tailored to your specific requirements and objectives.</p>",
         icon: 'info',
         confirmButtonText: 'Got it!',
         background: 'rgba(0, 0, 0, 0.8)',
@@ -1001,7 +995,15 @@ function submitTask() {
     })
     .then(response => response.text())
     .then(result => {
-        alert(`Response: ${result}`);
+        Swal.fire({
+            title: `${result} !`,
+            icon: 'success', 
+            timer: 1500,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
         // Re-fetch the available work count and cards
         fetchAndDisplayAvailableTasks();
         // Re-fetch and update the counter for 'Available Work' tasks
@@ -1049,6 +1051,7 @@ function renderAddNewTemplateTaskCard(tasksContainer) {
 }
 // Displays a custom message for the template task info button
 function displayTemplateTaskInfo() {
+
     Swal.fire({
         title: 'Use Templates for Efficiency',
         html: "<p style='color:#fff;'>Select from existing templates to quickly set up common task types.</p>",
@@ -1105,7 +1108,7 @@ function renderTemplateDetails(templateId) {
                 </div>
                 <div class="task-card-footer">
                     <button class="task-card-button cancel-task-button" onclick="resetTemplateTaskCard()">Cancel</button>
-                    <button class="task-card-button submit-task-button" onclick="submitTemplateTask(1)">Submit</button>
+                    <button class="task-card-button submit-task-button" onclick="submitTemplateTask(${templateId})">Submit</button>
                 </div>
 
                 `;
@@ -1184,10 +1187,18 @@ function submitTemplateTask(templateId) {
             return response.text(); // Expecting a text response, not JSON
         })
         .then(result => {
-            alert(`Task Submitted: ${result}`);
-            // Add any additional logic here for after a successful submission
-            // For example, updating the UI or redirecting the user
-                    // Re-fetch the available work count and cards
+            Swal.fire({
+                title: `${result} !`,
+                icon: 'success', // You can choose different icons such as 'success', 'error', 'warning', etc.
+                timer: 1500,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+
+            
+            // Re-fetch the available work count and cards
             fetchAndDisplayAvailableTasks();
             // Re-fetch and update the counter for 'Available Work' tasks
             fetchAndUpdateAvailableWorkCount();
@@ -1318,65 +1329,80 @@ function assignTaskToUser(taskId) {
                     taskId: taskId
                 })
             });
-        } else {
-            throw new Error('Assignment Aborted: No comment was provided.');
+        } else if (result.isDismissed) {
+            console.log('User canceled the assignment process.');
+            return null; // Return null to indicate cancellation
         }
     }).then(response => {
+        if (response === null) {
+            return null; // Early exit if response is null
+        }
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text();
     }).then(commentResponse => {
+        if (commentResponse === null) {
+            return null; // Early exit if commentResponse is null
+        }
         console.log('Comment created:', commentResponse);
-
-        // Update the task status to 'IN_PROGRESS'
-        return fetch(`http://localhost:8080/tasks`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: taskId,
-                status: 'IN_PROGRESS'
-            })
-        });
+            // Update the task status to 'IN_PROGRESS'
+            return fetch(`http://localhost:8080/tasks`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: taskId,
+                    status: 'IN_PROGRESS'
+                })
+            });
     }).then(response => {
+        if (response === null) {
+            return null; // Early exit if response is null
+        }
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text();
     }).then(updateResponse => {
+        if (updateResponse === null) {
+            return null; // Early exit if commentResponse is null
+        }
         console.log('Task status updated:', updateResponse);
-
-        // Create a new UserTask
-        return fetch(`http://localhost:8080/usertasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                assignerId: sessionStorage.getItem('userId'),
-                userId: sessionStorage.getItem('userId'),
-                taskId: taskId
-            })
-        });
+            // Create a new UserTask
+            return fetch(`http://localhost:8080/usertasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    assignerId: sessionStorage.getItem('userId'),
+                    userId: sessionStorage.getItem('userId'),
+                    taskId: taskId
+                })
+            });
     }).then(response => {
+        if (response === null) {
+            return null; // Early exit if response is null
+        }
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text();
     }).then(createResponse => {
+        if (createResponse === null) {
+            return null; // Early exit if commentResponse is null
+        }
         console.log('UserTask created:', createResponse);
+            // Re-fetch Available Work tasks to reflect the changes
+            fetchAndDisplayAvailableTasks();
 
-        // Re-fetch Available Work tasks to reflect the changes
-        fetchAndDisplayAvailableTasks();
+            // Re-fetch and update the counter for 'New Assigned' tasks
+            fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
 
-        // Re-fetch and update the counter for 'New Assigned' tasks
-        fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
-
-        // Also, re-fetch and update the counter for 'Available Work' tasks
-        fetchAndUpdateAvailableWorkCount();
-
+            // Also, re-fetch and update the counter for 'Available Work' tasks
+            fetchAndUpdateAvailableWorkCount();
     }).catch(error => {
         console.error('Error:', error);
         Swal.fire({
@@ -1449,7 +1475,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Assuming tasksContainer is defined and accessible here
     const tasksContainer = document.querySelector('.tasks-container');
     renderAddNewTaskCard(tasksContainer);
-    
+
+
 });
 
 

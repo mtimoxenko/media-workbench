@@ -66,10 +66,6 @@ form {
     flex-direction: column;
 }
 
-.form-button {
-    width: 140px;
-    /* Other styles... */
-}
 
 
 .form-header {
@@ -106,18 +102,6 @@ form input:focus {
     border: 2px solid var(--lila);
 }
 
-form button {
-    background-color: var(--azul);
-    color: white;
-    padding: .8rem 0;
-    border-radius: .2rem;
-    font-size: 1rem;
-    font-weight: 400;
-}
-
-form button:hover {
-    background-color: var(--azul-hover);
-}
 
 .ingresarA {
     padding: 1rem 0;
@@ -131,6 +115,8 @@ form button:hover {
 .ingresarA a:hover {
     color: var(--lila);
 }
+
+
 
 /* Flex and Alignment */
 .flex-column {
@@ -155,11 +141,11 @@ form button:hover {
 /* Custom Field Styles */
 .custom-field {
     position: relative;
-    font-size: 14px;
+    font-size: 12px;
     border-top: 20px solid transparent;
     margin-bottom: 5px;
     display: inline-block;
-    --field-padding: 12px;
+    --field-padding: 5px;
 }
 
 .custom-field input {
@@ -196,23 +182,6 @@ form button:hover {
     background-size: 100% 0.15em, 100% 0.1em, 100%;
 }
 
-button {
-    color: var(--color-main-text);
-    background-color: transparent;
-    border: 2px solid var(--color-main-text);
-    transition-duration: 0.4s;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    width: 40%;
-    margin-top: 4%;
-    padding: 15px 20px;
-}
-
-button:hover {
-    background-color: rgb(91, 98, 117);
-    color: white;
-}
 
 
 form {
@@ -235,12 +204,7 @@ form {
   
   
   
-  /* Center the button */
-  form button {
-    width: 140px; 
-    margin-top: 20px; /* Space above the button */
-    /* Add other button styles as needed */
-  }
+
   
   /* Override anchor tag block to keep it centered */
   .ingresarA a {
@@ -272,12 +236,7 @@ form {
 
 
 
-  
-
-
-
 /* ROLE AND SHIFT TAG SELECTION */
-
 .role-tags, .shift-tags {
     display: flex;
     gap: 10px;
@@ -308,4 +267,68 @@ form {
     border-color: #007bff; /* Blue border to match the background */
 }
 
+  
+
+/* LOGIN and REGISTER BUTTONS */
+/* General Button Reset */
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Base style for buttons */
+.form-button {
+    display: block; /* makes the button a block element */
+    width: 100%; /* makes the button expand to the full width of its container */
+    color: white;
+    background-color: rgba(67, 161, 243, 0.58); /* a lighter shade of blue for login */
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 200;
+    text-transform: uppercase;  
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* consistent space above the button */
+    text-align: center; /* ensures text is centered */
+    text-decoration: none; /* removes underline from links if button is an 'a' tag */
+    outline: none; /* removes the focus outline */
+}
+/* Hover styles for buttons */
+.form-button:hover {
+    background-color:  rgb(67, 161, 243); /* a color that should be
+noticeable when hovering over the button */
+}
+/* Ensure buttons do not inherit any additional styling */
+.form-button {
+    border: none;
+}
+
+/* Specific styles for the login button */
+.form-button.login {
+    width: 30%;
+}
+/* Specific styles for the register button */
+.form-button.register {
+    width: 65%;
+}
+
+
+
+/* LOGIN FORM Fade In EFFECT */
+@keyframes fadeInScaleUp {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .container {
+    animation: fadeInScaleUp 2s ease forwards;
+  }
   

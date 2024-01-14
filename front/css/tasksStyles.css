@@ -13,13 +13,11 @@
     --lila: #8a6df1;
     --laranja: #ff7059;
     --amarelo: #ffc51a;
-}
-
-html, body {
-    overflow-y: auto; /* Only show scrollbar when necessary */
-    height: 100%; /* Set the height to prevent unintended effects */
-  }
+}  
   
+body.swal2-shown {
+    padding-right: 0px !important;
+  }
   
 
 body {
@@ -236,10 +234,7 @@ nav .user-info button {
     font-weight: bold;
 }
 
-#tasksInProgress .card-header { background: #6ecaff2d; }
-#newAssignedTasks .card-header { background: #d5e97324; }
-#completedTasks .card-header { background: #6effd123; }
-#activeTasks .card-header { background: #6effd123; }
+
 
 #addNewTask {
     order: 3;
@@ -283,25 +278,25 @@ footer img {
     border-radius: 20px; /* Adjust the border-radius as you wish */
     width: 400px;
     background-color: rgba(47, 54, 64, 0.9); /* Dark blue, semi-transparent */
+}
 
-  }
-  
-  .swal2-title {
+.swal2-title {
     color: white; /* This will change the title color to white */
-  }
-  
-  .swal2-confirm {
+}
+
+.swal2-confirm {
     border-radius: 5px; /* Rounded borders for the confirm button */
-    background-color: #3498db; /* Brighter blue for the confirm button */
-  }
-  
-  .swal2-cancel {
+    background-color: #3498dbbc; /* Brighter blue for the confirm button */
+}
+
+.swal2-cancel {
     border-radius: 5px; /* Rounded borders for the cancel button */
     background-color: #95a5a6; /* Gray for the cancel button */
-
-  }
+}
   
-
+.swal2-textarea {
+    color: #2cc062d3; /* Or any color you prefer */
+}
 
 
 
@@ -540,9 +535,7 @@ footer img {
 }
 
 
-.swal2-textarea {
-    color: #2c8cc09f; /* Or any color you prefer */
-}
+
 
 
 
@@ -1090,4 +1083,34 @@ footer img {
 .generated-task-button:hover {
     background-color: #357ab8; /* A slightly darker blue for the hover effect */
     cursor: pointer; /* Change cursor to signify clickable button */
+}
+
+
+
+
+
+/* ACTIVE CARDS */
+
+#tasksInProgress .card-header { background: #6ecaff2d; }
+#newAssignedTasks .card-header { background: #d5e97324; }
+#completedTasks .card-header { background: #6effd123; }
+#activeTasks .card-header { background: #6effd123; }
+
+
+/* Hover effect for card headers */
+#tasksInProgress .card-header:hover,
+#newAssignedTasks .card-header:hover,
+#completedTasks .card-header:hover,
+#activeTasks .card-header:hover {
+    background-color: #2394d691; /* Change to a solid color for hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+/* Restores background opacity when not hovered */
+#tasksInProgress .card-header,
+#newAssignedTasks .card-header,
+#completedTasks .card-header,
+#activeTasks .card-header {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
