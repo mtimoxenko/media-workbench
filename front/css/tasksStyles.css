@@ -13,6 +13,10 @@
     --lila: #8a6df1;
     --laranja: #ff7059;
     --amarelo: #ffc51a;
+    --color-shift-day: #34a2a89a; /* Green color for DAY shift */
+    --color-shift-evening: #16abdc; /* Blue color for EVENING shift */
+    --color-shift-night: #a25c56ac; /* Red color for NIGHT shift */
+    --color-shift-selected: #007bff; /* Blue color for selected role tag */
 }  
   
 body.swal2-shown {
@@ -277,30 +281,8 @@ footer img {
 }
 
 
-/* logout */
-.swal2-popup {
-    border-radius: 20px; /* Adjust the border-radius as you wish */
-    width: 400px;
-    background-color: rgba(47, 54, 64, 0.9); /* Dark blue, semi-transparent */
-}
 
-.swal2-title {
-    color: white; /* This will change the title color to white */
-}
-
-.swal2-confirm {
-    border-radius: 5px; /* Rounded borders for the confirm button */
-    background-color: #3498dbbc; /* Brighter blue for the confirm button */
-}
-
-.swal2-cancel {
-    border-radius: 5px; /* Rounded borders for the cancel button */
-    background-color: #95a5a6; /* Gray for the cancel button */
-}
   
-.swal2-textarea {
-    color: #2cc062d3; /* Or any color you prefer */
-}
 
 
 
@@ -1117,4 +1099,101 @@ footer img {
 #completedTasks .card-header,
 #activeTasks .card-header {
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+
+
+
+/* ROLE TAGS */
+.role-tags, .shift-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.role-tag, .shift-tag {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem;
+}
+
+.role-tag:hover, .shift-tag:hover {
+    background-color: #7eacde79;
+    color: #fff;
+    border-color: transparent;
+}
+
+.role-tag:active, .shift-tag:active {
+    background-color: #007bff79;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.role-tag.day-shift, .shift-tag.day-shift {
+    background-color: var(--color-shift-day);
+    color: var(--app-grey);
+}
+
+.role-tag.evening-shift, .shift-tag.evening-shift {
+    background-color: var(--color-shift-evening);
+    color: var(--negro);
+}
+
+.role-tag.night-shift, .shift-tag.night-shift {
+    background-color: var(--color-shift-night);
+    color: var(--app-grey);
+}
+
+.role-tag.selected, .shift-tag.selected {
+    background-color: var(--color-shift-selected);
+    color: var(--app-grey);
+}
+
+.shift-heading {
+    font-size: 1em;
+    color: var(--color-main-text);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+
+
+/* SWAL2 */
+/* Common styles for all Swal modals */
+.swal2-title {
+    color: var(--color-main-text);
+    margin-top: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.swal2-textarea {
+    margin-top: 10px;
+    background-color: var(--color-bg-main);
+    color: var(--color-main-text);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.swal2-popup {
+    border-radius: 20px;
+    width: 400px;
+    background-color: rgba(47, 54, 64, 0.9);
+}
+
+.swal2-confirm {
+    border-radius: 5px;
+    background-color: #3498dbbc;
+}
+
+.swal2-cancel {
+    border-radius: 5px;
+    background-color: #95a5a6;
 }

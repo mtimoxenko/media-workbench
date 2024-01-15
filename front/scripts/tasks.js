@@ -57,22 +57,31 @@ function showUserInfo() {
                     Swal.fire({
                         title: `Your role is: ${userRole}`,
                         text: roleInfo.description,
-                        color: '#fff',
-                        background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
-                        confirmButtonColor: '#3085d6', // Use a blue color for the confirm button
                         icon: 'info',
-                        confirmButtonText: 'OK!'
+                        confirmButtonText: 'OK!',
+                        customClass: {
+                            title: 'swal2-title',
+                            content: 'swal2-textarea',
+                            popup: 'swal2-popup',
+                            confirmButton: 'swal2-confirm',
+                            cancelButton: 'swal2-cancel',
+                        }
                     });
                 } else {
                     // When rol is null or not set
                     Swal.fire({
                         title: 'Your role is not set.',
                         text: 'No specific role has been assigned to you.',
-                        color: '#fff',
-                        background: 'rgba(36, 59, 85, 0.9)',
                         confirmButtonColor: '#3085d6',
                         icon: 'info',
-                        confirmButtonText: 'OK!'
+                        confirmButtonText: 'OK!',
+                        customClass: {
+                            title: 'swal2-title',
+                            content: 'swal2-textarea',
+                            popup: 'swal2-popup',
+                            confirmButton: 'swal2-confirm',
+                            cancelButton: 'swal2-cancel',
+                        }
                     });
                 }
             })
@@ -82,7 +91,14 @@ function showUserInfo() {
                     title: 'Error',
                     text: 'Unable to fetch role information.',
                     icon: 'error',
-                    confirmButtonText: 'Close'
+                    confirmButtonText: 'Close',
+                    customClass: {
+                        title: 'swal2-title',
+                        content: 'swal2-textarea',
+                        popup: 'swal2-popup',
+                        confirmButton: 'swal2-confirm',
+                        cancelButton: 'swal2-cancel',
+                    }
                 });
             });
     } else {
@@ -91,7 +107,14 @@ function showUserInfo() {
             title: 'No Role Found',
             text: 'User role not found in session storage.',
             icon: 'error',
-            confirmButtonText: 'Close'
+            confirmButtonText: 'Close',
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     }
 }
@@ -116,6 +139,13 @@ function cancelTask(userTaskId, taskId) {
         showCancelButton: true,
         confirmButtonText: 'Submit',
         cancelButtonText: 'Cancel',
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        },
         inputValidator: (value) => {
             if (!value.trim()) {
                 return 'Comment cannot be empty.';
@@ -189,7 +219,14 @@ function cancelTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     }).catch(error => {
         console.error('Error:', error);
@@ -201,7 +238,14 @@ function cancelTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     });
 }
@@ -246,7 +290,14 @@ function initiateTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     })
     .catch(error => {
@@ -260,7 +311,14 @@ function initiateTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     });
 }
@@ -276,6 +334,13 @@ function completeTask(userTaskId, taskId) {
         showCancelButton: true,
         confirmButtonText: 'Submit',
         cancelButtonText: 'Cancel',
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        },
         inputValidator: (value) => {
             if (!value.trim()) {
                 return 'Comment cannot be empty.';
@@ -355,7 +420,14 @@ function completeTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
         fetchAndDisplayInProgressTasks();
     }).catch(error => {
@@ -368,7 +440,14 @@ function completeTask(userTaskId, taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     });
 }
@@ -390,6 +469,13 @@ function addCommentToTask(taskId) {
         confirmButtonText: 'Add Comment',
         confirmButtonColor: '#3498dbbc',
         cancelButtonText: 'Cancel',
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        },
         inputValidator: (value) => {
             if (!value.trim()) {
                 return 'Comment cannot be empty.';
@@ -441,7 +527,14 @@ function addCommentToTask(taskId) {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
     });
 }
@@ -461,9 +554,14 @@ function fetchTaskInfo(taskId) {
                 html: `<p class="task-description">${taskInfo.description}</p>
                        <p class="task-creator-info">Created by @${taskInfo.creatorName} ${taskInfo.creatorSurname}</p>`, // Including creator's information
                 icon: 'info',
-                background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
-                confirmButtonColor: '#3085d6', // Use a blue color for the confirm button
-                confirmButtonText: 'Close'
+                confirmButtonText: 'Close',
+                customClass: {
+                    title: 'swal2-title',
+                    content: 'swal2-textarea',
+                    popup: 'swal2-popup',
+                    confirmButton: 'swal2-confirm',
+                    cancelButton: 'swal2-cancel',
+                }
             });
         })
         .catch(error => {
@@ -938,8 +1036,13 @@ function displayNewTaskInfo() {
         html: "<p style='color:#fff;'>Design tasks tailored to your specific requirements and objectives.</p>",
         icon: 'info',
         confirmButtonText: 'Got it!',
-        background: 'rgba(0, 0, 0, 0.8)',
-        color: '#fff'
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        }
     });
 }
 // Handles the creation of a custom task form when '+ New Task' is clicked
@@ -1045,7 +1148,14 @@ function submitTask() {
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
-            allowEnterKey: false
+            allowEnterKey: false,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         });
         // Re-fetch the available work count and cards
         fetchAndDisplayAvailableTasks();
@@ -1100,8 +1210,13 @@ function displayTemplateTaskInfo() {
         html: "<p style='color:#fff;'>Select from existing templates to quickly set up common task types.</p>",
         icon: 'info',
         confirmButtonText: 'Understood',
-        background: 'rgba(0, 0, 0, 0.8)',
-        color: '#fff'
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        }
     });
 }
 // Handles the creation of a template task buttons
@@ -1238,7 +1353,14 @@ function submitTemplateTask(templateId) {
                 showConfirmButton: false,
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                allowEnterKey: false
+                allowEnterKey: false,
+                customClass: {
+                    title: 'swal2-title',
+                    content: 'swal2-textarea',
+                    popup: 'swal2-popup',
+                    confirmButton: 'swal2-confirm',
+                    cancelButton: 'swal2-cancel',
+                }
             });
 
             
@@ -1343,123 +1465,235 @@ function renderAvailableTasks(activeTasks) {
         });
     }
 }
-// Assigns a task to the current user with a required comment
+
+
+
+
+
+
+
+
+
+
+
+// Assigns a task to user with a required comment
 function assignTaskToUser(taskId) {
-    // Prompt user for a comment before assigning the task
-    Swal.fire({
-        title: 'Comment Required',
-        input: 'textarea',
-        inputPlaceholder: 'Your comment...',
-        showCancelButton: true,
-        confirmButtonText: 'Submit',
-        cancelButtonText: 'Cancel',
-        inputValidator: (value) => {
-            if (!value.trim()) {
-                return 'Comment cannot be empty.';
-            }
-        }
-    }).then((result) => {
-        if (result.isConfirmed && result.value) {
-            // User provided a comment and confirmed the assignment
-            return fetch(`http://localhost:8080/comments`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: result.value,
-                    userId: sessionStorage.getItem('userId'),
-                    taskId: taskId
-                })
-            });
-        } else if (result.isDismissed) {
-            console.log('User canceled the assignment process.');
-            return null; // Return null to indicate cancellation
-        }
-    }).then(response => {
-        if (response === null) {
-            return null; // Early exit if response is null
-        }
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    }).then(commentResponse => {
-        if (commentResponse === null) {
-            return null; // Early exit if commentResponse is null
-        }
-        console.log(commentResponse);
-            // Update the task status to 'IN_PROGRESS'
-            return fetch(`http://localhost:8080/tasks`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: taskId,
-                    status: 'IN_PROGRESS'
-                })
-            });
-    }).then(response => {
-        if (response === null) {
-            return null; // Early exit if response is null
-        }
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    }).then(updateResponse => {
-        if (updateResponse === null) {
-            return null; // Early exit if commentResponse is null
-        }
-        console.log(updateResponse);
-            // Create a new UserTask
-            return fetch(`http://localhost:8080/usertasks`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    assignerId: sessionStorage.getItem('userId'),
-                    userId: sessionStorage.getItem('userId'),
-                    taskId: taskId
-                })
-            });
-    }).then(response => {
-        if (response === null) {
-            return null; // Early exit if response is null
-        }
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-    }).then(createResponse => {
-        if (createResponse === null) {
-            return null; // Early exit if commentResponse is null
-        }
-        console.log(createResponse);
-            // Re-fetch Available Work tasks to reflect the changes
-            fetchAndDisplayAvailableTasks();
+    let selectedUserId; // Define selectedUserId here
 
-            // Re-fetch and update the counter for 'New Assigned' tasks
-            fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+    fetch('http://localhost:8080/users')
+        .then(response => response.json())
+        .then(users => {
+            // Get the actual user's ID and shift status
+            const actualUserId = sessionStorage.getItem('userId');
+            const actualUserShift = users.find(user => user.id === actualUserId)?.shift;
+        
+            // Create an object to group users by shift
+            const usersByShift = {};
+            users.forEach(user => {
+                if (user.id !== actualUserId) {
+                    if (!usersByShift[user.shift]) {
+                        usersByShift[user.shift] = [];
+                    }
+                    usersByShift[user.shift].push(user);
+                }
+            });
+        
+            // Create containers for each shift
+            const shiftContainers = Object.keys(usersByShift).map(shift => {
+                const shiftClass = shift.toLowerCase() + '-shift';
+                const userTags = usersByShift[shift].map(user => {
+                    return `<span class="role-tag ${shiftClass}" data-value="${user.id}" data-shift="${user.shift}">${user.name} ${user.surname}</span>`;
+                }).join('');
+        
 
-            // Also, re-fetch and update the counter for 'Available Work' tasks
-            fetchAndUpdateAvailableWorkCount();
-    }).catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            title: 'Assignment aborted!',
-            icon: 'error',
-            timer: 2000,
-            showConfirmButton: false,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false
+                // Assign the CSS class to all shift headings
+                const shiftHeadingClass = 'shift-heading';
+
+                return `
+                    <div class="${shiftClass}-container">
+                        <h2 class="${shiftHeadingClass}">${shift} Shift</h2>
+                        <div class="role-tags">${userTags}</div>
+                    </div>
+                `;
+            }).join('');
+
+            Swal.fire({
+                html: shiftContainers,
+                // title: 'Comment Required',
+                input: 'textarea',
+                inputPlaceholder: 'Comment Required...',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    title: 'swal2-title',
+                    content: 'swal2-textarea',
+                    popup: 'swal2-popup',
+                    confirmButton: 'swal2-confirm',
+                    cancelButton: 'swal2-cancel',
+                },
+                preConfirm: () => {
+                    selectedUserId = document.querySelector('.role-tag.selected')?.dataset.value; // Assign selectedUserId here
+                    const comment = Swal.getInput().value; // Get the value from the textarea input
+                
+                    if (!comment.trim()) {
+                        Swal.showValidationMessage('Comment cannot be empty.');
+                        return false; // Stop the process if validation fails
+                    }
+                
+                    // If no user is selected, use the userId from sessionStorage
+                    if (!selectedUserId) {
+                        selectedUserId = Number(sessionStorage.getItem('userId'));
+                    }
+                
+                    return { userId: selectedUserId, comment: comment };
+                }                               
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    const userId = Number(sessionStorage.getItem('userId'));
+                    // User provided a comment and confirmed the assignment
+                    return fetch(`http://localhost:8080/comments`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            text: result.value.comment,
+                            userId: userId,
+                            taskId: taskId
+                        })
+                    });
+                } else if (result.isDismissed) {
+                    console.log('User canceled the assignment process.');
+                    return null; // Return null to indicate cancellation
+                }
+            }).then(response => {
+                if (response === null) {
+                    return null; // Early exit if response is null
+                }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get the response as a string
+            }).then(commentResponse => {
+                if (commentResponse === null) {
+                    return null; // Early exit if commentResponse is null
+                }
+                console.log(commentResponse);
+                // Update the task status to 'IN_PROGRESS'
+                return fetch(`http://localhost:8080/tasks`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: taskId,
+                        status: 'IN_PROGRESS'
+                    })
+                });
+            }).then(response => {
+                if (response === null) {
+                    return null; // Early exit if response is null
+                }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get the response as a string
+            }).then(updateResponse => {
+                if (updateResponse === null) {
+                    return null; // Early exit if updateResponse is null
+                }
+                console.log(updateResponse);
+
+                // Use the selected user's ID (selectedUserId) in the request
+                const userId = selectedUserId; // Assuming you store the selected user's ID in the userId variable
+
+                // Create a new UserTask
+                return fetch(`http://localhost:8080/usertasks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        assignerId: sessionStorage.getItem('userId'),
+                        userId: userId,
+                        taskId: taskId
+                    })
+                });
+            }).then(response => {
+                if (response === null) {
+                    return null; // Early exit if response is null
+                }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text(); // Get the response as a string
+            }).then(createResponse => {
+                if (createResponse === null) {
+                    return null; // Early exit if createResponse is null
+                }
+                console.log(createResponse);
+                // Display a success message to the user
+                Swal.fire({
+                    title: 'Task Assigned!',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    customClass: {
+                        title: 'swal2-title',
+                        content: 'swal2-textarea',
+                        popup: 'swal2-popup',
+                        confirmButton: 'swal2-confirm',
+                        cancelButton: 'swal2-cancel',
+                    }
+                });
+                // Re-fetch Available Work tasks to reflect the changes
+                fetchAndDisplayAvailableTasks();
+        
+                // Re-fetch and update the counter for 'New Assigned' tasks
+                fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+        
+                // Also, re-fetch and update the counter for 'Available Work' tasks
+                fetchAndUpdateAvailableWorkCount();
+            }).catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Assignment aborted!',
+                    icon: 'error',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    customClass: {
+                        title: 'swal2-title',
+                        content: 'swal2-textarea',
+                        popup: 'swal2-popup',
+                        confirmButton: 'swal2-confirm',
+                        cancelButton: 'swal2-cancel',
+                    }
+                });
+            });
         });
-    });
 }
+
+// Add event listener for role tags
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('role-tag')) {
+        document.querySelectorAll('.role-tag').forEach(tag => tag.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+});
+
+
+
+
+
+
 
 
 
@@ -1483,14 +1717,12 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire({
             title: 'Are you leaving?',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
             confirmButtonText: 'Confirm',
             cancelButtonText: 'Cancel',
-            // background: 'rgba(110, 202, 255, 0.5)',
             customClass: {
-                popup: 'swal2-popup',
                 title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
                 confirmButton: 'swal2-confirm',
                 cancelButton: 'swal2-cancel',
             }

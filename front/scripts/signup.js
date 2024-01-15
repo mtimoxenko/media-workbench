@@ -114,10 +114,15 @@ function submitForm(name, surname, email, password, shift, role) {
             title: 'User created successfully!',
             text: 'Please wait, redirecting...',
             icon: 'success',
-            color: '#fff',
-            background: 'rgba(36, 59, 85, 0.9)', // Use a dark background color
             showConfirmButton: false,
             timer: 3500,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         }).then(() => {
             window.location.href = './tasks.html'; // Redirect based on user role if necessary
         });
@@ -151,6 +156,13 @@ function displayMessage(message, isError) {
             icon: 'success',
             showConfirmButton: false,
             timer: 3500,
+            customClass: {
+                title: 'swal2-title',
+                content: 'swal2-textarea',
+                popup: 'swal2-popup',
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel',
+            }
         }).then(() => {
             window.location.href = './tasks.html';
         });

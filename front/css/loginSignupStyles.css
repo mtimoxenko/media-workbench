@@ -316,6 +316,43 @@ noticeable when hovering over the button */
 
 
 
+/* SWAL2 */
+/* Common styles for all Swal modals */
+.swal2-title {
+    color: var(--color-main-text);
+    margin-top: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.swal2-textarea {
+    margin-top: 10px;
+    background-color: var(--color-bg-main);
+    color: var(--color-main-text);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.swal2-popup {
+    border-radius: 20px;
+    width: 400px;
+    background-color: rgba(47, 54, 64, 0.9);
+}
+
+.swal2-confirm {
+    border-radius: 5px;
+    background-color: #3498dbbc;
+}
+
+.swal2-cancel {
+    border-radius: 5px;
+    background-color: #95a5a6;
+}
+
+
+
+
 /* LOGIN FORM Fade In EFFECT */
 @keyframes fadeInScaleUp {
     from {
@@ -329,6 +366,6 @@ noticeable when hovering over the button */
   }
   
   .container {
-    animation: fadeInScaleUp 2s ease forwards;
+    animation: fadeInScaleUp 1s ease forwards;
   }
   
