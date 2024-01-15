@@ -34,6 +34,13 @@ public class Task {
     @Schema(description = "Current status of the Task.", example = "ACTIVE", required = true)
     private TaskStatus status = TaskStatus.ACTIVE;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false)
+    private TaskCategory category;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "shift_status")
+    private ShiftStatus shiftStatus;
 
     @Column(name = "creation_date")
     @Schema(description = "Date and time when the Task was created.", example = "2023-07-21T15:03:00", required = true)

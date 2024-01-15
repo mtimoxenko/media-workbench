@@ -1,12 +1,12 @@
 package com.mediaworkbench.workbench.dto.user;
 
 import com.mediaworkbench.workbench.model.UserRoleStatus;
-import com.mediaworkbench.workbench.model.UserShiftStatus;
+import com.mediaworkbench.workbench.model.ShiftStatus;
 
 public record LoginUserResponse(
         int token,
         String userName,
         long userId,
-        UserShiftStatus shift,
+        ShiftStatus shift,
         UserRoleStatus role
 ) { }

@@ -135,7 +135,7 @@ public class UserService implements IUserService {
         existingUser.setSurname(updateUserRequest.surname());
         existingUser.setEmail(updateUserRequest.email());
         existingUser.setPassword(updateUserRequest.password());
-        existingUser.setShift(updateUserRequest.shift());      // UserShiftStatus
+        existingUser.setShift(updateUserRequest.shift());      // ShiftStatus
         existingUser.setRole(updateUserRequest.role());    // UserRoleStatus role
         existingUser.setIsAdmin(updateUserRequest.isAdmin());
         // Do not replace collections, modify them if needed

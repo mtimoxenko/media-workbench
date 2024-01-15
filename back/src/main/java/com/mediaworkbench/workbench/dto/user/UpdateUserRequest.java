@@ -1,7 +1,7 @@
 package com.mediaworkbench.workbench.dto.user;
 
+import com.mediaworkbench.workbench.model.ShiftStatus;
 import com.mediaworkbench.workbench.model.UserRoleStatus;
-import com.mediaworkbench.workbench.model.UserShiftStatus;
 
 public record UpdateUserRequest(
         Long id,
@@ -9,7 +9,7 @@ public record UpdateUserRequest(
         String surname,
         String email,
         String password,
-        UserShiftStatus shift,
+        ShiftStatus shift,
         UserRoleStatus role,
         Boolean isAdmin
 ) { }

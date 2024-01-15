@@ -43,7 +43,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Schema(description = "Shift user work in", example = "EVENING", required = true)
-    private UserShiftStatus shift;
+    private ShiftStatus shift;
 
     @Column(name = "is_admin", nullable = false)
     @Schema(description = "Flag to indicate if the User is an admin.", example = "true")

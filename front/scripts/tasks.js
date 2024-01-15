@@ -1017,10 +1017,15 @@ function submitTask() {
     }
 
     // Prepare the task data with the user ID from session storage
+    const shiftStatus = JSON.parse(sessionStorage.getItem('shift'));
+    const userId = Number(sessionStorage.getItem('userId'));
+
     const taskData = {
         name: taskName,
         description: taskDescription,
-        creatorId: JSON.parse(sessionStorage.getItem('userId'))
+        creatorId: userId,
+        category: "CUSTOM",
+        shiftStatus: shiftStatus
     };
 
     // Continue with the fetch request if validation is successful
@@ -1099,7 +1104,6 @@ function displayTemplateTaskInfo() {
         color: '#fff'
     });
 }
-
 // Handles the creation of a template task buttons
 function createTemplateTaskButton() {
     fetch('../templates/tasks.json') 
@@ -1119,7 +1123,6 @@ function createTemplateTaskButton() {
         })
         .catch(error => console.error('Error fetching templates:', error));
 }
-
 function renderTemplateDetails(templateId) {
     fetch('../templates/tasks.json')
         .then(response => response.json())
@@ -1163,7 +1166,6 @@ function renderTemplateDetails(templateId) {
         })
         .catch(error => console.error('Error fetching template details:', error));
 }
-
 function resetTemplateTaskCard() {
     const taskDetailsContainer = document.querySelector('.add-template-task-card');
     taskDetailsContainer.innerHTML = `
@@ -1190,8 +1192,6 @@ function resetTemplateTaskCard() {
         addTemplateTaskBtn.addEventListener('click', createTemplateTaskButton);
     }
 }
-
-
 // This function is specifically for submitting a template task
 function submitTemplateTask(templateId) {
     fetch('../templates/tasks.json') // Replace with the actual path to your tasks.json file
@@ -1203,11 +1203,17 @@ function submitTemplateTask(templateId) {
             }
 
             // Construct the task data from the template
+            const userId = Number(sessionStorage.getItem('userId'));
+            const shiftStatus = JSON.parse(sessionStorage.getItem('shift'));
+            
             const taskData = {
                 name: template.name,
                 description: template.description,
-                creatorId: sessionStorage.getItem('userId') // Assuming the creatorId is stored as a string
+                creatorId: userId,
+                category: "TEMPLATE",
+                shiftStatus: shiftStatus
             };
+            
 
             // Proceed with the fetch request to submit the task data
             return fetch('http://localhost:8080/tasks', { // Make sure this is the correct endpoint

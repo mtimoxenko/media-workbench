@@ -1,6 +1,6 @@
 package com.mediaworkbench.workbench.model;
 
-public enum UserShiftStatus {
+public enum ShiftStatus {
     DAY,
     EVENING,
     NIGHT

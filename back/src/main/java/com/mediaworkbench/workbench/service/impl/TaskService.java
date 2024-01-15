@@ -46,6 +46,8 @@ public class TaskService implements ITaskService {
         Task task = new Task();
         task.setName(createTaskRequest.name());
         task.setDescription(createTaskRequest.description());
+        task.setCategory(createTaskRequest.category());
+        task.setShiftStatus(createTaskRequest.shiftStatus());
 
         // Fetch the creator user by ID and set it
         User creator = userRepository.findById(createTaskRequest.creatorId())
@@ -84,7 +86,7 @@ public class TaskService implements ITaskService {
 
         // Update task fields from request
         existingTask.setStatus(updateTaskRequest.status()); // Update the status of the task
-
+        existingTask.setShiftStatus(updateTaskRequest.shiftStatus());
         // No need to update creation date or creator as they should remain constant after initial creation
 
         taskRepository.save(existingTask);
@@ -133,6 +135,8 @@ public class TaskService implements ITaskService {
                 task.getName(),
                 task.getDescription(),
                 task.getStatus(),
+                task.getCategory(),
+                task.getShiftStatus(),
                 task.getCreator().getName(),
                 task.getCreator().getSurname(),
                 commentResponses);
