@@ -17,7 +17,11 @@
   
 body.swal2-shown {
     padding-right: 0px !important;
-  }
+}
+body.swal2-shown {
+    overflow-y: auto !important;
+}
+  
   
 
 body {

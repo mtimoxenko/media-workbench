@@ -137,17 +137,23 @@ function cancelTask(userTaskId, taskId) {
                     taskId: taskId
                 })
             });
-        } else {
-            throw new Error('Cancellation Aborted: No comment was provided.');
+        } else if (result.isDismissed) {
+            console.log('User aborted the cancelation process.');
+            return null; // Return null to indicate cancellation
         }
     }).then(response => {
+        if (response === null) {
+            return null; // Early exit if response is null
+        }
         if (!response.ok) {
-            // If the server responds with an error status, throw an error
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.text(); // Expect a text response from the server
+        return response.text();
     }).then(commentResponse => {
-        console.log('Comment created:', commentResponse);
+        if (commentResponse === null) {
+            return null; // Early exit if commentResponse is null
+        }
+        console.log(commentResponse);
         // Comment created successfully, proceed to cancel the task
         return fetch(`http://localhost:8080/usertasks/${userTaskId}`, {
             method: 'DELETE',
@@ -156,13 +162,18 @@ function cancelTask(userTaskId, taskId) {
             }
         });
     }).then(response => {
+        if (response === null) {
+            return null; // Early exit if response is null
+        }
         if (!response.ok) {
-            // If the server responds with an error status, throw an error
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.text(); // Expect a text response from the server
+        return response.text();
     }).then(cancelResponse => {
-        console.log('Task cancelled:', cancelResponse);
+        if (cancelResponse === null) {
+            return null; // Early exit if commentResponse is null
+        }
+        console.log(cancelResponse);
         // Task cancelled successfully, now remove the task card from UI
         const taskCard = document.querySelector(`[data-user-task-id="${userTaskId}"]`);
         if (taskCard && taskCard.parentNode) {
@@ -214,7 +225,7 @@ function initiateTask(userTaskId, taskId) {
         return response.text(); // Handle text response
     })
     .then(message => {
-        console.log('Task initiated:', message);
+        console.log(message);
 
         // Remove the task card from UI
         // console.log(userTaskId);
@@ -286,19 +297,23 @@ function completeTask(userTaskId, taskId) {
                     taskId: taskId
                 })
             });
-        } else {
-            // If the user cancels or the input is empty, do not proceed with creating a comment
-            return Promise.reject('Completion Aborted: No comment was provided.');
+        } else if (result.isDismissed) {
+            console.log('User canceled completion process.');
+            return null; // Return null to indicate cancellation
         }
     }).then(response => {
-        if (!response.ok) {
-            // If the server responds with an error status, throw an error
-            return response.text().then(text => Promise.reject(text));
+        if (response === null) {
+            return null; // Early exit if response is null
         }
-        // Return text response since the server sends a string
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         return response.text();
     }).then(commentMessage => {
-        console.log('Comment created:', commentMessage);
+        if (commentMessage === null) {
+            return null; // Early exit if commentResponse is null
+        }
+        console.log(commentMessage);
         // Comment created successfully, now update the task status to 'COMPLETED'
         return fetch(`http://localhost:8080/usertasks`, {
             method: 'PUT',
@@ -312,14 +327,18 @@ function completeTask(userTaskId, taskId) {
             })
         });
     }).then(response => {
-        if (!response.ok) {
-            // If the server responds with an error status, throw an error
-            return response.text().then(text => Promise.reject(text));
+        if (response === null) {
+            return null; // Early exit if response is null
         }
-        // Return text response since that is what your server sends
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         return response.text();
     }).then(updateMessage => {
-        console.log('Task status updated:', updateMessage);
+        if (updateMessage === null) {
+            return null; // Early exit if commentResponse is null
+        }
+        console.log(updateMessage);
         // Task status updated to 'COMPLETED', now remove the task card from UI
         const taskCard = document.querySelector(`[data-user-task-id="${userTaskId}"]`).parentNode.parentNode;
         if (taskCard) {
@@ -341,6 +360,16 @@ function completeTask(userTaskId, taskId) {
         fetchAndDisplayInProgressTasks();
     }).catch(error => {
         console.error('Error:', error);
+        Swal.fire({
+            title: 'Completion aborted!',
+            // text: 'There was a problem cancelling the task.',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
     });
 }
 
@@ -382,29 +411,38 @@ function addCommentToTask(taskId) {
                     taskId: taskId
                 })
             });
-        } else {
-            // If the user cancels or the input is empty, simply close the alert
-            return Promise.resolve('No action taken.'); // Resolve the promise with a message
+        } else if (result.isDismissed) {
+            console.log('User canceled comment.');
+            return null; // Return null to indicate cancellation
         }
     }).then(response => {
-        if (response.ok) {
-            // If the server responds with a success status, parse the response
-            return response.text();
-        } else if (response) {
-            // If response is a simple message, just log it (e.g., 'No action taken.')
-            console.log(response);
-        } else {
-            // If there's an actual error response from the server, handle it
-            return response.text().then(text => Promise.reject(text));
+        if (response === null) {
+            return null; // Early exit if response is null
         }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
     }).then(message => {
+        if (message === null) {
+            return null; // Early exit if commentResponse is null
+        }
         if (message) {
             // Handle your successful comment addition or other messages here
             console.log(message);
         }
     }).catch(error => {
-        // If there was an error other than the user cancelling, you can handle it here
-        // If you want to do nothing, you can leave this catch block empty
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Comment aborted!',
+            // text: 'There was a problem cancelling the task.',
+            icon: 'info',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false
+        });
     });
 }
 // Sets up hover effect to display comments on task info buttons
@@ -1064,7 +1102,7 @@ function displayTemplateTaskInfo() {
 
 // Handles the creation of a template task buttons
 function createTemplateTaskButton() {
-    fetch('../templates/tasks.json') // Replace with the correct path to your tasks.json file
+    fetch('../templates/tasks.json') 
         .then(response => response.json())
         .then(templates => {
             const newTaskCardContent = document.querySelector('#template-task-content');
@@ -1345,7 +1383,7 @@ function assignTaskToUser(taskId) {
         if (commentResponse === null) {
             return null; // Early exit if commentResponse is null
         }
-        console.log('Comment created:', commentResponse);
+        console.log(commentResponse);
             // Update the task status to 'IN_PROGRESS'
             return fetch(`http://localhost:8080/tasks`, {
                 method: 'PUT',
@@ -1369,7 +1407,7 @@ function assignTaskToUser(taskId) {
         if (updateResponse === null) {
             return null; // Early exit if commentResponse is null
         }
-        console.log('Task status updated:', updateResponse);
+        console.log(updateResponse);
             // Create a new UserTask
             return fetch(`http://localhost:8080/usertasks`, {
                 method: 'POST',
@@ -1394,7 +1432,7 @@ function assignTaskToUser(taskId) {
         if (createResponse === null) {
             return null; // Early exit if commentResponse is null
         }
-        console.log('UserTask created:', createResponse);
+        console.log(createResponse);
             // Re-fetch Available Work tasks to reflect the changes
             fetchAndDisplayAvailableTasks();
 
