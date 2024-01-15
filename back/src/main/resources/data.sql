@@ -1,5 +1,5 @@
 -- Insert 5 random users
-INSERT INTO usr (name, surname, email, password, is_admin, rol, shift)
+INSERT INTO usr (name, surname, email, password, is_admin, role, shift)
 VALUES
     ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false, 'ATTENDANT', 'DAY'),
     ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', false, 'REPORTER', 'NIGHT'),

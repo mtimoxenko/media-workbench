@@ -1,6 +1,6 @@
 package com.mediaworkbench.workbench.dto.user;
 
-import com.mediaworkbench.workbench.model.UserRolStatus;
+import com.mediaworkbench.workbench.model.UserRoleStatus;
 import com.mediaworkbench.workbench.model.UserShiftStatus;
 
 public record CreateUserRequest(
@@ -9,5 +9,5 @@ public record CreateUserRequest(
         String email,
         String password,
         UserShiftStatus shift,
-        UserRolStatus rol
+        UserRoleStatus role
 ) { }

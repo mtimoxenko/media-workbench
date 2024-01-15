@@ -41,7 +41,7 @@ function updateUserDisplay() {
 }
 
 function showUserInfo() {
-    const storedRole = sessionStorage.getItem('rol');
+    const storedRole = sessionStorage.getItem('role');
 
     if (storedRole) {
         // Fetch the roles data from the JSON file
@@ -50,7 +50,7 @@ function showUserInfo() {
             .then(roles => {
                 // Find the role that matches the stored role
                 const userRole = JSON.parse(storedRole);
-                const roleInfo = roles.find(role => role.rol === userRole);
+                const roleInfo = roles.find(role => role.role === userRole);
 
                 if (roleInfo) {
                     // Display the role and description in Swal.fire

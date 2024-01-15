@@ -38,7 +38,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     @Schema(description = "Rol related to tasks of the user", example = "ATTENDANT", required = true)
-    private UserRolStatus rol;
+    private UserRoleStatus role;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

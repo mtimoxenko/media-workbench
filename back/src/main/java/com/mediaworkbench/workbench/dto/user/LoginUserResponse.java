@@ -1,6 +1,6 @@
 package com.mediaworkbench.workbench.dto.user;
 
-import com.mediaworkbench.workbench.model.UserRolStatus;
+import com.mediaworkbench.workbench.model.UserRoleStatus;
 import com.mediaworkbench.workbench.model.UserShiftStatus;
 
 public record LoginUserResponse(
@@ -8,5 +8,5 @@ public record LoginUserResponse(
         String userName,
         long userId,
         UserShiftStatus shift,
-        UserRolStatus rol
+        UserRoleStatus role
 ) { }

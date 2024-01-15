@@ -1,7 +1,7 @@
 package com.mediaworkbench.workbench.dto.user;
 
 import com.mediaworkbench.workbench.dto.usertask.UserTaskResponse;
-import com.mediaworkbench.workbench.model.UserRolStatus;
+import com.mediaworkbench.workbench.model.UserRoleStatus;
 import com.mediaworkbench.workbench.model.UserShiftStatus;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public record UserResponse(
         String surname,
         String email,
         UserShiftStatus shift,
-        UserRolStatus rol,
+        UserRoleStatus role,
         Boolean isAdmin,
         List<UserTaskResponse> assignedTasks
 ) { }
