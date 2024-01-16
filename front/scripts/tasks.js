@@ -723,6 +723,9 @@ function fetchAndDisplayTasksCount(status, countElementId) {
 }
 // Fetches and updates the count of available work tasks
 function fetchAndUpdateAvailableWorkCount() {
+    // Retrieve the current shift from sessionStorage
+    const currentShift = JSON.parse(sessionStorage.getItem('shift'));
+
     fetch('http://localhost:8080/tasks')
         .then(response => {
             if (!response.ok) {
@@ -731,8 +734,10 @@ function fetchAndUpdateAvailableWorkCount() {
             return response.json();
         })
         .then(allTasks => {
-            // Filter to get only 'ACTIVE' tasks
-            const activeTasksCount = allTasks.filter(task => task.status === 'ACTIVE').length;
+            // Filter to get only 'ACTIVE' tasks that match the current shift
+            const activeTasksCount = allTasks.filter(task => 
+                task.status === 'ACTIVE' && task.shiftStatus === currentShift).length;
+
             // Update the count in the DOM
             document.getElementById('activeTasksCount').textContent = activeTasksCount;
         })
@@ -740,6 +745,7 @@ function fetchAndUpdateAvailableWorkCount() {
             console.error('Error fetching available work tasks:', error);
         });
 }
+
 
 
 
@@ -1388,6 +1394,9 @@ function submitTemplateTask(templateId) {
 
 // Fetches and displays available tasks
 function fetchAndDisplayAvailableTasks() {
+    // Retrieve the current shift from sessionStorage
+    const currentShift = JSON.parse(sessionStorage.getItem('shift'));
+
     fetch('http://localhost:8080/tasks')
         .then(response => {
             if (!response.ok) {
@@ -1396,13 +1405,17 @@ function fetchAndDisplayAvailableTasks() {
             return response.json();
         })
         .then(allTasks => {
-            const activeTasks = allTasks.filter(task => task.status === 'ACTIVE');
-            renderAvailableTasks(activeTasks);
+            // Filter tasks that are active and match the current shift
+            const availableTasks = allTasks.filter(task => 
+                task.status === 'ACTIVE' && task.shiftStatus === currentShift);
+
+            renderAvailableTasks(availableTasks);
         })
         .catch(error => {
             console.error('Error fetching available tasks:', error);
         });
 }
+
 // Renders available (active) tasks
 function renderAvailableTasks(activeTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -1474,7 +1487,7 @@ function renderAvailableTasks(activeTasks) {
 
 
 
-
+// Task Assignment Process
 
 // Add event listener for role tags and shift headings
 document.addEventListener('click', function(e) {
@@ -1493,6 +1506,21 @@ document.addEventListener('click', function(e) {
     }
 });
 
+// Helper function to update task status to 'IN_PROGRESS'
+function updateTaskStatusToInProgress(taskId) {
+    const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
+    return fetch(`http://localhost:8080/tasks`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: taskId,
+            status: 'IN_PROGRESS',
+            shiftStatus: actualUserShift
+        })
+    });
+}
 // Helper function to update the task's shiftStatus
 function updateTaskShiftStatus(taskId, selectedValue) {
     const updatedTaskData = {
@@ -1526,21 +1554,6 @@ function createComment(taskId, comment) {
         })
     });
 }
-// Helper function to update task status to 'IN_PROGRESS'
-function updateTaskStatusToInProgress(taskId) {
-    const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
-    return fetch(`http://localhost:8080/tasks`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: taskId,
-            status: 'IN_PROGRESS',
-            shiftStatus: actualUserShift
-        })
-    });
-}
 // Helper function to create a UserTask
 function createUserTask(taskId, userId) {
     const assigner = Number(sessionStorage.getItem('userId'));
@@ -1557,9 +1570,6 @@ function createUserTask(taskId, userId) {
         })
     });
 }
-
-
-
 
 
 function fetchUsersAndCreateShiftContainers() {
@@ -1678,7 +1688,6 @@ function assignTask(taskId) {
             });
     });
 }
-
 // Helper function to assign a task to a user
 // 1) Update task status to 'IN_PROGRESS'
 // 2) Create a comment
@@ -1721,9 +1730,46 @@ function assignTaskToUser(taskId, userId, comment) {
                 
                 // Re-fetch and update the counter for 'New Assigned' tasks
                 const actualUserId = Number(sessionStorage.getItem('userId'));
-                if ((userId === actualUserId)) 
+                if ((userId === actualUserId)){
                     fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
-                
+
+                    // Display a success message to the user
+                    Swal.fire({
+                        title: 'Self-assignment successful!',
+                        icon: 'success',
+                        timer: 2500,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        customClass: {
+                            title: 'swal2-title',
+                            content: 'swal2-textarea',
+                            popup: 'swal2-popup',
+                            confirmButton: 'swal2-confirm',
+                            cancelButton: 'swal2-cancel',
+                        }
+                    });
+                } else {
+                    // Display a success message to the user
+                    Swal.fire({
+                        title: 'Task assigned to the user!',
+                        icon: 'success',
+                        timer: 2500,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        customClass: {
+                            title: 'swal2-title',
+                            content: 'swal2-textarea',
+                            popup: 'swal2-popup',
+                            confirmButton: 'swal2-confirm',
+                            cancelButton: 'swal2-cancel',
+                        }
+                    });
+                }
+
             } else {
                 throw new Error('Failed to create UserTask');
             }
@@ -1732,18 +1778,62 @@ function assignTaskToUser(taskId, userId, comment) {
             console.error('Error during task assignment process:', error);
         });
 }
-
-
 // Helper function to assign a task to a group (shift)
 // 1) Update task shiftStatus to whatever shift is passed
 // 2) Create a comment
-function assignTaskToGroup(taskId, shift, comment) {
-    // Implementation for assigning a task to a group (shift)
-    console.log('Assigning task to group:', shift);
-    console.log('Comment:', comment);
-    // Call API to assign the task to a group (implement as needed)
-    // ...
+function assignTaskToGroup(taskId, selectedValue, comment) {
+    console.log('Starting task assignment to group process...');
+
+    // Step 1: Update the task's shiftStatus
+    updateTaskShiftStatus(taskId, selectedValue)
+        .then(response => {
+            if (response.ok) {
+                console.log(`Task shift status updated to ${selectedValue}`);
+
+                // Step 2: Create a comment for the task
+                return createComment(taskId, comment);
+            } else {
+                throw new Error('Failed to update task shift status');
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Comment added to the task');
+                console.log('Task assigned to group:', selectedValue);
+                console.log('Comment:', comment);
+
+                // Re-fetch Available Work tasks to reflect the changes
+                fetchAndDisplayAvailableTasks();
+                // Also, re-fetch and update the counter for 'Available Work' tasks
+                fetchAndUpdateAvailableWorkCount();
+
+                // Display a success message to the user
+                Swal.fire({
+                    title: `Task assigned to the group ${selectedValue}!`,
+                    icon: 'success',
+                    timer: 2500,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    customClass: {
+                        title: 'swal2-title',
+                        content: 'swal2-textarea',
+                        popup: 'swal2-popup',
+                        confirmButton: 'swal2-confirm',
+                        cancelButton: 'swal2-cancel',
+                    }
+                });
+
+            } else {
+                throw new Error('Failed to add comment to task');
+            }
+        })
+        .catch(error => {
+            console.error('Error during task assignment to group process:', error);
+        });
 }
+
 
 
 
