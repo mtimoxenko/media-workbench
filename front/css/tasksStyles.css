@@ -1155,12 +1155,48 @@ footer img {
     color: var(--app-grey);
 }
 
+
+/* Shift Heading Styles */
 .shift-heading {
+    cursor: pointer;
+    padding: 1px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
     font-size: 1em;
     color: var(--color-main-text);
     text-transform: uppercase;
     margin-bottom: 15px;
 }
+
+/* Shift Heading Hover Styles */
+.shift-heading:hover {
+    background-color: #7eacde79;
+    color: #fff;
+    border-color: transparent;
+}
+
+/* Shift Heading Active Styles */
+.shift-heading:active {
+    background-color: #007bff79;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Shift Heading Selected Styles */
+.shift-heading.selected {
+    background-color: #e9ebec79;
+    color: #ee0a0a;
+    border-color: transparent;
+}
+
+
+
+
+
+
+
 
 
 
@@ -1173,21 +1209,37 @@ footer img {
     font-weight: bold;
 }
 
+/* Style for the Swal textarea input */
 .swal2-textarea {
-    margin-top: 10px;
-    background-color: var(--color-bg-main);
-    color: var(--color-main-text);
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: transparent; /* Remove background color */
+    color: var(--color-main-text); /* Set text color */
+    border: 1px solid var(--color-main-text); /* Add a border */
+    padding: 10px; /* Add padding */
+    border-radius: 5px; /* Add border radius */
+    resize: none; /* Disable textarea resizing */
+    min-height: 100px; /* Set a minimum height */
+    font-size: 14px; /* Adjust font size */
 }
+
+/* Remove default focus style */
+.swal2-textarea:focus {
+    outline: none;
+    border-color: var(--color-shift-selected); /* Change border color on focus */
+}
+
 
 .swal2-popup {
     border-radius: 20px;
     width: 400px;
     background-color: rgba(47, 54, 64, 0.9);
+    color: var(--color-main-text);
 }
-
+/* Increase the width of the Swal popup */
+.swal2-popup-custom {
+    border-radius: 20px;
+    width: 500px;
+    background-color: rgba(47, 54, 64, 0.9);
+}
 .swal2-confirm {
     border-radius: 5px;
     background-color: #3498dbbc;

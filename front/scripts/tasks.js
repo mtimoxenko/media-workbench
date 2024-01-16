@@ -61,7 +61,7 @@ function showUserInfo() {
                         confirmButtonText: 'OK!',
                         customClass: {
                             title: 'swal2-title',
-                            content: 'swal2-textarea',
+                            content: 'swal2-text',
                             popup: 'swal2-popup',
                             confirmButton: 'swal2-confirm',
                             cancelButton: 'swal2-cancel',
@@ -72,12 +72,11 @@ function showUserInfo() {
                     Swal.fire({
                         title: 'Your role is not set.',
                         text: 'No specific role has been assigned to you.',
-                        confirmButtonColor: '#3085d6',
                         icon: 'info',
                         confirmButtonText: 'OK!',
                         customClass: {
                             title: 'swal2-title',
-                            content: 'swal2-textarea',
+                            content: 'swal2-text',
                             popup: 'swal2-popup',
                             confirmButton: 'swal2-confirm',
                             cancelButton: 'swal2-cancel',
@@ -133,9 +132,10 @@ function cancelTask(userTaskId, taskId) {
 
     // Prompt user for a comment before canceling the task
     Swal.fire({
-        title: 'Comment Required',
+        // title: 'Comment Required',
         input: 'textarea',
-        inputPlaceholder: 'Your comment...',
+        inputPlaceholder: 'Comment Required...',
+        icon: 'info',
         showCancelButton: true,
         confirmButtonText: 'Submit',
         cancelButtonText: 'Cancel',
@@ -328,9 +328,10 @@ function completeTask(userTaskId, taskId) {
 
     // Prompt user for a comment before marking the task as completed
     Swal.fire({
-        title: 'Completion Comment Required',
+        // title: 'Completion Comment Required',
         input: 'textarea',
-        inputPlaceholder: 'Enter a completion comment...',
+        inputPlaceholder: 'Comment Required...',
+        icon: 'info',
         showCancelButton: true,
         confirmButtonText: 'Submit',
         cancelButtonText: 'Cancel',
@@ -1459,7 +1460,7 @@ function renderAvailableTasks(activeTasks) {
 
             // Event listener for the 'Assign Task' button
             const assignBtn = document.getElementById(`assignBtn${task.id}`);
-            assignBtn.addEventListener('click', () => assignTaskToUser(task.id));
+            assignBtn.addEventListener('click', () => assignTask(task.id));
 
 
         });
@@ -1475,219 +1476,289 @@ function renderAvailableTasks(activeTasks) {
 
 
 
+// Add event listener for role tags and shift headings
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('role-tag') || e.target.classList.contains('shift-heading')) {
+        // Deselect all role tags and shift headings
+        const allRoleTags = document.querySelectorAll('.role-tag');
+        const allShiftHeadings = document.querySelectorAll('.shift-heading');
+        allRoleTags.forEach(tag => tag.classList.remove('selected'));
+        allShiftHeadings.forEach(heading => heading.classList.remove('selected'));
 
-// Assigns a task to user with a required comment
-function assignTaskToUser(taskId) {
-    let selectedUserId; // Define selectedUserId here
+        // Select the clicked element
+        e.target.classList.add('selected');
 
-    fetch('http://localhost:8080/users')
+        // Store the selected shift value in a variable
+        selectedShiftValue = e.target.getAttribute('data-value');
+    }
+});
+
+// Helper function to update the task's shiftStatus
+function updateTaskShiftStatus(taskId, selectedValue) {
+    const updatedTaskData = {
+        id: taskId,
+        status: "ACTIVE",
+        shiftStatus: selectedValue
+    };
+
+    return fetch(`http://localhost:8080/tasks`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTaskData),
+    });
+}
+// Helper function to create a comment
+function createComment(taskId, comment) {
+    const userId = Number(sessionStorage.getItem('userId'));
+
+    return fetch(`http://localhost:8080/comments`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: comment,
+            userId: userId,
+            taskId: taskId
+        })
+    });
+}
+// Helper function to update task status to 'IN_PROGRESS'
+function updateTaskStatusToInProgress(taskId) {
+    const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
+    return fetch(`http://localhost:8080/tasks`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: taskId,
+            status: 'IN_PROGRESS',
+            shiftStatus: actualUserShift
+        })
+    });
+}
+// Helper function to create a UserTask
+function createUserTask(taskId, userId) {
+    const assigner = Number(sessionStorage.getItem('userId'));
+
+    return fetch(`http://localhost:8080/usertasks`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            assignerId: assigner,
+            userId: userId,
+            taskId: taskId
+        })
+    });
+}
+
+
+
+
+
+function fetchUsersAndCreateShiftContainers() {
+    // Send a GET request to fetch the user data from 'http://localhost:8080/users'
+    return fetch('http://localhost:8080/users')
+        // Once the response is received, parse it as JSON
         .then(response => response.json())
         .then(users => {
-            // Get the actual user's ID and shift status
-            const actualUserId = sessionStorage.getItem('userId');
-            const actualUserShift = users.find(user => user.id === actualUserId)?.shift;
-        
-            // Create an object to group users by shift
+            // Get the "shift" and "userId" values from session storage
+            const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
+            const actualUserId = Number(sessionStorage.getItem('userId'));
+
+            // Create an empty object to group users by their "shift"
             const usersByShift = {};
+
+            // Loop through the users and group them by their "shift"
             users.forEach(user => {
-                if (user.id !== actualUserId) {
-                    if (!usersByShift[user.shift]) {
-                        usersByShift[user.shift] = [];
-                    }
+                if (!usersByShift[user.shift]) {
+                    usersByShift[user.shift] = [];
+                }
+                // Exclude the user whose ID matches the ID in session storage
+                if (user.shift === actualUserShift && user.id !== actualUserId) {
                     usersByShift[user.shift].push(user);
                 }
             });
-        
-            // Create containers for each shift
+
+            // Create HTML shift containers for the grouped users and headings for all shifts except the actual shift
             const shiftContainers = Object.keys(usersByShift).map(shift => {
                 const shiftClass = shift.toLowerCase() + '-shift';
+                const shiftId = shift.toLowerCase();
+                const shiftDataValue = shift.toUpperCase();
+
+                // Create HTML tags for each user in the group
                 const userTags = usersByShift[shift].map(user => {
                     return `<span class="role-tag ${shiftClass}" data-value="${user.id}" data-shift="${user.shift}">${user.name} ${user.surname}</span>`;
                 }).join('');
-        
 
-                // Assign the CSS class to all shift headings
                 const shiftHeadingClass = 'shift-heading';
 
+                // Return the HTML structure for the shift container, excluding the heading for the actual shift
                 return `
                     <div class="${shiftClass}-container">
-                        <h2 class="${shiftHeadingClass}">${shift} Shift</h2>
+                        ${shift !== actualUserShift ? `<h2 class="${shiftHeadingClass}" id="${shiftId}" data-value="${shiftDataValue}">${shiftDataValue} Shift</h2>` : ''}
                         <div class="role-tags">${userTags}</div>
                     </div>
                 `;
             }).join('');
 
-            Swal.fire({
-                html: shiftContainers,
-                // title: 'Comment Required',
-                input: 'textarea',
-                inputPlaceholder: 'Comment Required...',
-                showCancelButton: true,
-                confirmButtonText: 'Submit',
-                cancelButtonText: 'Cancel',
-                customClass: {
-                    title: 'swal2-title',
-                    content: 'swal2-textarea',
-                    popup: 'swal2-popup',
-                    confirmButton: 'swal2-confirm',
-                    cancelButton: 'swal2-cancel',
-                },
-                preConfirm: () => {
-                    selectedUserId = document.querySelector('.role-tag.selected')?.dataset.value; // Assign selectedUserId here
-                    const comment = Swal.getInput().value; // Get the value from the textarea input
-                
-                    if (!comment.trim()) {
-                        Swal.showValidationMessage('Comment cannot be empty.');
-                        return false; // Stop the process if validation fails
+            // Return the HTML for all shift containers and headings
+            return shiftContainers;
+        });
+}
+function createAndHandleSwal(shiftContainers) {
+    return Swal.fire({
+        html: shiftContainers,
+        input: 'textarea',
+        inputPlaceholder: 'Comment Required...',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            title: 'swal2-title',
+            content: 'swal2-textarea',
+            popup: 'swal2-popup-custom',
+            confirmButton: 'swal2-confirm',
+            cancelButton: 'swal2-cancel',
+        },
+        preConfirm: () => {
+            const selectedRoleTag = document.querySelector('.role-tag.selected')?.dataset.value;
+            const selectedShiftHeading = document.querySelector('.shift-heading.selected')?.getAttribute('data-value');
+            let selectedValue = selectedRoleTag || selectedShiftHeading;
+            const comment = Swal.getInput().value;
+
+            if (!comment.trim()) {
+                Swal.showValidationMessage('Comment cannot be empty.');
+                return false;
+            }
+
+            if (!selectedValue || selectedValue === null) {
+                selectedValue = Number(sessionStorage.getItem('userId'));
+            }
+
+            return { selectedValue, comment };
+        }
+    }).then((result) => {
+        // Handle Swal result
+        if (result.isConfirmed) {
+            return result.value; // Return selectedValue and comment
+        } else {
+            return null; // Swal was dismissed or canceled
+        }
+    });
+}
+
+// Main function to assign a task
+function assignTask(taskId) {
+    // Fetch the users from the server and create shiftContainers
+    fetchUsersAndCreateShiftContainers().then(shiftContainers => {
+        createAndHandleSwal(shiftContainers)
+            .then(result => {
+                if (result) {
+                    const { selectedValue, comment } = result;
+
+                    // Check if selectedValue is a number (user ID) or a string (shift)
+                    if (!isNaN(parseInt(selectedValue))) {
+                        // If selectedValue is a number, assign task to a user
+                        assignTaskToUser(taskId, parseInt(selectedValue), comment);
+                    } else {
+                        // If selectedValue is a string, assign task to a group (shift)
+                        assignTaskToGroup(taskId, selectedValue, comment);
                     }
-                
-                    // If no user is selected, use the userId from sessionStorage
-                    if (!selectedUserId) {
-                        selectedUserId = Number(sessionStorage.getItem('userId'));
-                    }
-                
-                    return { userId: selectedUserId, comment: comment };
-                }                               
-            }).then((result) => {
-                if (result.isConfirmed && result.value) {
-                    const userId = Number(sessionStorage.getItem('userId'));
-                    // User provided a comment and confirmed the assignment
-                    return fetch(`http://localhost:8080/comments`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            text: result.value.comment,
-                            userId: userId,
-                            taskId: taskId
-                        })
-                    });
-                } else if (result.isDismissed) {
+                } else {
+                    // Handle dismissal or cancellation of Swal
                     console.log('User canceled the assignment process.');
-                    return null; // Return null to indicate cancellation
                 }
-            }).then(response => {
-                if (response === null) {
-                    return null; // Early exit if response is null
-                }
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text(); // Get the response as a string
-            }).then(commentResponse => {
-                if (commentResponse === null) {
-                    return null; // Early exit if commentResponse is null
-                }
-                console.log(commentResponse);
-                // Update the task status to 'IN_PROGRESS'
-                return fetch(`http://localhost:8080/tasks`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: taskId,
-                        status: 'IN_PROGRESS'
-                    })
-                });
-            }).then(response => {
-                if (response === null) {
-                    return null; // Early exit if response is null
-                }
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text(); // Get the response as a string
-            }).then(updateResponse => {
-                if (updateResponse === null) {
-                    return null; // Early exit if updateResponse is null
-                }
-                console.log(updateResponse);
+            });
+    });
+}
 
-                // Use the selected user's ID (selectedUserId) in the request
-                const userId = selectedUserId; // Assuming you store the selected user's ID in the userId variable
+// Helper function to assign a task to a user
+// 1) Update task status to 'IN_PROGRESS'
+// 2) Create a comment
+// 3) Create a UserTask 
+function assignTaskToUser(taskId, userId, comment) {
+    console.log('Starting task assignment process...');
 
-                // Create a new UserTask
-                return fetch(`http://localhost:8080/usertasks`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        assignerId: sessionStorage.getItem('userId'),
-                        userId: userId,
-                        taskId: taskId
-                    })
-                });
-            }).then(response => {
-                if (response === null) {
-                    return null; // Early exit if response is null
-                }
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text(); // Get the response as a string
-            }).then(createResponse => {
-                if (createResponse === null) {
-                    return null; // Early exit if createResponse is null
-                }
-                console.log(createResponse);
-                // Display a success message to the user
-                Swal.fire({
-                    title: 'Task Assigned!',
-                    icon: 'success',
-                    timer: 1500,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    customClass: {
-                        title: 'swal2-title',
-                        content: 'swal2-textarea',
-                        popup: 'swal2-popup',
-                        confirmButton: 'swal2-confirm',
-                        cancelButton: 'swal2-cancel',
-                    }
-                });
+    // Step 1: Update task status to 'IN_PROGRESS'
+    updateTaskStatusToInProgress(taskId)
+        .then(response => {
+            if (response.ok) {
+                console.log('Task status updated to IN_PROGRESS');
+
+                // Step 2: Create a comment for the task
+                return createComment(taskId, comment);
+            } else {
+                throw new Error('Failed to update task status');
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Comment added to the task');
+
+                // Step 3: Create a UserTask
+                return createUserTask(taskId, userId);
+            } else {
+                throw new Error('Failed to add comment to task');
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('UserTask created successfully');
+                console.log('Task assigned to user with ID:', userId);
+                console.log('Comment:', comment);
+
                 // Re-fetch Available Work tasks to reflect the changes
                 fetchAndDisplayAvailableTasks();
-        
-                // Re-fetch and update the counter for 'New Assigned' tasks
-                fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
-        
                 // Also, re-fetch and update the counter for 'Available Work' tasks
                 fetchAndUpdateAvailableWorkCount();
-            }).catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    title: 'Assignment aborted!',
-                    icon: 'error',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    customClass: {
-                        title: 'swal2-title',
-                        content: 'swal2-textarea',
-                        popup: 'swal2-popup',
-                        confirmButton: 'swal2-confirm',
-                        cancelButton: 'swal2-cancel',
-                    }
-                });
-            });
+                
+                // Re-fetch and update the counter for 'New Assigned' tasks
+                const actualUserId = Number(sessionStorage.getItem('userId'));
+                if ((userId === actualUserId)) 
+                    fetchAndDisplayTasksCount('ASSIGNED', '#newAssignedCount');
+                
+            } else {
+                throw new Error('Failed to create UserTask');
+            }
+        })
+        .catch(error => {
+            console.error('Error during task assignment process:', error);
         });
 }
 
-// Add event listener for role tags
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('role-tag')) {
-        document.querySelectorAll('.role-tag').forEach(tag => tag.classList.remove('selected'));
-        e.target.classList.add('selected');
-    }
-});
+
+// Helper function to assign a task to a group (shift)
+// 1) Update task shiftStatus to whatever shift is passed
+// 2) Create a comment
+function assignTaskToGroup(taskId, shift, comment) {
+    // Implementation for assigning a task to a group (shift)
+    console.log('Assigning task to group:', shift);
+    console.log('Comment:', comment);
+    // Call API to assign the task to a group (implement as needed)
+    // ...
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
