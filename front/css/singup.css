@@ -1,0 +1,361 @@
+@import url('./globalStyles.css');
+
+:root {
+    --color-bg-main: rgb(30, 33, 43);
+    --color-main-text: rgb(179, 179, 190);
+}
+
+
+
+body {
+    background-image: url('../assets/aaa.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3); /* Adjusted dimming */
+}
+
+
+
+
+header {
+    background-color: transparent;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Added to ensure header is positioned correctly */
+    padding: 0 5%;
+    height: 70px;
+}
+
+nav {
+    width: 100%; /* Ensure the nav takes the full width of its container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 span {
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--lila);
+}
+
+nav img {
+    display: block;
+    height: 80%;
+}
+
+.container {
+    padding: 0 5%;
+}
+
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; /* Adjust the height as needed */
+}
+
+
+/* Form Styles */
+form {
+    background-color: transparent;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    border-radius: .2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.form-header h2 {
+    margin-bottom: .8rem;
+}
+
+.form-header p {
+    padding: .2rem 1rem;
+    border: 2px solid white;
+}
+
+form label {
+    margin-bottom: .3rem;
+}
+
+form input {
+    background: transparent;
+    color: var(--color-main-text);
+    border-radius: .1rem;
+    margin-bottom: 1rem;
+    padding: .3rem .5rem;
+    border: 2px solid var(--app-grey);
+}
+
+form input:focus {
+    outline: none;
+    border: 2px solid var(--lila);
+}
+
+
+.ingresarA {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.ingresarA a {
+    color: #ffffff;
+}
+
+.ingresarA a:hover {
+    color: var(--lila);
+}
+
+
+
+/* Flex and Alignment */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.center-items {
+    align-items: center;
+}
+
+/* Gaps */
+.gap10 {
+    gap: 10px;
+}
+
+.gap15 {
+    gap: 15px;
+}
+
+/* Custom Field Styles */
+.custom-field {
+    position: relative;
+    font-size: 12px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: inline-block;
+    --field-padding: 5px;
+}
+
+.custom-field input {
+    border: none;
+    background: transparent;
+    padding: var(--field-padding);
+    border-radius: 3px;
+    width: 170px;
+    outline: none;
+    font-size: 14px;
+}
+
+#message {
+    width: 300px;
+}
+
+.custom-field .placeholder {
+    position: absolute;
+    left: var(--field-padding);
+    top: 22px;
+    transform: translateY(-50%);
+    transition: top 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+
+.custom-field.two input {
+    background: linear-gradient(90deg, #6f6c6c, #6f6c6c) center bottom/0 0.15em no-repeat,
+                linear-gradient(90deg, #ccc, #ccc) left bottom/100% 0.15em no-repeat,
+                linear-gradient(90deg, transparent, transparent) left bottom/100% no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.custom-field.two input:not(:placeholder-shown),
+.custom-field.two input:focus {
+    background-size: 100% 0.15em, 100% 0.1em, 100%;
+}
+
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Add other styles required for the form */
+  }
+  
+  /* If there is padding or specific widths you want to maintain for the form elements, 
+     you may want to add a class or use a more specific selector for them. */
+  
+  
+/* Checkbox Styles - Specific to checkbox and label */
+#role {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-bottom: 1rem; /* Add margin below the checkbox */
+  }
+  
+  
+  
+
+  
+  /* Override anchor tag block to keep it centered */
+  .ingresarA a {
+    display: block;
+    text-align: center;
+    /* Add other anchor tag styles as needed */
+  }
+
+  .message-box {
+    display: none; /* Hidden by default */
+    padding: .5em 1em;
+    color: white;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.success-message {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.error-message {
+    color: rgb(255, 255, 255); /* Text color */
+    background-color: rgba(255, 0, 0, 0.3); /* Background color */
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    /* Other styling as needed */
+}
+
+
+
+/* ROLE AND SHIFT TAG SELECTION */
+.role-tags, .shift-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the tags if you want */
+    margin-bottom: 10px; /* Spacing below the tag container */
+}
+  
+.role-tag, .shift-tag {
+    padding: 5px 10px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem; /* Adjust font size as needed */
+}
+
+.role-tag:hover, .shift-tag:hover {
+    background-color:#7eacde79; /* Light blue background on hover */
+    color: #fff; /* White text color on hover */
+}
+
+.role-tag.selected, .shift-tag.selected {
+    color: #fff;
+    background-color: #007bff79; /* Slightly transparent blue background */
+    border-color: #007bff; /* Blue border to match the background */
+}
+
+  
+
+/* LOGIN and REGISTER BUTTONS */
+/* General Button Reset */
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Base style for buttons */
+.form-button {
+    display: block; /* makes the button a block element */
+    width: 100%; /* makes the button expand to the full width of its container */
+    color: white;
+    background-color: rgba(67, 161, 243, 0.58); /* a lighter shade of blue for login */
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    font-weight: 200;
+    text-transform: uppercase;  
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* consistent space above the button */
+    text-align: center; /* ensures text is centered */
+    text-decoration: none; /* removes underline from links if button is an 'a' tag */
+    outline: none; /* removes the focus outline */
+}
+/* Hover styles for buttons */
+.form-button:hover {
+    background-color:  rgb(67, 161, 243); /* a color that should be
+noticeable when hovering over the button */
+}
+/* Ensure buttons do not inherit any additional styling */
+.form-button {
+    border: none;
+}
+
+/* Specific styles for the login button */
+.form-button.login {
+    width: 30%;
+}
+/* Specific styles for the register button */
+.form-button.register {
+    width: 65%;
+}
+
+
+
+/* SWAL2 */
+/* Common styles for all Swal modals */
+.swal2-title {
+    color: var(--color-main-text);
+    margin-top: 15px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.swal2-textarea {
+    margin-top: 10px;
+    background-color: var(--color-bg-main);
+    color: var(--color-main-text);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.swal2-popup {
+    border-radius: 20px;
+    width: 400px;
+    background-color: rgba(47, 54, 64, 0.9);
+}
+
+.swal2-confirm {
+    border-radius: 5px;
+    background-color: #3498dbbc;
+}
+
+.swal2-cancel {
+    border-radius: 5px;
+    background-color: #95a5a6;
+}
+  
+.container {
+    animation: fadeInScaleUp 1s ease forwards;  
+}
+  

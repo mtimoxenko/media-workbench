@@ -28,6 +28,21 @@ body.swal2-shown {
   
   
 
+@keyframes fadeInBackground {
+    0% {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 1);
+    }
+    5% { /* Fast initial transition */
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.8);
+    }
+    75% { /* Slower transition towards the end */
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.65);
+    }
+    100% {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.6);
+    }
+}
+
 body {
     background-color: var(--oscuro);
     background-image: url('../assets/2.jpg');
@@ -35,12 +50,16 @@ body {
     background-attachment: fixed;
     background-position: center center;
     background-size: cover;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .6);
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 1);
     min-height: 100vh;
     font-family: 'Montserrat', 'Archivo', sans-serif;
     font-weight: 300;
     color: var(--app-grey);
+    /* Use cubic-bezier for fine-tuning the easing */
+    animation: fadeInBackground 60s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+
 
 
 header {

@@ -1,6 +1,13 @@
 window.addEventListener('load', function () {
     console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
 
+    const bodyElement = document.body;
+
+    // Check if the animation has already been played by looking for the 'animationPlayed' flag in sessionStorage
+    if (!sessionStorage.getItem('animationPlayed')) {
+        bodyElement.classList.add('animate-background');
+        sessionStorage.setItem('animationPlayed', 'true');
+    }
 
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');
@@ -60,6 +67,7 @@ window.addEventListener('load', function () {
         sessionStorage.setItem('shift', JSON.stringify(data.shift));
         sessionStorage.setItem('role', JSON.stringify(data.role));
     
+
         // Set a delay before redirecting to allow the user to see the success message
         setTimeout(() => {
             const redirectUrl = data.token === 33 ? './admin.html' : './tasks.html';
@@ -85,4 +93,6 @@ window.addEventListener('load', function () {
         form.appendChild(divTemplate);
         return divTemplate;
     }
+
+
 });

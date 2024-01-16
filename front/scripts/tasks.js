@@ -1881,7 +1881,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                sessionStorage.clear();
+                sessionStorage.removeItem('jwt');
+                sessionStorage.removeItem('role');
+                sessionStorage.removeItem('shift');
+                sessionStorage.removeItem('userId');
+                sessionStorage.removeItem('userName');
+                // sessionStorage.clear();
+                // localStorage.removeItem('animationPlayed');
                 window.location.replace('./index.html');
             }
         });
@@ -1905,7 +1911,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Assuming tasksContainer is defined and accessible here
     const tasksContainer = document.querySelector('.tasks-container');
     renderAddNewTaskCard(tasksContainer);
-
 
 });
 
