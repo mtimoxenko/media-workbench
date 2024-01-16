@@ -570,7 +570,7 @@ function fetchTaskInfo(taskId) {
             // Optionally, handle errors or display a message if the fetch fails
         });
 }
-// Displays a message when there are no new assigned tasks
+
 function setupCommentHoverEffect() {
     // Select all info buttons
     const infoButtons = document.querySelectorAll('.icon-button.info-button');
@@ -588,18 +588,27 @@ function setupCommentHoverEffect() {
                     .then(response => response.json())
                     .then(task => {
                         const lastThreeComments = task.comments.slice(-3);
-                        const commentsHtml = lastThreeComments.map(comment => {
-                            const date = new Date(comment.commentTimestamp);
-                            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                            const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} at ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-                            
-                            return `
-                                <div class="comment">
-                                    <p class="comment-timestamp cursive">${formattedDate} @${comment.userName} ${comment.userSurname}</p>
-                                    <p class="comment-text stylish-text">${comment.commentText}</p>
-                                </div>
-                            `;
-                        }).join('');
+                        let commentsHtml;
+
+                        if (lastThreeComments.length === 0) {
+                            // Message to display when there are no comments
+                            commentsHtml = '<p class="no-comments-message stylish-text">No comments were added to this task yet.</p>';
+                        } else {
+
+                            commentsHtml = lastThreeComments.map(comment => {
+                                const date = new Date(comment.commentTimestamp);
+                                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                const formattedDate = `${date.getDate().toString().padStart(2, '0')} ${monthNames[date.getMonth()]} at ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                                
+                                return `
+                                    <div class="comment">
+                                        <p class="comment-timestamp cursive">${formattedDate} @${comment.userName} ${comment.userSurname}</p>
+                                        <p class="comment-text stylish-text">${comment.commentText}</p>
+                                    </div>
+                                `;
+                            }).join('');
+
+                        }
 
                         contentContainer.innerHTML = `<div class="comments-section">${commentsHtml}</div>`;
                         contentContainer.classList.add("comments-loaded"); // Mark as loaded
@@ -1455,6 +1464,11 @@ function renderAvailableTasks(activeTasks) {
             const taskCardHTML = `
                 <div class="task-card-header">
                     <div class="task-card-status">ACTIVE</div>
+                    <div class="task-card-info">
+                        <button class="icon-button info-button" data-task-id="${task.id}" onclick="fetchTaskInfo(${task.id})">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="task-card-content">
                     <h3 class="task-card-headline">${task.name}</h3>
@@ -1474,11 +1488,11 @@ function renderAvailableTasks(activeTasks) {
             // Event listener for the 'Assign Task' button
             const assignBtn = document.getElementById(`assignBtn${task.id}`);
             assignBtn.addEventListener('click', () => assignTask(task.id));
-
-
         });
     }
+    setupCommentHoverEffect();
 }
+
 
 
 
@@ -1836,28 +1850,6 @@ function assignTaskToGroup(taskId, selectedValue, comment) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Event listener for DOMContentLoaded to ensure the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
@@ -1916,7 +1908,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
-
-
-
 
