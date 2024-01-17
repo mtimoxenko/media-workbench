@@ -5,12 +5,12 @@ variables:
   TF_STATE_NAME: workbench-app
   TF_ROOT: cicd/platform/provisioning
   ANSIBLE_PATH: cicd/config
-  TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
+  TF_ADDRESS: https://gitlab.com/api/v4/projects/PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 
 before_script:
   - cd $TF_ROOT
-  - sh ./init.sh
+  # - sh ./init.sh
 
 
 stages:
@@ -24,11 +24,12 @@ terraform_init:
   stage: prepare_tf
   script:
     - gitlab-terraform init
-  resource_group: $TF_STATE_NAME # limit the concurrency of jobs to access shared resource
+  resource_group: $TF_STATE_NAME
   rules:
-  - if: '$CI_COMMIT_BRANCH == "main"'
-    changes:
-      - ${TF_ROOT}/main.tf
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - ${TF_ROOT}/*.tf
+
 
 terraform_validate:
   stage: validate_tf
