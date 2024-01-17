@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./front
+    image: media-front:0.0.1-MVP
+    ports:
+      - "3000:80"
+    networks:
+      - media-network
+
+  backend:
+    build: ./back
+    image: media-api:0.0.1-MVP
+    ports:
+      - "8080:8080"
+    networks:
+      - media-network
+
+networks:
+  media-network:
+    driver: bridge
