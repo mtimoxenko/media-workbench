@@ -1,0 +1,109 @@
+image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+
+variables:
+  PROJECT_ID: 53926083
+  TF_STATE_NAME: workbench-app
+  TF_ROOT: cicd/platform/provisioning
+  ANSIBLE_PATH: cicd/config
+  TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
+
+
+before_script:
+  - cd $TF_ROOT
+  - sh ./init.sh
+
+
+stages:
+  - prepare_tf
+  - validate_tf
+  - plan_tf
+  - deploy_tf
+  - destroy_tf
+
+terraform_init:
+  stage: prepare_tf
+  script:
+    - gitlab-terraform init
+  resource_group: $TF_STATE_NAME # limit the concurrency of jobs to access shared resource
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "main"'
+    changes:
+      - ${TF_ROOT}/main.tf
+
+terraform_validate:
+  stage: validate_tf
+  script:
+    - gitlab-terraform init
+    - gitlab-terraform validate
+  resource_group: $TF_STATE_NAME
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "main"'
+    changes:
+      - ${TF_ROOT}/main.tf
+
+terraform_plan:
+  stage: plan_tf
+  script:
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  resource_group: $TF_STATE_NAME
+  artifacts:
+    name: plan
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "main"'
+    changes:
+      - ${TF_ROOT}/main.tf
+
+
+deploy_aws_infrastructure:
+  stage: deploy_tf
+  script:
+    - gitlab-terraform apply
+    - echo "Extracting EC2 instance public IP..."
+    - export EC2_PUBLIC_IP=$(gitlab-terraform output -raw ec2_public_ip)
+    - echo "EC2 Public IP -> [ $EC2_PUBLIC_IP ]"
+    - pwd
+    - cd ..
+    - pwd
+    - ls -l
+    - cd config
+    - pwd
+    - ls -l
+    - echo "Generating Ansible inventory file..."
+    - cat hosts.j2
+    # - cat hosts.ini
+    - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
+    - echo $EC2_PUBLIC_IP > ec2_ip.txt
+    - ls -l
+    - cat hosts.j2
+    - cat hosts.ini
+    - cat ec2_ip.txt
+  artifacts:
+    paths:
+      - ${ANSIBLE_PATH}/hosts.ini
+      - ${ANSIBLE_PATH}/ec2_ip.txt
+  resource_group: $TF_STATE_NAME
+  dependencies:
+    - terraform_plan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - ${TF_ROOT}/main.tf
+      # when: manual # blocked
+
+destroy_aws_infrastructure:
+  stage: destroy_tf
+  script:
+    - gitlab-terraform destroy -auto-approve
+  resource_group: $TF_STATE_NAME
+  dependencies:
+    - terraform_plan
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - ${TF_ROOT}/main.tf
+  when: manual
