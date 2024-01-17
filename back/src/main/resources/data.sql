@@ -1,27 +1,16 @@
 -- Insert users
 INSERT INTO usr (name, surname, email, password, is_admin, role, shift)
 VALUES
-    ('Maximo', 'Timochenko', 'mtimochenko@noc.com', 'password123', false, 'ATTENDANT', 'NIGHT'),
-    ('Matias', 'Gioscio', 'mgioscio@noc.com', 'password456', false, 'REPORTER', 'NIGHT'),
-    ('Brian', 'Silva', 'basilva@noc.com', 'password789', false, 'HELPER', 'NIGHT'),
-    ('Sebastian', 'Lopez', 'seblopez@noc.com', 'password101', false, 'ATTENDANT', 'NIGHT'),
-    ('Joaquin', 'Higa', 'jhiga@noc.com', 'password102', false, 'REPORTER', 'NIGHT'),
-    ('Mariano', 'Villalba', 'mvillalba@noc.com', '123', false, null, 'DAY'),
-    ('Federico', 'Muñiz', 'fmuñiz@noc.com', '123', false, null, 'DAY'),
-    ('Lucas', 'Bardon', 'lbardon@noc.com', '123', false, null, 'DAY'),
-    ('Mariano', 'Buonsante', 'mbuonsante@noc.com', '123', false, 'ATTENDANT', 'DAY'),
-    ('Lucas', 'Testatonda', 'ltestatonda@noc.com', '123', false, null, 'DAY'),
-    ('Cristian', 'Gimenez', 'cgimenez@noc.com', '123', false, null, 'DAY'),
-    ('Oscar', 'Gonzalez', 'ogonzalez@noc.com', '123', false, null, 'DAY'),
-    ('German', 'Rios', 'grios@noc.com', '123', false, null, 'DAY'),
-    ('Cristian', 'Leiva', 'cleiva@noc.com', '123', false, null, 'DAY'),
-    ('Gonzalo', 'Hepp', 'ghepp@noc.com', '123', false, null, 'EVENING'),
-    ('Pablo', 'Zucco', 'pzucco@noc.com', '123', false, null, 'EVENING'),
-    ('Guillermo', 'Cruz', 'gcruz@noc.com', '123', false, null, 'EVENING'),
-    ('Roberto', 'Corigliano', 'rcorigliano@noc.com', '123', false, null, 'EVENING'),
-    ('Facundo', 'Fernandez', 'ffernandez@noc.com', '123', false, null, 'EVENING'),
-    ('Gonzalo', 'Burgos', 'gburgos@noc.com', '123', false, null, 'EVENING'),
-    ('Daniel', 'Tubio', 'dtubio@noc.com', '123', false, null, 'EVENING');
+    ('Noche', 'Guest', 'noche@noc.com', 'noche', false, 'ATTENDANT', 'NIGHT'),
+    ('Matias', 'Higa', 'mhiga@noc.com', 'noche', false, 'REPORTER', 'NIGHT'),
+    ('Brian', 'Gioscio', 'bgioscio@noc.com', 'noche', false, 'HELPER', 'NIGHT'),
+    ('Dia', 'Guest', 'dia@noc.com', 'dia', false, null, 'DAY'),
+    ('German', 'Bardon', 'gbardon@noc.com', 'dia', false, null, 'DAY'),
+    ('Oscar', 'Testatonda', 'otestatonda@noc.com', 'dia', false, null, 'DAY'),
+    ('Tarde', 'Guest', 'tarde@noc.com', 'tarde', false, null, 'EVENING'),
+    ('Facundo', 'Tubio', 'ftubio@noc.com', 'tarde', false, null, 'EVENING'),
+    ('Roberto', 'Zucco', 'rzucco@noc.com', 'tarde', false, null, 'EVENING');
+
 
 -- Insert specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
@@ -35,17 +24,17 @@ VALUES
 -- Insert assignments of tasks to users (UserTask)
 INSERT INTO user_task (user_id, task_id, user_task_status, assignment_date, assigned_by)
 VALUES
-    (1, 1, 'ASSIGNED', '2023-08-06 14:00:00', 2),
-    (1, 2, 'ASSIGNED', '2023-08-07 15:00:00', 4),
-    (3, 3, 'ASSIGNED', '2023-08-08 09:30:00', 1),
-    (4, 4, 'ASSIGNED', '2023-08-09 16:45:00', 5),
-    (5, 5, 'ASSIGNED', '2023-08-10 17:00:00', 3);
+    (2, 1, 'ASSIGNED', '2023-08-06 14:00:00', 3),
+    (3, 2, 'ASSIGNED', '2023-08-07 15:00:00', 1),
+    (5, 3, 'ASSIGNED', '2023-08-08 09:30:00', 6),
+    (6, 4, 'ASSIGNED', '2023-08-09 16:45:00', 5),
+    (8, 5, 'ASSIGNED', '2023-08-10 17:00:00', 9);
 
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
-    (1, 1, 'Las revisiones de salud en Grafana se han realizado correctamente.', '2023-08-11 09:15:00'),
-    (3, 2, 'Gestión del desborde de tráfico con QWILT completada satisfactoriamente.', '2023-08-12 10:30:00'),
-    (4, 3, 'Mantenimiento de EDGE realizado con éxito.', '2023-08-13 11:45:00'),
-    (5, 4, 'Se han resuelto los TT pendientes de ICD.', '2023-08-14 14:30:00'),
-    (2, 5, 'Respuesta a alarmas en el Centro de Gestión de Fallos gestionada.', '2023-08-15 15:45:00');
+    (1, 1, 'Atento hoy a las notificaciones en Grafana.', '2023-08-11 09:15:00'),
+    (3, 2, 'Desborde de tráfico con QWILT para desactivar.', '2023-08-12 10:30:00'),
+    (4, 3, 'Verificar EDGE 10 que esta en mantenimiento.', '2023-08-13 11:45:00'),
+    (5, 4, 'Hay algunos TT pendientes en ICD.', '2023-08-14 14:30:00'),
+    (2, 5, 'Gestionar las alarmas por evento de la fecha.', '2023-08-15 15:45:00');
