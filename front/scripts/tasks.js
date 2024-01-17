@@ -1903,8 +1903,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const availableWorkCard = document.getElementById('activeTasks');
     if (availableWorkCard) {
         availableWorkCard.addEventListener('click', function() {
-            // This function will be triggered when the "Available Work" card is clicked
+            // This functions will be triggered when the "Available Work" card is clicked
+            // Re-fetch Available Work tasks to reflect the changes
             fetchAndDisplayAvailableTasks();
+            // Also, re-fetch and update the counter for 'Available Work' tasks
+            fetchAndUpdateAvailableWorkCount();
         });
     }
 
