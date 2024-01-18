@@ -3,13 +3,13 @@ image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 variables:
   PROJECT_ID: 53926083
   TF_STATE_NAME: workbench-app
-  TF_ROOT: cicd/platform/provisioning
-  ANSIBLE_PATH: cicd/config
+  TF_PATH: cicd/platform/provisioning
+  ANSIBLE_PATH: cicd/platform/config
   TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 
 before_script:
-  - cd $TF_ROOT
+  - cd $TF_PATH
   # - sh ./init.sh
 
 
@@ -28,7 +28,7 @@ terraform_init:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_ROOT}/*.tf
+        - ${TF_PATH}/*.tf
 
 
 terraform_validate:
@@ -40,7 +40,7 @@ terraform_validate:
   rules:
   - if: '$CI_COMMIT_BRANCH == "main"'
     changes:
-      - ${TF_ROOT}/main.tf
+      - ${TF_PATH}/main.tf
 
 terraform_plan:
   stage: plan_tf
@@ -51,13 +51,13 @@ terraform_plan:
   artifacts:
     name: plan
     paths:
-      - ${TF_ROOT}/plan.cache
+      - ${TF_PATH}/plan.cache
     reports:
-      terraform: ${TF_ROOT}/plan.json
+      terraform: ${TF_PATH}/plan.json
   rules:
   - if: '$CI_COMMIT_BRANCH == "main"'
     changes:
-      - ${TF_ROOT}/main.tf
+      - ${TF_PATH}/main.tf
 
 
 deploy_aws_infrastructure:
@@ -93,7 +93,7 @@ deploy_aws_infrastructure:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_ROOT}/main.tf
+        - ${TF_PATH}/main.tf
       # when: manual # blocked
 
 destroy_aws_infrastructure:
@@ -106,5 +106,5 @@ destroy_aws_infrastructure:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_ROOT}/main.tf
+        - ${TF_PATH}/main.tf
   when: manual
