@@ -46,10 +46,7 @@ VALUES
     (3, 2, 'ASSIGNED', '2023-08-07 15:00:00', 1),
     (5, 3, 'ASSIGNED', '2023-08-08 09:30:00', 6),
     (6, 4, 'ASSIGNED', '2023-08-09 16:45:00', 5),
-    (8, 5, 'ASSIGNED', '2023-08-10 17:00:00', 9);
--- Assigning the new tasks
-INSERT INTO user_task (user_id, task_id, user_task_status, assignment_date, assigned_by)
-VALUES
+    (8, 5, 'ASSIGNED', '2023-08-10 17:00:00', 9),
     (5, 6, 'ASSIGNED', '2023-08-09 10:00:00', 6), -- Duncan assigned by Hari
     (6, 7, 'ASSIGNED', '2023-08-10 11:30:00', 5), -- Hari assigned by Duncan
     (8, 8, 'ASSIGNED', '2023-08-11 14:00:00', 7); -- Gurney assigned by Stalker
