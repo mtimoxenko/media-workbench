@@ -4,11 +4,11 @@ stages:
   - plan_tf
   - deploy_tf
   - destroy_tf
-  # - configure_infra # [Ansible] job
+  - configure_infra # [Ansible] job
   # - build_image     # [DinD] job
   # - deploy_image    # [Ansible] job
 
 include:
   - local: '/cicd/deploy_infrastructure.yml'
-  # - local: '/cicd/configure_infrastructure.yml'
+  - local: '/cicd/configure_infrastructure.yml'
   # - local: '/cicd/deploy_app.yml'

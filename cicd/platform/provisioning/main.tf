@@ -13,7 +13,7 @@ resource "aws_instance" "web" {
   #             EOF
 
   tags = {
-    Name = "ec2-workbench"
+    Name = "workbench-app"
   }
 }
 
