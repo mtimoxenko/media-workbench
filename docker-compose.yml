@@ -2,7 +2,7 @@ version: '3.8'
 services:
   frontend:
     build: ./front
-    image: $DOCKERHUB_USERNAME/workbench-front:${IMAGE_TAG}
+    image: ${FRONTEND_IMAGE}:${FRONTEND_TAG}
     ports:
       - "3000:80"
     networks:
@@ -10,7 +10,7 @@ services:
 
   backend:
     build: ./back
-    image: $DOCKERHUB_USERNAME/workbench-back:${IMAGE_TAG}
+    image: ${BACKEND_IMAGE}:${BACKEND_TAG}
     ports:
       - "8080:8080"
     networks:
