@@ -1,7 +1,13 @@
 package com.mediaworkbench.workbench.model;
 
 public enum UserRoleStatus {
-    ATTENDANT,
-    REPORTER,
-    HELPER
+    REPLICANT_HUNTER,
+    SPICE_OVERSEER,
+    COSMIC_RESEARCHER,
+    REVOLUTIONARY_LEADER,
+    DUNE_STRATEGIST,
+    PSYCHOHISTORIAN,
+    ZONE_EXPLORER,
+    BALISET_ARTIST,
+    STATION_SCIENTIST
 }
