@@ -1,9 +1,6 @@
 stages:
   - configure_infra
 
-variables:
-  ANSIBLE_PATH: _cicd/platform/config
-
 ansible_configure:
   stage: configure_infra
   image: alpinelinux/ansible:latest

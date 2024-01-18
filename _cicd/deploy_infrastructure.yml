@@ -4,7 +4,6 @@ variables:
   PROJECT_ID: 53926083
   TF_STATE_NAME: workbench-app
   TF_PATH: _cicd/platform/provisioning
-  ANSIBLE_PATH: cicd/platform/config
   TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 

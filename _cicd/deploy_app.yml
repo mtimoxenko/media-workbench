@@ -1,6 +1,5 @@
 variables:
-  ANSIBLE_PATH: _cicd/platform/config
-  IMAGE_TAG: $CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+  IMAGE_TAG: $CI_COMMIT_TAG
   # URL-safe slug of the branch + unique id of the current pipeline 
   # IMAGE_TAG combines the branch/tag slug and the pipeline ID.
 
@@ -28,20 +27,20 @@ build_docker_image:
         - back/*
         - front/*
 
-# deploy_docker_aws:
-#   stage: push_to_remote
-#   image: alpinelinux/ansible:latest
-#   dependencies:
-#     - deploy_aws_infrastructure
-#   before_script:
-#     - cd $ANSIBLE_PATH
-#     - chmod 400 $SSH_KEY
-#     # - EC2_PUBLIC_IP=$(cat $ANSIBLE_PATH/ec2_ip.txt)  # Read the IP address into a variable
-#   script: 
-#     - export ANSIBLE_HOST_KEY_CHECKING=False
-#     - ansible-playbook -i hosts.ini start_app.yml --private-key=$SSH_KEY -u ubuntu
-#   rules:
-#     - if: '$CI_COMMIT_BRANCH == "main"'
-#       changes:
-#         - back/*
-#         - front/*
+deploy_docker_aws:
+  stage: push_to_remote
+  image: alpinelinux/ansible:latest
+  dependencies:
+    - deploy_aws_infrastructure
+  before_script:
+    - cd $ANSIBLE_PATH
+    - chmod 400 $SSH_KEY
+    # - EC2_PUBLIC_IP=$(cat $ANSIBLE_PATH/ec2_ip.txt)  # Read the IP address into a variable
+  script: 
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible-playbook -i hosts.ini start_app.yml --private-key=$SSH_KEY -u ubuntu
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - back/*
+        - front/*
