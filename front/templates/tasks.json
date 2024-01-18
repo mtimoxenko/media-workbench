@@ -1,32 +1,32 @@
 [
     {
         "id": 1,
-        "btn": "EDGE",
-        "name": "Mantenimiento EDGE",
-        "description": "Realizar mantenimiento de rutina y actualizaciones en la infraestructura de la red EDGE."
+        "btn": "REPLICANTS",
+        "name": "Identify Replicants",
+        "description": "Use the Voight-Kampff test to identify potential replicants in the city. Essential for maintaining order."
     },
     {
         "id": 2,
-        "btn": "FMC",
-        "name": "Alarmas FMC",
-        "description": "Monitorear y responder a las alarmas en el Centro de Gestión de Fallas (FMC)."
+        "btn": "SPICE",
+        "name": "Monitor Spice Levels",
+        "description": "Oversee spice production on Arrakis. Monitor for any unusual activity or disruptions in the spice flow."
     },
     {
         "id": 3,
-        "btn": "GRAFANA",
-        "name": "Controles de Salud Grafana",
-        "description": "Realizar revisiones regulares de salud y monitoreo de flujos de red utilizando Grafana."
+        "btn": "SOLARIS",
+        "name": "Study Solaris Ocean",
+        "description": "Conduct a detailed study of the Solaris ocean's behavior. Analyze patterns and record any anomalies."
     },
     {
         "id": 4,
-        "btn": "ICD",
-        "name": "TTs ICD Pendientes",
-        "description": "Resolver Tickets de Problemas pendientes relacionados con problemas y consultas de ICD."
+        "btn": "ZONE",
+        "name": "Artifact Retrieval",
+        "description": "Lead an expedition into The Zone to retrieve rumored powerful artifacts. Ensure safety protocols are followed."
     },
     {
         "id": 5,
-        "btn": "QWILT",
-        "name": "Gestión Tráfico con Filtro QWILT",
-        "description": "Gestionar y optimizar el exceso de tráfico utilizando técnicas de filtrado QWILT."
+        "btn": "UPRISING",
+        "name": "Investigate Uprising",
+        "description": "Investigate and report on any signs of a replicant uprising. Maintain secrecy and discretion."
     }
 ]

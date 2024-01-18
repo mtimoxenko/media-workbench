@@ -639,47 +639,52 @@ function displayNoTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No New Assigned Tasks 🌟</h2>
-            <p>Great job! You're all caught up! 👍</p>
-            <p>Why not check "Tasks in Progress" or explore "Available Work" for new opportunities?</p>
+            <h2>Clean Sector 🌃</h2>
+            <p>Efficiency at 100%. Systems nominal.</p>
+            <p>Scan "In Progress" or "Open Assignments" for directives.</p>
         </div>
     `;
-    // Add additional styling as needed
+    // Add additional retrofuturistic styling as needed
 }
+
 // Displays a message when there are no tasks in progress
 function displayNoInProgressTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No Tasks In Progress 💪</h2>
-            <p>Take a moment to relax, you've earned it! 😊</p>
-            <p>Ready for more? See "New Assigned Tasks" or dive into "Completed Tasks" to review your achievements.</p>
+            <h2>Stable Orbits 🛸</h2>
+            <p>Cruise mode engaged. Savor the stillness.</p>
+            <p>Ready to engage? "New Assignments" and "Achievements" await.</p>
         </div>
     `;
-    // Add additional styling as needed
+    // Add additional retrofuturistic styling as needed
 }
+
 // Displays a message when there are no completed tasks
 function displayNoCompletedTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No Completed Tasks Yet 🚀</h2>
-            <p>You're on the path to great achievements! 🌟</p>
-            <p>Check out "New Assigned Tasks" or "Tasks In Progress" to keep the momentum going!</p>
+            <h2>Victories Pending 🚀</h2>
+            <p>Legends in the making. Press on.</p>
+            <p>Initiate "New Assignments" or continue "Current Operations".</p>
         </div>
     `;
-    // Add additional styling as needed
+    // Add additional retrofuturistic styling as needed
 }
+
 // Displays a message when there are no available work tasks
 function displayNoAvailableWorkMessage(container) {
     container.innerHTML = `
         <div class="no-tasks-message">
-            <h2>No Available Work Right Now 🤔</h2>
-            <p>Looking for something to do? Create a new task using the Custom or Template Task cards above! 🌱</p>
-            <p>You can also check "New Assigned Tasks" or "Tasks in Progress" to find other activities.</p>
+            <h2>Horizon Clear 🌌</h2>
+            <p>Mission pool is calm. Ideal for strategizing new endeavors.</p>
+            <p>Create or accept "New Assignments". The cosmos is your limit.</p>
         </div>
     `;
+    // Add additional retrofuturistic styling as needed
 }
+
 
 
 
