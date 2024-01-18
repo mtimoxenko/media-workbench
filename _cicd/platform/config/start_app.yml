@@ -1,0 +1,38 @@
+---
+- hosts: dev
+  become: true
+  remote_user: ubuntu
+  vars:
+    dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}" # Set your DockerHub username
+    dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"  # Set your DockerHub password
+    image_name: "fr3m3n/front-vanilla"     # Set your Docker image name
+    image_tag: "stellinelab-1.0.0"         # Set your Docker image tag
+
+  tasks:
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ dockerhub_username }}"
+        password: "{{ dockerhub_password }}"
+
+    - name: Stop and remove all running containers
+      docker_container:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ docker_ps_aq.stdout_lines }}"
+      ignore_errors: yes
+      when: docker_ps_aq.stdout_lines is defined
+
+    - name: Get all running container IDs
+      command: docker ps -aq
+      register: docker_ps_aq
+      changed_when: false
+
+    - name: Run the Docker container
+      docker_container:
+        name: "my_container"
+        image: "{{ image_name }}:{{ image_tag }}"
+        state: started
+        ports:
+          - "80:80"
+        recreate: yes
+        pull: yes

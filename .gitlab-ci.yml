@@ -5,10 +5,10 @@ stages:
   - deploy_tf
   - destroy_tf
   - configure_infra # [Ansible] job
-  # - build_image     # [DinD] job
-  # - deploy_image    # [Ansible] job
+  - upload_to_dockerhub    # [DinD] job
+  # - push_to_remote   # [Ansible] job
 
 include:
-  - local: '/cicd/deploy_infrastructure.yml'
-  - local: '/cicd/configure_infrastructure.yml'
-  # - local: '/cicd/deploy_app.yml'
+  - local: '/_cicd/deploy_infrastructure.yml'
+  - local: '/_cicd/configure_infrastructure.yml'
+  - local: '/_cicd/deploy_app.yml'

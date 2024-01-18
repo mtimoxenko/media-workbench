@@ -2,7 +2,7 @@ version: '3.8'
 services:
   frontend:
     build: ./front
-    image: media-front:0.0.1-MVP
+    image: $DOCKERHUB_USERNAME/workbench-front:${IMAGE_TAG}
     ports:
       - "3000:80"
     networks:
@@ -10,7 +10,7 @@ services:
 
   backend:
     build: ./back
-    image: media-api:0.0.1-MVP
+    image: $DOCKERHUB_USERNAME/workbench-back:${IMAGE_TAG}
     ports:
       - "8080:8080"
     networks:
