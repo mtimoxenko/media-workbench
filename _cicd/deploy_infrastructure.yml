@@ -9,6 +9,7 @@ variables:
 
 
 before_script:
+  - pwd
   - cd $TF_PATH
   # - sh ./init.sh
 
