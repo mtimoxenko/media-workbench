@@ -2,7 +2,7 @@ stages:
   - configure_infra
 
 variables:
-  ANSIBLE_PATH: cicd/platform/config
+  ANSIBLE_PATH: _cicd/platform/config
 
 ansible_configure:
   stage: configure_infra

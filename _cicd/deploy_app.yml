@@ -1,5 +1,5 @@
 variables:
-  ANSIBLE_PATH: cicd/platform/config
+  ANSIBLE_PATH: _cicd/platform/config
   IMAGE_TAG: $CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
   # URL-safe slug of the branch + unique id of the current pipeline 
   # IMAGE_TAG combines the branch/tag slug and the pipeline ID.
