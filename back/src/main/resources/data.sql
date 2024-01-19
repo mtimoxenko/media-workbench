@@ -53,7 +53,6 @@ VALUES
 
 
 
-
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
