@@ -7,9 +7,6 @@ variables:
   TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 
-# before_script:
-#   - cd $TF_PATH
-
 stages:
   - prepare_tf
   - validate_tf
