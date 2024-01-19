@@ -13,12 +13,10 @@ deploy_front_to_aws:
   script: 
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
-  only:
-    refs:
-      - tags
-    changes:
-      - front/* 
-
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "push"'
+      changes:
+        - front/*
 
 deploy_back_to_aws:
   stage: deploy_backend
@@ -31,8 +29,7 @@ deploy_back_to_aws:
   script: 
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu
-  only:
-    refs:
-      - tags
-    changes:
-      - back/*
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_PIPELINE_SOURCE == "push"'
+      changes:
+        - back/*
