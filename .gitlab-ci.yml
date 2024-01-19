@@ -6,16 +6,19 @@ variables:
   BACKEND_TAG: "$CI_COMMIT_TAG"
 
 stages:
-  - prepare_tf              # [Terraform] pipeline
-  - validate_tf
-  - plan_tf
-  - deploy_tf
-  - destroy_tf
-  - configure_infra         # [Ansible] job
-  - upload_to_dockerhub     # [DinD] job
-  - push_to_remote          # [Ansible] job
+  - prepare_tf        # [Terraform] pipeline
+  - validate_tf       #    |
+  - plan_tf           #    |
+  - deploy_tf         #    |
+  - destroy_tf        #    |
+  - configure_infra   # [Ansible]
+  - build_frontend    # [DinD]
+  - build_backend     #    |
+  - deploy_frontend   # [Ansible]
+  - deploy_backend    #    |
 
 include:
-  - local: '/_cicd/deploy_infrastructure.yml'
+  - local: '/_cicd/build_infrastructure.yml'
   - local: '/_cicd/configure_infrastructure.yml'
+  - local: '/_cicd/build_app.yml'
   - local: '/_cicd/deploy_app.yml'
