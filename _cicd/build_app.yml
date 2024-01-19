@@ -15,7 +15,7 @@ build_frontend_image:
     - docker build -t $FRONTEND_IMAGE:$FRONTEND_TAG ./front --no-cache
     - docker push $FRONTEND_IMAGE:$FRONTEND_TAG
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "main" && $CI_COMMIT_TAG'
       changes:
         - front/**/*
 
@@ -33,6 +33,6 @@ build_backend_image:
     - docker build -t $BACKEND_IMAGE:$BACKEND_TAG ./back --no-cache
     - docker push $BACKEND_IMAGE:$BACKEND_TAG
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_COMMIT_TAG'
+    - if: '$CI_COMMIT_BRANCH == "main" && $CI_COMMIT_TAG'
       changes:
         - back/src/main/**/*
