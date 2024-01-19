@@ -34,9 +34,9 @@ VALUES
     (5, 3, 'ASSIGNED', '2023-08-08 09:30:00', 6),
     (6, 4, 'ASSIGNED', '2023-08-09 16:45:00', 5),
     (8, 5, 'ASSIGNED', '2023-08-10 17:00:00', 9),
-    (5, 6, 'ASSIGNED', '2023-08-09 10:00:00', 6), -- Duncan assigned by Hari
-    (6, 7, 'ASSIGNED', '2023-08-10 11:30:00', 5), -- Hari assigned by Duncan
-    (8, 8, 'ASSIGNED', '2023-08-11 14:00:00', 7); -- Gurney assigned by Stalker
+    (5, 6, 'ASSIGNED', '2023-08-09 10:00:00', 6),
+    (6, 7, 'ASSIGNED', '2023-08-10 11:30:00', 5),
+    (8, 8, 'ASSIGNED', '2023-08-11 14:00:00', 7);
 
 
 -- Insert specific comments
@@ -48,21 +48,9 @@ VALUES
     (4, 4, 'Preparing for The Zone expedition. Safety measures in place.', '2023-08-14 14:30:00'),
     (1, 5, 'Tracking Roy Batty. Possible locations identified. Proceeding with caution.', '2023-08-15 15:45:00'),
     (1, 1, 'Several suspects cleared. Continuing the search.', '2023-08-12 09:20:00'),
-    (2, 2, 'Spice flow is critical. Monitoring for Harkonnen interference.', '2023-08-13 10:35:00');
-
--- Kris Kelvin on Solaris Ocean Study
-INSERT INTO comment (user_id, task_id, text, timestamp)
-VALUES (3, 3, 'The ocean responds to our presence. Need to study this interaction.', '2023-08-14 12:00:00');
-
--- Duncan Idaho on Dune Reconnaissance
-INSERT INTO comment (user_id, task_id, text, timestamp)
-VALUES (5, 6, 'Recon in progress. The desert holds many secrets.', '2023-08-15 13:30:00');
-
--- Hari Seldon on Predictive Analysis
-INSERT INTO comment (user_id, task_id, text, timestamp)
-VALUES (6, 7, 'Initial predictions are concerning. Further analysis required.', '2023-08-16 15:00:00');
-
--- Gurney Halleck on Baliset Performance
-INSERT INTO comment (user_id, task_id, text, timestamp)
-VALUES (8, 8, 'Preparing a new composition to inspire the troops.', '2023-08-17 16:45:00');
+    (2, 2, 'Spice flow is critical. Monitoring for Harkonnen interference.', '2023-08-13 10:35:00'),
+    (3, 3, 'The ocean responds to our presence. Need to study this interaction.', '2023-08-14 12:00:00'),
+    (5, 6, 'Recon in progress. The desert holds many secrets.', '2023-08-15 13:30:00'),
+    (6, 7, 'Initial predictions are concerning. Further analysis required.', '2023-08-16 15:00:00'),
+    (8, 8, 'Preparing a new composition to inspire the troops.', '2023-08-17 16:45:00');
 
