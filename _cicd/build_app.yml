@@ -14,6 +14,7 @@ build_frontend_image:
     - echo $DOCKERHUB_PASSWORD | docker login --user $DOCKERHUB_USERNAME --password-stdin
   script:
     # - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - pwd
     - docker build -t $FRONTEND_IMAGE:$FRONTEND_TAG ./front --no-cache
     - docker push $FRONTEND_IMAGE:$FRONTEND_TAG
   only:
