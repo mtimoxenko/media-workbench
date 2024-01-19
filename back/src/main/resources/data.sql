@@ -52,7 +52,6 @@ VALUES
     (8, 8, 'ASSIGNED', '2023-08-11 14:00:00', 7); -- Gurney assigned by Stalker
 
 
-
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
