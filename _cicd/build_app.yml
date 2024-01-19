@@ -10,10 +10,10 @@ build_frontend_image:
     - docker:24-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
-  # before_script:
-  #   - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+  before_script:
+    - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
   script:
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    # - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - docker build -t $FRONTEND_IMAGE:$FRONTEND_TAG ./front --no-cache
     - docker push $FRONTEND_IMAGE:$FRONTEND_TAG
   only:
@@ -29,10 +29,10 @@ build_backend_image:
     - docker:24-dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
-  # before_script:
-  #   - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+  before_script:
+    - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
   script:
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    # - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - docker build -t $BACKEND_IMAGE:$BACKEND_TAG ./back --no-cache
     - docker push $BACKEND_IMAGE:$BACKEND_TAG
   only:

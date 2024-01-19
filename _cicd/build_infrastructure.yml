@@ -7,8 +7,8 @@ variables:
   TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 
-before_script:
-  - cd $TF_PATH
+# before_script:
+#   - cd $TF_PATH
 
 stages:
   - prepare_tf
@@ -19,6 +19,8 @@ stages:
 
 terraform_init:
   stage: prepare_tf
+  before_script:
+    - cd $TF_PATH
   script:
     - gitlab-terraform init
   resource_group: $TF_STATE_NAME
@@ -30,6 +32,8 @@ terraform_init:
 
 terraform_validate:
   stage: validate_tf
+  before_script:
+    - cd $TF_PATH
   script:
     - gitlab-terraform init
     - gitlab-terraform validate
@@ -41,6 +45,8 @@ terraform_validate:
 
 terraform_plan:
   stage: plan_tf
+  before_script:
+    - cd $TF_PATH
   script:
     - gitlab-terraform plan
     - gitlab-terraform plan-json
@@ -59,6 +65,8 @@ terraform_plan:
 
 build_aws_infrastructure:
   stage: deploy_tf
+  before_script:
+    - cd $TF_PATH
   script:
     - gitlab-terraform apply
     - echo "Extracting EC2 instance public IP..."
@@ -93,6 +101,8 @@ build_aws_infrastructure:
 
 destroy_aws_infrastructure:
   stage: destroy_tf
+  before_script:
+    - cd $TF_PATH
   script:
     - gitlab-terraform destroy -auto-approve
   resource_group: $TF_STATE_NAME
