@@ -66,6 +66,7 @@ VALUES
     (1, 5, 'Tracking Roy Batty. Possible locations identified. Proceeding with caution.', '2023-08-15 15:45:00'),
     (1, 1, 'Several suspects cleared. Continuing the search.', '2023-08-12 09:20:00');
 
+
 -- Paul Atreides on Arrakis Spice Monitoring
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES (2, 2, 'Spice flow is critical. Monitoring for Harkonnen interference.', '2023-08-13 10:35:00');
