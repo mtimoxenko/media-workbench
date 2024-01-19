@@ -22,11 +22,8 @@ VALUES
     ('Zone Artifact Retrieval', 'Stalker to lead an expedition to retrieve a rumored powerful artifact from The Zone.', 4, '2023-08-04 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
     ('Replicant Uprising Investigation', 'Investigate reports of a replicant uprising led by Roy Batty.', 1, '2023-08-05 13:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
     ('Dune Reconnaissance', 'Duncan Idaho to conduct surveillance missions on Dune for strategic insights.', 5, '2023-08-06 10:30:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
-    ('Predictive Analysis', 'Hari Seldon to use psychohistory for predictive analysis of future events.', 6, '2023-08-07 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'DAY');
-
--- Gurney Halleck's Baliset Performance
-INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
-VALUES ('Baliset Performance', 'Gurney Halleck to perform a musical piece on the baliset for troop morale.', 8, '2023-08-08 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING');
+    ('Predictive Analysis', 'Hari Seldon to use psychohistory for predictive analysis of future events.', 6, '2023-08-07 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
+    ('Baliset Performance', 'Gurney Halleck to perform a musical piece on the baliset for troop morale.', 8, '2023-08-08 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING');
 
 
 -- Insert assignments of tasks to users (UserTask)
