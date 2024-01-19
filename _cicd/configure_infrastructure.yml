@@ -9,15 +9,12 @@ configure_aws_infrastructure:
   before_script:
     - ansible --version
     - echo "Initialize Ansible configuration..."
-    # Initialize Ansible, e.g., configure hosts, variables, etc.
     - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script:
     - export ANSIBLE_HOST_KEY_CHECKING=False
-    # - ansible all -i hosts.ini -m raw -a 'python3 --version' --private-key=$SSH_KEY -u ubuntu
-    # - python3 --version
     - ansible-playbook -i hosts.ini config_infra.yml --private-key=$SSH_KEY -u ubuntu
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${ANSIBLE_PATH}/* # Only run if changes in the Ansible directory
+        - _cicd/infra/config/config_infra.yml
