@@ -21,4 +21,4 @@ include:
   - local: '/_cicd/build_infrastructure.yml'
   - local: '/_cicd/configure_infrastructure.yml'
   - local: '/_cicd/build_app.yml'
-  - local: '/_cicd/deploy_app.yml'
+  # - local: '/_cicd/deploy_app.yml'

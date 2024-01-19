@@ -11,15 +11,12 @@ deploy_front_to_aws:
     - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script: 
-    - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "front/**/*"; then
-        export ANSIBLE_HOST_KEY_CHECKING=False
-        ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
-      else
-        echo "No changes in 'front/' directory, skipping deployment."
-      fi
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
   rules:
     - if: '$CI_COMMIT_TAG'
+      changes:
+        - front/**/*
 
 deploy_back_to_aws:
   stage: deploy_backend
@@ -30,12 +27,9 @@ deploy_back_to_aws:
     - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script: 
-    - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "back/**/*"; then
-        export ANSIBLE_HOST_KEY_CHECKING=False
-        ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu
-      else
-        echo "No changes in 'back/' directory, skipping deployment."
-      fi
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu
   rules:
     - if: '$CI_COMMIT_TAG'
+      changes:
+        - back/**/*
