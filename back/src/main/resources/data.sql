@@ -35,7 +35,6 @@ INSERT INTO task (name, description, creator_id, creation_date, status, category
 VALUES ('Baliset Performance', 'Gurney Halleck to perform a musical piece on the baliset for troop morale.', 8, '2023-08-08 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING');
 
 
-
 -- Insert assignments of tasks to users (UserTask)
 INSERT INTO user_task (user_id, task_id, user_task_status, assignment_date, assigned_by)
 VALUES
