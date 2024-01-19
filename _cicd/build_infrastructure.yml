@@ -88,7 +88,7 @@ build_aws_infrastructure:
     - cat ec2_ip.txt
     # Configure Git
     - git checkout -b deployment-branch
-    - git add _cicd/infra/config/hosts.ini
+    - git add hosts.ini
     - git commit -m "Add hosts.ini for deployment"
     - git push origin deployment-branch
   artifacts:
