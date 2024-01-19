@@ -63,6 +63,9 @@ terraform_plan:
 build_aws_infrastructure:
   stage: deploy_tf
   before_script:
+   - git config --global user.email "ci-runner@example.com"
+    - git config --global user.name "CI Runner"
+    - git remote set-url origin https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@gitlab.com/frem3n/media-workbench.git
     - cd $TF_PATH
   script:
     - gitlab-terraform apply
@@ -84,12 +87,9 @@ build_aws_infrastructure:
     - cat hosts.j2
     - cat ec2_ip.txt
     # Configure Git
-    - git config --global user.email "ci@example.com"
-    - git config --global user.name "CI Runner"
     - git checkout -b deployment-branch
     - git add _cicd/infra/config/hosts.ini
     - git commit -m "Add hosts.ini for deployment"
-    - git remote set-url origin https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@gitlab.com/frem3n/media-workbench.git
     - git push origin deployment-branch
   artifacts:
     paths:
