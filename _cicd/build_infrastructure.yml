@@ -25,7 +25,7 @@ terraform_init:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_PATH}/*.tf
+        - _cicd/infra/provisioning/*.tf
 
 
 terraform_validate:
@@ -37,7 +37,7 @@ terraform_validate:
   rules:
   - if: '$CI_COMMIT_BRANCH == "main"'
     changes:
-      - ${TF_PATH}/main.tf
+      - _cicd/infra/provisioning/*.tf
 
 terraform_plan:
   stage: plan_tf
@@ -54,7 +54,7 @@ terraform_plan:
   rules:
   - if: '$CI_COMMIT_BRANCH == "main"'
     changes:
-      - ${TF_PATH}/main.tf
+      - _cicd/infra/provisioning/*.tf
 
 
 build_aws_infrastructure:
@@ -89,7 +89,7 @@ build_aws_infrastructure:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_PATH}/main.tf
+        - _cicd/infra/provisioning/*.tf
       # when: manual # pipe blocked
 
 destroy_aws_infrastructure:
@@ -102,5 +102,5 @@ destroy_aws_infrastructure:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - ${TF_PATH}/main.tf
+        - _cicd/infra/provisioning/*.tf
   when: manual
