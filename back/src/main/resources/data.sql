@@ -36,7 +36,6 @@ VALUES ('Baliset Performance', 'Gurney Halleck to perform a musical piece on the
 
 
 
-
 -- Insert assignments of tasks to users (UserTask)
 INSERT INTO user_task (user_id, task_id, user_task_status, assignment_date, assigned_by)
 VALUES
