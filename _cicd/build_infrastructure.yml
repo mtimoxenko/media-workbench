@@ -64,9 +64,11 @@ build_aws_infrastructure:
   stage: deploy_tf
   before_script:
     - cd $TF_PATH
+    # Set up Git configuration with CI runner's details
     - git config --global user.email "ci-runner@example.com"
     - git config --global user.name "CI Runner"
-    - git remote set-url origin https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@gitlab.com/frem3n/media-workbench.git
+    # Use the CI_DEPLOY_TOKEN for Git operations
+    - 'git remote set-url origin https://oauth2:$CI_DEPLOY_TOKEN@gitlab.com/frem3n/media-workbench.git'
   script:
     - gitlab-terraform apply
     - echo "Extracting EC2 instance public IP..."
@@ -86,11 +88,13 @@ build_aws_infrastructure:
     - ls -l
     - cat hosts.j2
     - cat ec2_ip.txt
-    # Configure Git
+    # Git
+    # After making changes, commit and push back to the repository
     - git checkout -b deployment-branch
-    - git add hosts.ini
-    - git commit -m "Add hosts.ini for deployment"
-    - git push origin deployment-branch
+    - git add hosts.ini ec2_ip.txt
+    - git commit -m "Add hosts.ini and ec2_ip.txt for deployment"
+    # Use the token to authenticate the push to GitLab
+    - 'git push origin deployment-branch'
   artifacts:
     paths:
       - ${ANSIBLE_PATH}/hosts.ini
