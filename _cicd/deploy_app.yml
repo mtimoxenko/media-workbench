@@ -12,7 +12,7 @@ deploy_front_to_aws:
     - chmod 400 $SSH_KEY
   script: 
     - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "front/"; then
+      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "front/**/*"; then
         export ANSIBLE_HOST_KEY_CHECKING=False
         ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
       else
@@ -31,7 +31,7 @@ deploy_back_to_aws:
     - chmod 400 $SSH_KEY
   script: 
     - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "back/"; then
+      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "back/**/*"; then
         export ANSIBLE_HOST_KEY_CHECKING=False
         ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu
       else

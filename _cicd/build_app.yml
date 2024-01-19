@@ -13,7 +13,7 @@ build_frontend_image:
     - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
   script:
     - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "front/"; then
+      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "front/**/*"; then
         docker build -t $FRONTEND_IMAGE:$FRONTEND_TAG ./front --no-cache
         docker push $FRONTEND_IMAGE:$FRONTEND_TAG
       else
@@ -34,7 +34,7 @@ build_backend_image:
     - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
   script:
     - |
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "back/"; then
+      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -q "back/**/*"; then
         docker build -t $BACKEND_IMAGE:$BACKEND_TAG ./back --no-cache
         docker push $BACKEND_IMAGE:$BACKEND_TAG
       else
