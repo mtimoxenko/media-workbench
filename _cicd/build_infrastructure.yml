@@ -73,7 +73,6 @@ build_aws_infrastructure:
     - ls -l
     - echo "Generating Ansible inventory file..."
     - cat hosts.j2
-    # - cat hosts.ini
     - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
     - echo $EC2_PUBLIC_IP > ec2_ip.txt
     - ls -l
