@@ -63,10 +63,8 @@ VALUES
     (2, 2, 'Noticed unusual spice production patterns on Arrakis. Investigating.', '2023-08-12 10:30:00'),
     (3, 3, 'Solaris ocean exhibits new phenomena. Recording data for analysis.', '2023-08-13 11:45:00'),
     (4, 4, 'Preparing for The Zone expedition. Safety measures in place.', '2023-08-14 14:30:00'),
-    (1, 5, 'Tracking Roy Batty. Possible locations identified. Proceeding with caution.', '2023-08-15 15:45:00');
--- Deckard on Replicant Identification
-INSERT INTO comment (user_id, task_id, text, timestamp)
-VALUES (1, 1, 'Several suspects cleared. Continuing the search.', '2023-08-12 09:20:00');
+    (1, 5, 'Tracking Roy Batty. Possible locations identified. Proceeding with caution.', '2023-08-15 15:45:00'),
+    (1, 1, 'Several suspects cleared. Continuing the search.', '2023-08-12 09:20:00');
 
 -- Paul Atreides on Arrakis Spice Monitoring
 INSERT INTO comment (user_id, task_id, text, timestamp)
