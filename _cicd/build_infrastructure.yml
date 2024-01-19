@@ -83,9 +83,16 @@ build_aws_infrastructure:
     - ls -l
     - cat hosts.j2
     - cat ec2_ip.txt
+    # Configure Git
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "CI Runner"
+
+    # Checkout new branch and commit hosts.ini
     - git checkout -b deployment-branch
     - git add hosts.ini
     - git commit -m "Add hosts.ini for deployment"
+    
+    # Push the branch to the remote repository
     - git push origin deployment-branch
   artifacts:
     paths:
