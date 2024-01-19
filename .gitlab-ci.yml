@@ -1,5 +1,5 @@
 variables:
-  ANSIBLE_PATH: "cicd/platform/config"
+  ANSIBLE_PATH: "cicd/infra/config"
   FRONTEND_IMAGE: "fr3m3n/workbench-front"
   FRONTEND_TAG: "$CI_COMMIT_TAG"
   BACKEND_IMAGE: "fr3m3n/workbench-back"
