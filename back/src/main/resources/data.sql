@@ -20,10 +20,8 @@ VALUES
     ('Arrakis Spice Monitoring', 'Paul Atreides to oversee spice production levels on Arrakis and report any anomalies.', 2, '2023-08-02 10:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
     ('Solaris Ocean Study', 'Kris Kelvin to analyze the behavioral patterns of the Solaris ocean.', 3, '2023-08-03 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
     ('Zone Artifact Retrieval', 'Stalker to lead an expedition to retrieve a rumored powerful artifact from The Zone.', 4, '2023-08-04 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Replicant Uprising Investigation', 'Investigate reports of a replicant uprising led by Roy Batty.', 1, '2023-08-05 13:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT');
--- Duncan Idaho's Dune Reconnaissance
-INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
-VALUES ('Dune Reconnaissance', 'Duncan Idaho to conduct surveillance missions on Dune for strategic insights.', 5, '2023-08-06 10:30:00', 'IN_PROGRESS', 'CUSTOM', 'DAY');
+    ('Replicant Uprising Investigation', 'Investigate reports of a replicant uprising led by Roy Batty.', 1, '2023-08-05 13:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
+    ('Dune Reconnaissance', 'Duncan Idaho to conduct surveillance missions on Dune for strategic insights.', 5, '2023-08-06 10:30:00', 'IN_PROGRESS', 'CUSTOM', 'DAY');
 
 -- Hari Seldon's Predictive Analysis
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
