@@ -10,7 +10,9 @@ deploy_front_to_aws:
   before_script:
     - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
-  script: 
+  script:
+    - pwd
+    - ls -l
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
   rules:
@@ -23,6 +25,8 @@ deploy_back_to_aws:
   dependencies:
     - build_aws_infrastructure
   before_script:
+    - pwd
+    - ls -l
     - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script: 
