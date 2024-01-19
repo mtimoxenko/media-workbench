@@ -53,4 +53,3 @@ VALUES
     (5, 6, 'Recon in progress. The desert holds many secrets.', '2023-08-15 13:30:00'),
     (6, 7, 'Initial predictions are concerning. Further analysis required.', '2023-08-16 15:00:00'),
     (8, 8, 'Preparing a new composition to inspire the troops.', '2023-08-17 16:45:00');
-
