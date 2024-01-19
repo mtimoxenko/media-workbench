@@ -78,7 +78,6 @@ build_aws_infrastructure:
     - echo $EC2_PUBLIC_IP > ec2_ip.txt
     - ls -l
     - cat hosts.j2
-    - cat hosts.ini
     - cat ec2_ip.txt
   artifacts:
     paths:
