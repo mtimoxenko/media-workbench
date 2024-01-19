@@ -63,10 +63,10 @@ terraform_plan:
 build_aws_infrastructure:
   stage: deploy_tf
   before_script:
-   - git config --global user.email "ci-runner@example.com"
+    - cd $TF_PATH
+    - git config --global user.email "ci-runner@example.com"
     - git config --global user.name "CI Runner"
     - git remote set-url origin https://$CI_DEPLOY_USER:$CI_DEPLOY_PASSWORD@gitlab.com/frem3n/media-workbench.git
-    - cd $TF_PATH
   script:
     - gitlab-terraform apply
     - echo "Extracting EC2 instance public IP..."
