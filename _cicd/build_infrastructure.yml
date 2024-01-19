@@ -83,6 +83,10 @@ build_aws_infrastructure:
     - ls -l
     - cat hosts.j2
     - cat ec2_ip.txt
+    - git checkout -b deployment-branch
+    - git add ${ANSIBLE_PATH}/hosts.ini
+    - git commit -m "Add hosts.ini for deployment"
+    - git push origin deployment-branch
   artifacts:
     paths:
       - ${ANSIBLE_PATH}/hosts.ini

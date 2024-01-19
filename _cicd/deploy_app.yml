@@ -8,6 +8,8 @@ deploy_front_to_aws:
   dependencies:
     - build_aws_infrastructure
   before_script:
+    - git fetch origin deployment-branch
+    - git checkout deployment-branch
     - cd $ANSIBLE_PATH
     - pwd
     - ls -l
@@ -25,6 +27,8 @@ deploy_back_to_aws:
   dependencies:
     - build_aws_infrastructure
   before_script:
+    - git fetch origin deployment-branch
+    - git checkout deployment-branch
     - cd $ANSIBLE_PATH
     - pwd
     - ls -l
