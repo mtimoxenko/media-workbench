@@ -14,9 +14,8 @@ deploy_front_to_aws:
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu
   rules:
-    - if: '$CI_COMMIT_TAG'
-      changes:
-        - front/**/*
+    - if: '$CI_COMMIT_TAG =~ /frontend/'
+
 
 deploy_back_to_aws:
   stage: deploy_backend
@@ -30,6 +29,4 @@ deploy_back_to_aws:
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu
   rules:
-    - if: '$CI_COMMIT_TAG'
-      changes:
-        - back/**/*
+    - if: '$CI_COMMIT_TAG =~ /backend/'
