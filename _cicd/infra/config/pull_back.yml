@@ -4,9 +4,9 @@
   remote_user: ubuntu
   vars:
     dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
-    dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"          
-    backend_image: "{{ lookup('env', 'BACKEND_IMAGE') }}"           
-    backend_tag: "{{ lookup('env', 'BACKEND_TAG') }}"               
+    dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"
+    backend_image: "{{ lookup('env', 'BACKEND_IMAGE') }}"
+    backend_tag: "{{ lookup('env', 'BACKEND_TAG') }}"      
 
   tasks:
     - name: Log into DockerHub
