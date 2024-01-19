@@ -1,11 +1,11 @@
 stages:
   - configure_infra
 
-ansible_configure:
+configure_aws_infrastructure:
   stage: configure_infra
   image: alpinelinux/ansible:latest
   dependencies:
-    - deploy_aws_infrastructure
+    - build_aws_infrastructure
   before_script:
     - ansible --version
     - echo "Initialize Ansible configuration..."

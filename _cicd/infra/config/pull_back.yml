@@ -1,0 +1,33 @@
+---
+- hosts: dev
+  become: true
+  remote_user: ubuntu
+  vars:
+    dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
+    dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"          
+    backend_image: "{{ lookup('env', 'BACKEND_IMAGE') }}"           
+    backend_tag: "{{ lookup('env', 'BACKEND_TAG') }}"               
+
+  tasks:
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ dockerhub_username }}"
+        password: "{{ dockerhub_password }}"
+
+    - name: Pull the latest Docker images
+      docker_image:
+        name: "{{ item.name }}"
+        tag: "{{ item.tag }}"
+        source: pull
+      loop:
+        - { name: "{{ backend_image }}", tag: "{{ backend_tag }}" }
+
+    - name: Run the backend Docker container
+      docker_container:
+        name: "workbench-backend"
+        image: "{{ backend_image }}:{{ backend_tag }}"
+        state: started
+        recreate: yes
+        pull: yes
+        ports:
+          - "8080:8080"

@@ -3,14 +3,12 @@ image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 variables:
   PROJECT_ID: 53926083
   TF_STATE_NAME: workbench-app
-  TF_PATH: _cicd/platform/provisioning
+  TF_PATH: _cicd/infra/provisioning
   TF_ADDRESS: https://gitlab.com/api/v4/projects/$PROJECT_ID/terraform/state/$TF_STATE_NAME
 
 
 before_script:
   - cd $TF_PATH
-  # - sh ./init.sh
-
 
 stages:
   - prepare_tf
@@ -59,7 +57,7 @@ terraform_plan:
       - ${TF_PATH}/main.tf
 
 
-deploy_aws_infrastructure:
+build_aws_infrastructure:
   stage: deploy_tf
   script:
     - gitlab-terraform apply
@@ -75,7 +73,7 @@ deploy_aws_infrastructure:
     - ls -l
     - echo "Generating Ansible inventory file..."
     - cat hosts.j2
-    # - cat hosts.ini
+    - cat hosts.ini
     - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
     - echo $EC2_PUBLIC_IP > ec2_ip.txt
     - ls -l
@@ -93,7 +91,7 @@ deploy_aws_infrastructure:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         - ${TF_PATH}/main.tf
-      # when: manual # blocked
+      # when: manual # pipe blocked
 
 destroy_aws_infrastructure:
   stage: destroy_tf
