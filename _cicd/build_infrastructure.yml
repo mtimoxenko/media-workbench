@@ -90,7 +90,9 @@ build_aws_infrastructure:
     - cat ec2_ip.txt
     # Git
     # After making changes, commit and push back to the repository
-    - git checkout -b deployment-branch
+    - git fetch origin deployment-branch:deployment-branch
+    - git checkout deployment-branch
+    - git merge --no-edit origin/deployment-branch
     - git add hosts.ini ec2_ip.txt
     - git commit -m "Add hosts.ini and ec2_ip.txt for deployment"
     # Use the token to authenticate the push to GitLab
