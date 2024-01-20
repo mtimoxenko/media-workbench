@@ -10,6 +10,15 @@ configure_aws_infrastructure:
     - ansible --version
     - echo "Initialize Ansible configuration..."
     - cd $ANSIBLE_PATH
+    - apk add --no-cache git # Make sure git is installed
+    - git clone --single-branch --branch deployment-branch https://gitlab.com/frem3n/media-workbench.git temp_repo
+    - pwd
+    - ls -l
+    - echo "moving hosts.ini..."
+    - mv temp_repo/_cicd/infra/config/hosts.ini . # Adjust this path as necessary
+    - pwd
+    - ls -l
+    - rm -rf temp_repo # Clean up
     - chmod 400 $SSH_KEY
   script:
     - export ANSIBLE_HOST_KEY_CHECKING=False
