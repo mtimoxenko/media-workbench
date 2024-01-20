@@ -11,6 +11,7 @@ VALUES
     ('Gurney', 'Halleck', 'halleck@dune.com', 'baliset', false, 'BALISET_ARTIST', 'EVENING'),
     ('Dr.', 'Snaut', 'snaut@solaris.com', 'cosmonaut', false, 'STATION_SCIENTIST', 'EVENING');
 
+
 -- Insert specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
 VALUES
