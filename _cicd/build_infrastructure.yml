@@ -74,14 +74,17 @@ build_aws_infrastructure:
     - echo "EC2 Public IP -> [ $EC2_PUBLIC_IP ]"
     - pwd
     - cd ../config
-    - echo "Generating Ansible inventory file..."
-    - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
-    - echo $EC2_PUBLIC_IP > ec2_ip.txt
-    # Git
+    # Fetch and reset the branch
     - git fetch origin deployment-branch
     - git checkout deployment-branch || true
     - git reset --hard origin/deployment-branch
-    - git add hosts.ini ec2_ip.txt
+    # Remove the existing files to avoid conflicts
+    - rm -f ec2_ip.txt hosts.ini
+    # Generate new files
+    - echo "$EC2_PUBLIC_IP" > ec2_ip.txt
+    - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
+    # Add, commit, and push the changes
+    - git add ec2_ip.txt hosts.ini
     - git commit -m "Update hosts.ini and ec2_ip.txt with new deployment information"
     - 'git push --force-with-lease origin deployment-branch'
   artifacts:
@@ -95,6 +98,7 @@ build_aws_infrastructure:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         - _cicd/infra/provisioning/*.tf
+
 
 
 
