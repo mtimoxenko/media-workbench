@@ -6,11 +6,11 @@ deploy_front_to_aws:
   stage: deploy_frontend
   image: alpinelinux/ansible:latest
   before_script:
+    - cd $ANSIBLE_PATH
     - apk add --no-cache git # Make sure git is installed
     - git clone --single-branch --branch deployment-branch https://gitlab.com/frem3n/media-workbench.git temp_repo
     - mv temp_repo/_cicd/infra/config/hosts.ini .
     - rm -rf temp_repo # Clean up
-    - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script:
     - export ANSIBLE_HOST_KEY_CHECKING=False
@@ -22,11 +22,11 @@ deploy_back_to_aws:
   stage: deploy_backend
   image: alpinelinux/ansible:latest
   before_script:
+    - cd $ANSIBLE_PATH
     - apk add --no-cache git # Make sure git is installed
     - git clone --single-branch --branch deployment-branch https://gitlab.com/frem3n/media-workbench.git temp_repo
     - mv temp_repo/_cicd/infra/config/hosts.ini .
     - rm -rf temp_repo # Clean up
-    - cd $ANSIBLE_PATH
     - chmod 400 $SSH_KEY
   script: 
     - export ANSIBLE_HOST_KEY_CHECKING=False
