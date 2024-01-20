@@ -5,8 +5,9 @@
   vars:
     dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
     dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}" 
-    frontend_image: "{{ lookup('env', 'FRONTEND_IMAGE') }}"         
-    frontend_tag: "{{ lookup('env', 'FRONTEND_TAG') }}"             
+    frontend_image: "{{ lookup('env', 'FRONTEND_IMAGE') }}"        
+    # Use the passed-in cleaned tag 
+    frontend_tag: "{{ frontend_tag_cleaned | default(lookup('env', 'FRONTEND_TAG')) }}"
              
   tasks:
     - name: Log into DockerHub

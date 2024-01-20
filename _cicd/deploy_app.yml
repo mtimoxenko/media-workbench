@@ -15,7 +15,7 @@ deploy_front_to_aws:
     - chmod 400 $SSH_KEY
   script:
     - export ANSIBLE_HOST_KEY_CHECKING=False
-    - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu --extra-vars "image_tag=$FRONTEND_TAG_CLEANED"
+    - ansible-playbook -i hosts.ini pull_front.yml --private-key=$SSH_KEY -u ubuntu -e "frontend_tag_cleaned=$FRONTEND_TAG_CLEANED"
   rules:
     - if: '$CI_COMMIT_TAG =~ /frontend/'
 
@@ -32,6 +32,6 @@ deploy_back_to_aws:
     - chmod 400 $SSH_KEY
   script: 
     - export ANSIBLE_HOST_KEY_CHECKING=False
-    - ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu --extra-vars "image_tag=$BACKEND_TAG_CLEANED"
+    - ansible-playbook -i hosts.ini pull_back.yml --private-key=$SSH_KEY -u ubuntu -e "backend_tag_cleaned=$BACKEND_TAG_CLEANED"
   rules:
     - if: '$CI_COMMIT_TAG =~ /backend/'
