@@ -64,10 +64,8 @@ build_aws_infrastructure:
   stage: deploy_tf
   before_script:
     - cd $TF_PATH
-    # Set up Git configuration with CI runner's details
     - git config --global user.email "ci-runner@example.com"
     - git config --global user.name "CI Runner"
-    # Use the CI_DEPLOY_TOKEN for Git operations
     - 'git remote set-url origin https://oauth2:$CI_DEPLOY_TOKEN@gitlab.com/frem3n/media-workbench.git'
   script:
     - gitlab-terraform apply
@@ -75,28 +73,17 @@ build_aws_infrastructure:
     - export EC2_PUBLIC_IP=$(gitlab-terraform output -raw ec2_public_ip)
     - echo "EC2 Public IP -> [ $EC2_PUBLIC_IP ]"
     - pwd
-    - cd ..
-    - pwd
-    - ls -l
-    - cd config
-    - pwd
-    - ls -l
+    - cd ../config
     - echo "Generating Ansible inventory file..."
-    - cat hosts.j2
     - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
     - echo $EC2_PUBLIC_IP > ec2_ip.txt
-    - ls -l
-    - cat hosts.j2
-    - cat ec2_ip.txt
     # Git
-    # After making changes, commit and push back to the repository
-    - git fetch origin deployment-branch:deployment-branch
-    - git checkout deployment-branch
-    - git merge --no-edit origin/deployment-branch
+    - git fetch origin deployment-branch
+    - git checkout deployment-branch || true
+    - git reset --hard origin/deployment-branch
     - git add hosts.ini ec2_ip.txt
-    - git commit -m "Add hosts.ini and ec2_ip.txt for deployment"
-    # Use the token to authenticate the push to GitLab
-    - 'git push origin deployment-branch'
+    - git commit -m "Update hosts.ini and ec2_ip.txt with new deployment information"
+    - 'git push --force-with-lease origin deployment-branch'
   artifacts:
     paths:
       - ${ANSIBLE_PATH}/hosts.ini
@@ -107,8 +94,11 @@ build_aws_infrastructure:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-      - _cicd/infra/provisioning/*.tf
-      # when: manual # pipe blocked
+        - _cicd/infra/provisioning/*.tf
+
+
+
+
 
 destroy_aws_infrastructure:
   stage: destroy_tf
