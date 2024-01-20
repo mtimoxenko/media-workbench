@@ -74,10 +74,12 @@ build_aws_infrastructure:
     - echo "EC2 Public IP -> [ $EC2_PUBLIC_IP ]"
     - pwd
     - cd ../config
-    # Check if deployment-branch exists and delete it
+    # Delete the existing deployment-branch on remote if it exists
     - git fetch origin
-    - if git show-ref --quiet refs/heads/deployment-branch; then git push origin --delete deployment-branch; fi
-    # Create a new deployment-branch
+    - git branch -r | grep -q "origin/deployment-branch" && git push origin --delete deployment-branch || true
+    # Create new deployment-branch based on the current state of main
+    - git checkout main
+    - git pull origin main
     - git checkout -b deployment-branch
     # Generate and commit new files
     - echo "$EC2_PUBLIC_IP" > ec2_ip.txt
@@ -96,6 +98,7 @@ build_aws_infrastructure:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         - _cicd/infra/provisioning/*.tf
+
 
 
 
