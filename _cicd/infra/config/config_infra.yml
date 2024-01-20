@@ -63,8 +63,8 @@
       debug:
         var: docker_compose_version_output.stdout_lines
     
-    - name: Install Cowsay
-      apt:
-        name: cowsay
-        update_cache: yes
+    # - name: Install Cowsay
+    #   apt:
+    #     name: cowsay
+    #     update_cache: yes
         
