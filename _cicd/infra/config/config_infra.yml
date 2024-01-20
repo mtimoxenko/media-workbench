@@ -68,3 +68,7 @@
     #     name: cowsay
     #     update_cache: yes
         
+    - name: Uninstall Cowsay
+      apt:
+        name: cowsay
+        state: absent
