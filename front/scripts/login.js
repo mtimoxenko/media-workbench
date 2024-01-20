@@ -12,7 +12,7 @@ window.addEventListener('load', function () {
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
-    const endpointLogin = 'http://localhost:8080/users/login';
+    const endpointLogin = 'http://workbench-backend:8080/users/login';
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
