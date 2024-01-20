@@ -6,14 +6,19 @@
     dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
     dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"
     backend_image: "{{ lookup('env', 'BACKEND_IMAGE') }}"
-    # Use the passed-in cleaned tag
     backend_tag: "{{ backend_tag_cleaned | default(lookup('env', 'BACKEND_TAG')) }}"
+    network_name: workbench_network  # Define the network name
 
   tasks:
     - name: Log into DockerHub
       docker_login:
         username: "{{ dockerhub_username }}"
         password: "{{ dockerhub_password }}"
+
+    - name: Create a network
+      docker_network:
+        name: "{{ network_name }}"
+        state: present
 
     - name: Pull the latest Docker images
       docker_image:
@@ -30,5 +35,7 @@
         state: started
         recreate: yes
         pull: yes
+        networks:
+          - name: "{{ network_name }}"
         ports:
           - "8080:8080"

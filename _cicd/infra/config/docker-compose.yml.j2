@@ -2,7 +2,7 @@ version: '3.8'
 services:
   frontend:
     build: ./front
-    # image: ${FRONTEND_IMAGE}:${FRONTEND_TAG}
+    image: {{ frontend_image }}:{{ frontend_tag }}
     ports:
       - "3000:80"
     networks:
@@ -10,7 +10,7 @@ services:
 
   backend:
     build: ./back
-    # image: ${BACKEND_IMAGE}:${BACKEND_TAG}
+    image: {{ backend_image }}:{{ backend_tag }}
     ports:
       - "8080:8080"
     networks:

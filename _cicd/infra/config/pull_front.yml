@@ -6,14 +6,19 @@
     dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
     dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}" 
     frontend_image: "{{ lookup('env', 'FRONTEND_IMAGE') }}"        
-    # Use the passed-in cleaned tag 
     frontend_tag: "{{ frontend_tag_cleaned | default(lookup('env', 'FRONTEND_TAG')) }}"
-             
+    network_name: workbench_network  # Ensure this matches the network name used in the backend playbook
+
   tasks:
     - name: Log into DockerHub
       docker_login:
         username: "{{ dockerhub_username }}"
         password: "{{ dockerhub_password }}"
+
+    - name: Create a network
+      docker_network:
+        name: "{{ network_name }}"
+        state: present
 
     - name: Pull the latest Docker images
       docker_image:
@@ -23,7 +28,6 @@
       loop:
         - { name: "{{ frontend_image }}", tag: "{{ frontend_tag }}" }
 
-
     - name: Run the frontend Docker container
       docker_container:
         name: "workbench-frontend"
@@ -31,6 +35,7 @@
         state: started
         recreate: yes
         pull: yes
+        networks:
+          - name: "{{ network_name }}"
         ports:
           - "3000:80"
-
