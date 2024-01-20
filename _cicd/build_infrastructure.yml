@@ -74,19 +74,17 @@ build_aws_infrastructure:
     - echo "EC2 Public IP -> [ $EC2_PUBLIC_IP ]"
     - pwd
     - cd ../config
-    # Fetch and reset the branch
-    - git fetch origin deployment-branch
-    - git checkout deployment-branch || true
-    - git reset --hard origin/deployment-branch
-    # Remove the existing files to avoid conflicts
-    - rm -f ec2_ip.txt hosts.ini
-    # Generate new files
+    # Check if deployment-branch exists and delete it
+    - git fetch origin
+    - if git show-ref --quiet refs/heads/deployment-branch; then git push origin --delete deployment-branch; fi
+    # Create a new deployment-branch
+    - git checkout -b deployment-branch
+    # Generate and commit new files
     - echo "$EC2_PUBLIC_IP" > ec2_ip.txt
     - sed "s/{{ ec2_public_ip }}/$EC2_PUBLIC_IP/" hosts.j2 > hosts.ini
-    # Add, commit, and push the changes
     - git add ec2_ip.txt hosts.ini
     - git commit -m "Update hosts.ini and ec2_ip.txt with new deployment information"
-    - 'git push --force-with-lease origin deployment-branch'
+    - git push --set-upstream origin deployment-branch
   artifacts:
     paths:
       - ${ANSIBLE_PATH}/hosts.ini
@@ -98,8 +96,6 @@ build_aws_infrastructure:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         - _cicd/infra/provisioning/*.tf
-
-
 
 
 
