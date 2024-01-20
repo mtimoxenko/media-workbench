@@ -63,3 +63,4 @@
       debug:
         var: docker_compose_version_output.stdout_lines
         
+        
