@@ -12,6 +12,7 @@ VALUES
     ('Dr.', 'Snaut', 'snaut@solaris.com', 'cosmonaut', false, 'STATION_SCIENTIST', 'EVENING');
 
 
+
 -- Insert specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
 VALUES
