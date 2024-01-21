@@ -12,7 +12,7 @@ window.addEventListener('load', function () {
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
-    const endpointLogin = 'http://34.224.30.126:8080/users/login';
+    const endpointLogin = 'http://107.22.10.222:8080/users/login';
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
