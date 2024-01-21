@@ -10,7 +10,6 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*") // Allow requests from any origin
-                .allowedOrigins("http://workbench-frontend:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Specify allowed HTTP methods
                 .allowedHeaders("*"); // Allow all headers
     }
