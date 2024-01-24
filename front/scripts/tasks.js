@@ -153,7 +153,7 @@ function cancelTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the cancellation
             // Start by creating the comment in the database
-            return fetch(`http://localhost:8080/comments`, {
+            return fetch(`http://34.239.128.111:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -183,7 +183,7 @@ function cancelTask(userTaskId, taskId) {
         }
         console.log(commentResponse);
         // Comment created successfully, proceed to cancel the task
-        return fetch(`http://localhost:8080/usertasks/${userTaskId}`, {
+        return fetch(`http://34.239.128.111:8080/usertasks/${userTaskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
@@ -249,7 +249,7 @@ function cancelTask(userTaskId, taskId) {
 }
 // Initiates a task, updating its status to 'IN_PROGRESS'
 function initiateTask(userTaskId, taskId) {
-    fetch(`http://localhost:8080/usertasks`, {
+    fetch(`http://34.239.128.111:8080/usertasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -349,7 +349,7 @@ function completeTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed completion
             // Start by creating the comment in the database
-            return fetch(`http://localhost:8080/comments`, {
+            return fetch(`http://34.239.128.111:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -379,7 +379,7 @@ function completeTask(userTaskId, taskId) {
         }
         console.log(commentMessage);
         // Comment created successfully, now update the task status to 'COMPLETED'
-        return fetch(`http://localhost:8080/usertasks`, {
+        return fetch(`http://34.239.128.111:8080/usertasks`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -484,7 +484,7 @@ function addCommentToTask(taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the action
             // Proceed with creating the comment in the database
-            return fetch(`http://localhost:8080/comments`, {
+            return fetch(`http://34.239.128.111:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -539,7 +539,7 @@ function addCommentToTask(taskId) {
 }
 // Sets up hover effect to display comments on task info buttons
 function fetchTaskInfo(taskId) {
-    fetch(`http://localhost:8080/tasks/${taskId}`)
+    fetch(`http://34.239.128.111:8080/tasks/${taskId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -581,7 +581,7 @@ function setupCommentHoverEffect() {
         function handleHover() {
             // Check if comments are already rendered
             if (!contentContainer.classList.contains("comments-loaded")) {
-                fetch(`http://localhost:8080/tasks/${taskId}`)
+                fetch(`http://34.239.128.111:8080/tasks/${taskId}`)
                     .then(response => response.json())
                     .then(task => {
                         const lastThreeComments = task.comments.slice(-3).reverse();
@@ -701,7 +701,7 @@ function cardClickHandler(event) {
 function fetchAndDisplayTasksCount(status, countElementId) {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://localhost:8080/users/${userId}`)
+    fetch(`http://34.239.128.111:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -729,7 +729,7 @@ function fetchAndUpdateAvailableWorkCount() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('http://localhost:8080/tasks')
+    fetch('http://34.239.128.111:8080/tasks')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -858,7 +858,7 @@ function updateTaskCardForConfirmation(taskCard, action) {
 function fetchAndDisplayInProgressTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://localhost:8080/users/${userId}`)
+    fetch(`http://34.239.128.111:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -946,7 +946,7 @@ function renderInProgressTasks(inProgressTasks) {
 function fetchAndDisplayCompletedTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://localhost:8080/users/${userId}`)
+    fetch(`http://34.239.128.111:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1154,7 +1154,7 @@ function submitTask() {
     };
 
     // Continue with the fetch request if validation is successful
-    fetch('http://localhost:8080/tasks', {
+    fetch('http://34.239.128.111:8080/tasks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1355,7 +1355,7 @@ function submitTemplateTask(templateId) {
             
 
             // Proceed with the fetch request to submit the task data
-            return fetch('http://localhost:8080/tasks', { // Make sure this is the correct endpoint
+            return fetch('http://34.239.128.111:8080/tasks', { // Make sure this is the correct endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1409,7 +1409,7 @@ function fetchAndDisplayAvailableTasks() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('http://localhost:8080/tasks')
+    fetch('http://34.239.128.111:8080/tasks')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1526,7 +1526,7 @@ document.addEventListener('click', function(e) {
 // Helper function to update task status to 'IN_PROGRESS'
 function updateTaskStatusToInProgress(taskId) {
     const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
-    return fetch(`http://localhost:8080/tasks`, {
+    return fetch(`http://34.239.128.111:8080/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -1546,7 +1546,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
         shiftStatus: selectedValue
     };
 
-    return fetch(`http://localhost:8080/tasks`, {
+    return fetch(`http://34.239.128.111:8080/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -1558,7 +1558,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
 function createComment(taskId, comment) {
     const userId = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`http://localhost:8080/comments`, {
+    return fetch(`http://34.239.128.111:8080/comments`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -1575,7 +1575,7 @@ function createComment(taskId, comment) {
 function createUserTask(taskId, userId) {
     const assigner = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`http://localhost:8080/usertasks`, {
+    return fetch(`http://34.239.128.111:8080/usertasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -1590,8 +1590,8 @@ function createUserTask(taskId, userId) {
 
 
 function fetchUsersAndCreateShiftContainers() {
-    // Send a GET request to fetch the user data from 'http://localhost:8080/users'
-    return fetch('http://localhost:8080/users')
+    // Send a GET request to fetch the user data from 'http://34.239.128.111:8080/users'
+    return fetch('http://34.239.128.111:8080/users')
         // Once the response is received, parse it as JSON
         .then(response => response.json())
         .then(users => {
