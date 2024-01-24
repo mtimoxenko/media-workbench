@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
     const form = document.querySelector('form');
-    const endpoint = 'http://107.22.10.222:8080/users';
+    const endpoint = 'http://localhost:8080/users';
 
 // Attach click event listeners to role tags
 document.querySelectorAll('.role-tag').forEach(tag => {
@@ -60,7 +60,7 @@ function validateInput(name, surname, email, password, shift, role) {
     }
 
     // If role is provided, ensure it's a valid enum option
-    const validRoles = ['ATTENDANT', 'REPORTER', 'HELPER', '']; // '' represents no selection
+    const validRoles = ['BLADE_RUNNER', 'REPLICANT', 'ENGINEER', '']; // '' represents no selection
     if (role && !validRoles.includes(role)) {
         displayMessage('Invalid role selected.', true);
         return false;
@@ -75,6 +75,7 @@ function validateInput(name, surname, email, password, shift, role) {
 
     return true;
 }
+
 
 function submitForm(name, surname, email, password, shift, role) {
     // Include shift and role in the payload, handling role being optional

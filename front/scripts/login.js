@@ -1,18 +1,11 @@
 window.addEventListener('load', function () {
     console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
 
-    const bodyElement = document.body;
-
-    // Check if the animation has already been played by looking for the 'animationPlayed' flag in sessionStorage
-    if (!sessionStorage.getItem('animationPlayed')) {
-        bodyElement.classList.add('animate-background');
-        sessionStorage.setItem('animationPlayed', 'true');
-    }
 
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
-    const endpointLogin = 'http://107.22.10.222:8080/users/login';
+    const endpointLogin = 'http://localhost:8080/users/login';
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();

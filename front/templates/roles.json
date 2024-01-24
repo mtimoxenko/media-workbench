@@ -1,38 +1,14 @@
 [
     {
-        "role": "REPLICANT_HUNTER",
-        "description": "Specializes in identifying and dealing with rogue replicants. Uses advanced investigative techniques."
+        "role": "BLADE_RUNNER",
+        "description": "Specializes in tracking down and dealing with rogue replicants. Equipped with investigative skills and advanced technology."
     },
     {
-        "role": "SPICE_OVERSEER",
-        "description": "Responsible for monitoring and managing spice production on Arrakis. Ensures smooth operation and security."
+        "role": "REPLICANT",
+        "description": "Bioengineered beings designed for various tasks, from menial labor to complex assignments. Possesses unique abilities and characteristics."
     },
     {
-        "role": "COSMIC_RESEARCHER",
-        "description": "Conducts studies on extraterrestrial phenomena, particularly focusing on Solaris ocean's activities."
-    },
-    {
-        "role": "ZONE_EXPLORER",
-        "description": "Expert in navigating The Zone, seeking out artifacts and understanding mysterious phenomena."
-    },
-    {
-        "role": "REVOLUTIONARY_LEADER",
-        "description": "Leads and strategizes uprisings, skilled in rallying support and executing covert operations."
-    },
-    {
-        "role": "DUNE_STRATEGIST",
-        "description": "Expert in desert warfare tactics and resource management. Key player in Arrakis's geopolitical dynamics."
-    },
-    {
-        "role": "PSYCHOHISTORIAN",
-        "description": "Uses psychohistory to predict and analyze future trends and societal events."
-    },
-    {
-        "role": "BALISET_ARTIST",
-        "description": "Talented musician skilled in playing the baliset. Provides entertainment and morale boosts."
-    },
-    {
-        "role": "STATION_SCIENTIST",
-        "description": "Conducts scientific research and experiments in space stations, often dealing with unknown cosmic entities."
+        "role": "ENGINEER",
+        "description": "Focused on designing and improving replicant models and other high-tech equipment. Combines innovative engineering with cutting-edge scientific knowledge."
     }
 ]

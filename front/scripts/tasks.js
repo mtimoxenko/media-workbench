@@ -39,7 +39,6 @@ function updateUserDisplay() {
       userIcon.innerHTML = '<i class="fa-solid fa-user"></i>'; // Default icon if shift is not found
     }
 }
-
 function showUserInfo() {
     const storedRole = sessionStorage.getItem('role');
 
@@ -122,7 +121,6 @@ function showUserInfo() {
   
 
 
-
 // Cancels a user task with a required comment
 function cancelTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
@@ -155,7 +153,7 @@ function cancelTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the cancellation
             // Start by creating the comment in the database
-            return fetch(`http://107.22.10.222:8080/comments`, {
+            return fetch(`http://localhost:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -185,7 +183,7 @@ function cancelTask(userTaskId, taskId) {
         }
         console.log(commentResponse);
         // Comment created successfully, proceed to cancel the task
-        return fetch(`http://107.22.10.222:8080/usertasks/${userTaskId}`, {
+        return fetch(`http://localhost:8080/usertasks/${userTaskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
@@ -251,7 +249,7 @@ function cancelTask(userTaskId, taskId) {
 }
 // Initiates a task, updating its status to 'IN_PROGRESS'
 function initiateTask(userTaskId, taskId) {
-    fetch(`http://107.22.10.222:8080/usertasks`, {
+    fetch(`http://localhost:8080/usertasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -351,7 +349,7 @@ function completeTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed completion
             // Start by creating the comment in the database
-            return fetch(`http://107.22.10.222:8080/comments`, {
+            return fetch(`http://localhost:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -381,7 +379,7 @@ function completeTask(userTaskId, taskId) {
         }
         console.log(commentMessage);
         // Comment created successfully, now update the task status to 'COMPLETED'
-        return fetch(`http://107.22.10.222:8080/usertasks`, {
+        return fetch(`http://localhost:8080/usertasks`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -486,7 +484,7 @@ function addCommentToTask(taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the action
             // Proceed with creating the comment in the database
-            return fetch(`http://107.22.10.222:8080/comments`, {
+            return fetch(`http://localhost:8080/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -541,7 +539,7 @@ function addCommentToTask(taskId) {
 }
 // Sets up hover effect to display comments on task info buttons
 function fetchTaskInfo(taskId) {
-    fetch(`http://107.22.10.222:8080/tasks/${taskId}`)
+    fetch(`http://localhost:8080/tasks/${taskId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -570,7 +568,6 @@ function fetchTaskInfo(taskId) {
             // Optionally, handle errors or display a message if the fetch fails
         });
 }
-
 function setupCommentHoverEffect() {
     // Select all info buttons
     const infoButtons = document.querySelectorAll('.icon-button.info-button');
@@ -584,10 +581,10 @@ function setupCommentHoverEffect() {
         function handleHover() {
             // Check if comments are already rendered
             if (!contentContainer.classList.contains("comments-loaded")) {
-                fetch(`http://107.22.10.222:8080/tasks/${taskId}`)
+                fetch(`http://localhost:8080/tasks/${taskId}`)
                     .then(response => response.json())
                     .then(task => {
-                        const lastThreeComments = task.comments.slice(-3);
+                        const lastThreeComments = task.comments.slice(-3).reverse();
                         let commentsHtml;
 
                         if (lastThreeComments.length === 0) {
@@ -639,51 +636,43 @@ function displayNoTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>Clean Sector 🌃</h2>
-            <p>Efficiency at 100%. Systems nominal.</p>
-            <p>Scan "In Progress" or "Open Assignments" for directives.</p>
+            <h2>All Monitors Silent 🌃</h2>
+            <p>Your vigilance is complete. The city breathes easy, for now.</p>
+            <p>Check back for "New Assigned" tasks or monitor "Tasks In Progress".</p>
         </div>
     `;
-    // Add additional retrofuturistic styling as needed
 }
-
 // Displays a message when there are no tasks in progress
 function displayNoInProgressTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>Stable Orbits 🛸</h2>
-            <p>Cruise mode engaged. Savor the stillness.</p>
-            <p>Ready to engage? "New Assignments" and "Achievements" await.</p>
+            <h2>Tracking Systems Idle 🛸</h2>
+            <p>Replicants lay dormant. Your pursuit has paused.</p>
+            <p>Redirect to "New Assigned" or await updates in "Completed Tasks".</p>
         </div>
     `;
-    // Add additional retrofuturistic styling as needed
 }
-
 // Displays a message when there are no completed tasks
 function displayNoCompletedTasksMessage() {
     const tasksContainer = document.querySelector('.tasks-container');
     tasksContainer.innerHTML = `
         <div class="no-tasks-message">
-            <h2>Victories Pending 🚀</h2>
-            <p>Legends in the making. Press on.</p>
-            <p>Initiate "New Assignments" or continue "Current Operations".</p>
+            <h2>Memory Archives Empty 🚀</h2>
+            <p>No echoes from past chases. The archives wait to be filled.</p>
+            <p>Mark your achievements under "Completed Tasks" soon.</p>
         </div>
     `;
-    // Add additional retrofuturistic styling as needed
 }
-
 // Displays a message when there are no available work tasks
 function displayNoAvailableWorkMessage(container) {
     container.innerHTML = `
         <div class="no-tasks-message">
-            <h2>Horizon Clear 🌌</h2>
-            <p>Mission pool is calm. Ideal for strategizing new endeavors.</p>
-            <p>Create or accept "New Assignments". The cosmos is your limit.</p>
+            <p>Soon, "Available Work" will beckon with new missions.</p>
         </div>
     `;
-    // Add additional retrofuturistic styling as needed
 }
+
 
 
 
@@ -712,7 +701,7 @@ function cardClickHandler(event) {
 function fetchAndDisplayTasksCount(status, countElementId) {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://107.22.10.222:8080/users/${userId}`)
+    fetch(`http://localhost:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -740,7 +729,7 @@ function fetchAndUpdateAvailableWorkCount() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('http://107.22.10.222:8080/tasks')
+    fetch('http://localhost:8080/tasks')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -869,7 +858,7 @@ function updateTaskCardForConfirmation(taskCard, action) {
 function fetchAndDisplayInProgressTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://107.22.10.222:8080/users/${userId}`)
+    fetch(`http://localhost:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -957,7 +946,7 @@ function renderInProgressTasks(inProgressTasks) {
 function fetchAndDisplayCompletedTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`http://107.22.10.222:8080/users/${userId}`)
+    fetch(`http://localhost:8080/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1024,6 +1013,8 @@ function renderCompletedTasks(completedTasks) {
 function renderAddNewTaskCard(tasksContainer) {
     const addTaskCard = document.createElement('div');
     addTaskCard.classList.add('task-card', 'add-task-card');
+    // addTaskCard.setAttribute('data-aos', 'flip-right');
+    // addTaskCard.setAttribute('data-aos-duration', '1000');
     addTaskCard.innerHTML = `
         <div class="task-card-header">
             <div class="task-card-status custom-status">CUSTOM CARD</div>
@@ -1037,7 +1028,7 @@ function renderAddNewTaskCard(tasksContainer) {
             <h3>Create Your Custom Task</h3>
             <p>Personalize tasks to fit your specific needs.</p>
         </div>
-        <div class="task-card-footer">
+        <div class="task-card-footer add-custom-footer">
             <button class="task-card-button add-task-button">+ Custom Task</button>
         </div>
     `;
@@ -1087,11 +1078,16 @@ function createNewTask() {
     `;
 
     // Transform the '+ New Task' button into 'Cancel' and 'Submit' buttons in the footer
-    const taskCardFooter = document.querySelector('.task-card-footer');
+    const taskCardFooter = document.querySelector('.add-custom-footer');
     taskCardFooter.innerHTML = `
         <button class="task-card-button cancel-task-button">Cancel</button>
         <button class="task-card-button submit-task-button">Submit</button>
     `;
+
+    const customStatus = document.querySelector('.custom-status');
+    customStatus.innerHTML = `
+        CUSTOM
+    `;  
 
     // Adjust the footer to space the buttons appropriately
     taskCardFooter.style.display = 'flex';
@@ -1116,10 +1112,15 @@ function resetTaskCard() {
     taskCardStatus.textContent = 'CUSTOM CARD';
 
     // Transform the 'Cancel' button back to '+ New Task'
-    const taskCardFooter = document.querySelector('.task-card-footer');
+    const taskCardFooter = document.querySelector('.add-custom-footer');
     taskCardFooter.innerHTML = `
-        <button class="task-card-button add-task-button">+ New Task</button>
+        <button class="task-card-button add-task-button">+ Custom Task</button>
     `;
+
+    const customStatus = document.querySelector('.custom-status');
+    customStatus.innerHTML = `
+        CUSTOM CARD
+    `;  
 
     // Attach event listener to the '+ New Task' button
     document.querySelector('.add-task-button').addEventListener('click', createNewTask);
@@ -1153,7 +1154,7 @@ function submitTask() {
     };
 
     // Continue with the fetch request if validation is successful
-    fetch('http://107.22.10.222:8080/tasks', {
+    fetch('http://localhost:8080/tasks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1194,9 +1195,11 @@ function submitTask() {
 
 // TEMPLATE TASKS
 // Renders 'Add New Template Task' card
-function renderAddNewTemplateTaskCard(tasksContainer) {
+function renderAddNewTemplateTaskCard(tasksContainer) { 
     const addTemplateTaskCard = document.createElement('div');
     addTemplateTaskCard.classList.add('task-card', 'add-template-task-card');
+    // addTemplateTaskCard.setAttribute('data-aos', 'flip-left');
+    // addTemplateTaskCard.setAttribute('data-aos-duration', '1000');
     addTemplateTaskCard.innerHTML = `
         <div class="task-card-header">
             <div class="task-card-status template-status">TEMPLATE CARD</div>
@@ -1352,7 +1355,7 @@ function submitTemplateTask(templateId) {
             
 
             // Proceed with the fetch request to submit the task data
-            return fetch('http://107.22.10.222:8080/tasks', { // Make sure this is the correct endpoint
+            return fetch('http://localhost:8080/tasks', { // Make sure this is the correct endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1401,17 +1404,12 @@ function submitTemplateTask(templateId) {
 
 
 
-
-
-
-
-
 // Fetches and displays available tasks
 function fetchAndDisplayAvailableTasks() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('http://107.22.10.222:8080/tasks')
+    fetch('http://localhost:8080/tasks')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1429,7 +1427,6 @@ function fetchAndDisplayAvailableTasks() {
             console.error('Error fetching available tasks:', error);
         });
 }
-
 // Renders available (active) tasks
 function renderAvailableTasks(activeTasks) {
     const tasksContainer = document.querySelector('.tasks-container');
@@ -1438,21 +1435,23 @@ function renderAvailableTasks(activeTasks) {
     // Add the 'available-work-container' class
     tasksContainer.classList.add('available-work-container');
 
-    // Create a container for special task cards (Custom and Template)
-    const specialTasksContainer = document.createElement('div');
-    specialTasksContainer.classList.add('special-tasks-container');
-
     // Create a container for the rest of the active tasks
     const activeTasksContainer = document.createElement('div');
     activeTasksContainer.classList.add('active-tasks-container');
 
-    // Append the special task container and active task container to the tasks container
-    tasksContainer.appendChild(specialTasksContainer);
+    // Create a container for special task cards (Custom and Template)
+    const specialTasksContainer = document.createElement('div');
+    specialTasksContainer.classList.add('special-tasks-container');
+
+    // Append the active task container first
     tasksContainer.appendChild(activeTasksContainer);
 
-    // Call function to render Custom Task card and Template Task card inside the special tasks container
+    // Append the special task container second
+    tasksContainer.appendChild(specialTasksContainer);
+
+    // Call function to render Custom Task card
     renderAddNewTaskCard(specialTasksContainer);
-    // Assuming you have a similar function for Template Task card
+    // similar function for Template Task card
     renderAddNewTemplateTaskCard(specialTasksContainer);
 
     if (activeTasks.length === 0) {
@@ -1495,10 +1494,9 @@ function renderAvailableTasks(activeTasks) {
             assignBtn.addEventListener('click', () => assignTask(task.id));
         });
     }
+    
     setupCommentHoverEffect();
 }
-
-
 
 
 
@@ -1528,7 +1526,7 @@ document.addEventListener('click', function(e) {
 // Helper function to update task status to 'IN_PROGRESS'
 function updateTaskStatusToInProgress(taskId) {
     const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
-    return fetch(`http://107.22.10.222:8080/tasks`, {
+    return fetch(`http://localhost:8080/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -1548,7 +1546,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
         shiftStatus: selectedValue
     };
 
-    return fetch(`http://107.22.10.222:8080/tasks`, {
+    return fetch(`http://localhost:8080/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -1560,7 +1558,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
 function createComment(taskId, comment) {
     const userId = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`http://107.22.10.222:8080/comments`, {
+    return fetch(`http://localhost:8080/comments`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -1577,7 +1575,7 @@ function createComment(taskId, comment) {
 function createUserTask(taskId, userId) {
     const assigner = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`http://107.22.10.222:8080/usertasks`, {
+    return fetch(`http://localhost:8080/usertasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -1592,8 +1590,8 @@ function createUserTask(taskId, userId) {
 
 
 function fetchUsersAndCreateShiftContainers() {
-    // Send a GET request to fetch the user data from 'http://107.22.10.222:8080/users'
-    return fetch('http://107.22.10.222:8080/users')
+    // Send a GET request to fetch the user data from 'http://localhost:8080/users'
+    return fetch('http://localhost:8080/users')
         // Once the response is received, parse it as JSON
         .then(response => response.json())
         .then(users => {

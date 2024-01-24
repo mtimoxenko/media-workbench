@@ -1,32 +1,27 @@
 [
     {
         "id": 1,
-        "btn": "REPLICANTS",
-        "name": "Identify Replicants",
-        "description": "Use the Voight-Kampff test to identify potential replicants in the city. Essential for maintaining order."
+        "btn": "AI_ETHICS",
+        "name": "AI Ethics Review",
+        "description": "Conduct a comprehensive review of AI and replicant ethical guidelines. Ensure compliance with latest regulations."
     },
     {
         "id": 2,
-        "btn": "SPICE",
-        "name": "Monitor Spice Levels",
-        "description": "Oversee spice production on Arrakis. Monitor for any unusual activity or disruptions in the spice flow."
+        "btn": "DATA_ANALYSIS",
+        "name": "Replicant Data Analysis",
+        "description": "Analyze extensive data sets on replicant behavior and performance. Identify patterns and areas for improvement."
     },
     {
         "id": 3,
-        "btn": "SOLARIS",
-        "name": "Study Solaris Ocean",
-        "description": "Conduct a detailed study of the Solaris ocean's behavior. Analyze patterns and record any anomalies."
+        "btn": "SURVEILLANCE",
+        "name": "Urban Surveillance",
+        "description": "Implement advanced surveillance systems in urban areas to monitor replicant activities and ensure public safety."
     },
     {
         "id": 4,
-        "btn": "ZONE",
-        "name": "Artifact Retrieval",
-        "description": "Lead an expedition into The Zone to retrieve rumored powerful artifacts. Ensure safety protocols are followed."
-    },
-    {
-        "id": 5,
-        "btn": "UPRISING",
-        "name": "Investigate Uprising",
-        "description": "Investigate and report on any signs of a replicant uprising. Maintain secrecy and discretion."
+        "btn": "TECH_UPGRADE",
+        "name": "Technology Upgrades",
+        "description": "Develop and deploy upgrades to existing replicant and AI technologies. Enhance efficiency and capability."
     }
 ]
+

@@ -1,4 +1,6 @@
 @import url('./globalStyles.css');
+/* Import the Orbitron font in your CSS file or HTML <head> section */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
 :root {
     --color-bg-main: rgb(30, 33, 43);
@@ -63,15 +65,38 @@ body {
 
 
 header {
-    background-color: var(--negro);
+    background-color: rgba(10, 10, 20, 0.287);
     padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative; /* Added to ensure header is positioned correctly */
-    padding: 0 5%;
+    /* padding: 0 5%; */
     height: 70px;
 }
+
+nav h1 {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    font-weight: 100;
+    font-size: 1.0rem; /* Adjust the size as needed */
+    color: #4e83868c; /* Neon-like blue to match the login form */
+    margin: 0; /* Remove default margins */
+    text-shadow: none; /* Removing glow for minimalistic design */
+}
+
+/* header {
+    background-color: rgba(10, 10, 20, 0.287); 
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    height: 70px;
+    z-index: 1000; 
+} */
 
 nav {
     width: 100%; /* Ensure the nav takes the full width of its container */
@@ -287,18 +312,32 @@ nav .user-info button {
 footer {
     height: 2rem;
     width: 100%;
-    background-color: var(--negro);
     position: fixed;
     bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 footer img {
     height: 100%;
 }
-
+#footer-text {
+    color: #a9a9a9;
+    font-size: 10px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-link {
+    font-style: italic;
+    color: #a9a9a9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #29d8e1; /* A neon cyan color for the hover state */
+    text-shadow: 0 0 10px #29d8e1; /* A glow effect similar to neon signs */
+  }
 
 
   
@@ -697,6 +736,7 @@ footer img {
     background: #4caf4fa0; /* Green background for distinction */
     color: white; /* White text for better contrast */
     border: 2px solid  #fe000076;
+    /* display: none; */
 }
 
 .add-task-header {
@@ -722,7 +762,8 @@ footer img {
 .add-template-task-card {
     background: #dde02c99; /* Green background for distinction */
     color: whitergba(219, 222, 28, 0.487);
-    border: 2px solid  #fe000076; 
+    border: 2px solid  #fe000076;
+    /* display: none; */
 }
 
 .add-template-task-button {
@@ -1053,6 +1094,7 @@ footer img {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    /* display: none; */
 }
 
 .active-tasks-container {

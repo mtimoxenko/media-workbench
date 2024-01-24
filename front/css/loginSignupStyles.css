@@ -1,13 +1,25 @@
 @import url('./globalStyles.css');
+/* Import the Orbitron font in your CSS file or HTML <head> section */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
 
 :root {
     --color-bg-main: rgb(30, 33, 43);
     --color-main-text: rgb(179, 179, 190);
+    --neon-blue: #29d8e17e;
+    --neon-text-glow: 0 0 10px var(--neon-blue);
+    --dark: #ffffff; /* Assuming a dark theme, adjust as needed */
+    --lila: #bb9cfb; /* Adjust this color to fit your neon theme if needed */
 }
 
 
 
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh; /* Make sure the body takes the full viewport height */
+    margin: 0; /* Reset default margin */
     background-image: url('../assets/4.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -15,17 +27,59 @@ body {
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.7); /* 70% transparent overlay */
 }
 
+#footer-text {
+    color: #a9a9a9;
+    font-size: 10px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.footer-link {
+    font-style: italic;
+    color: #a9a9a9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+  
+.footer-link:hover {
+    color: #29d8e1; /* A neon cyan color for the hover state */
+    text-shadow: 0 0 10px #29d8e1; /* A glow effect similar to neon signs */
+}
+
 
 header {
-    background-color: transparent;
-    padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; /* Added to ensure header is positioned correctly */
+    background-color: rgba(10, 10, 20, 0.287); /* Semi-transparent for Blade Runner effect */
     padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Fixed positioning */
+    top: 0; /* Stick to the top */
+    left: 0; /* Align left */
+    right: 0; /* Align right */
     height: 70px;
+    z-index: 1000; /* Make sure it's above other elements */
 }
+
+
+nav h1 {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    font-weight: 100;
+    font-size: 1.0rem; /* Adjust the size as needed */
+    color: #4e83868c; /* Neon-like blue to match the login form */
+    margin: 0; /* Remove default margins */
+    text-shadow: none; /* Removing glow for minimalistic design */
+}
+
+/* Simplify the span within h1 if needed */
+nav h1 span {
+    font-weight: 100; /* Maintain the light font-weight */
+    color: #29d8e1; /* Keeping it consistent with the h1 */
+}
+
+
+
 
 nav {
     width: 100%; /* Ensure the nav takes the full width of its container */
@@ -34,11 +88,9 @@ nav {
     align-items: center;
 }
 
-nav h1 span {
-    font-weight: 300;
-    font-size: 1rem;
-    color: var(--lila);
-}
+
+  
+
 
 nav img {
     display: block;
@@ -47,16 +99,24 @@ nav img {
 
 .container {
     padding: 0 5%;
+    /* margin-bottom: 200px; */
+    margin-top: 130px;
 }
 
 .signup-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     height: 100%; /* Adjust the height as needed */
+    margin-top: 120px;
 }
 
+
+#return-login {
+    position: relative;
+    top: -25px;
+}
 
 /* Form Styles */
 form {
@@ -110,14 +170,23 @@ form input:focus {
     padding: 1rem 0;
     text-align: center;
 }
-
+  
 .ingresarA a {
-    color: #ffffff;
+    color: var(--dark);
+    display: block; /* Keeps the link centered */
+    text-align: center;
+    font-size: small;
+    text-decoration: none; /* Removes underline from links */
+    font-family: 'Orbitron', sans-serif; /* A futuristic font */
+    letter-spacing: 1px; /* Adds spacing between characters for a techy feel */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition for hover effects */
 }
-
+  
 .ingresarA a:hover {
-    color: var(--lila);
+    color: var(--neon-blue); /* Neon blue color for the hover state */
+    text-shadow: var(--neon-text-glow); /* Neon glow effect on hover */
 }
+  
 
 
 
@@ -209,12 +278,7 @@ form {
   
 
   
-  /* Override anchor tag block to keep it centered */
-  .ingresarA a {
-    display: block;
-    text-align: center;
-    /* Add other anchor tag styles as needed */
-  }
+
 
   .message-box {
     display: none; /* Hidden by default */
@@ -314,7 +378,7 @@ noticeable when hovering over the button */
 }
 /* Specific styles for the register button */
 .form-button.register {
-    width: 65%;
+    width: 50%;
 }
 
 

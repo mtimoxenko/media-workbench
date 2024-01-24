@@ -1,4 +1,6 @@
 @import url('./globalStyles.css');
+/* Import the Orbitron font in your CSS file or HTML <head> section */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
 :root {
     --color-bg-main: rgb(30, 33, 43);
@@ -16,7 +18,25 @@ body {
 }
 
 
-
+#footer-text {
+    color: #a9a9a9;
+    font-size: 10px;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-link {
+    font-style: italic;
+    color: #a9a9a9;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #29d8e1; /* A neon cyan color for the hover state */
+    text-shadow: 0 0 10px #29d8e1; /* A glow effect similar to neon signs */
+  }
 
 header {
     background-color: transparent;
