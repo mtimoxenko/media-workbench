@@ -32,7 +32,6 @@ VALUES
     (6, 6, 'ASSIGNED', '2024-01-25 10:00:00', 5); -- Eldon Tyrell assigned Tyrell Corporation Strategy
 
 
-
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
