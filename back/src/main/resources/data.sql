@@ -9,7 +9,6 @@ VALUES
     ('Eldon', 'Tyrell', 'tyrell@tyrell.com', 'replicantcreator', false, 'ENGINEER', 'EVENING');
 
 
-
 -- Insert specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
 VALUES
