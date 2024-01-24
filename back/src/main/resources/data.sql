@@ -1,55 +1,50 @@
 -- Insert users with roles
 INSERT INTO usr (name, surname, email, password, is_admin, role, shift)
 VALUES
-    ('Rick', 'Deckard', 'deckard@bladerunner.com', 'replicant', false, 'REPLICANT_HUNTER', 'NIGHT'),
-    ('Paul', 'Atreides', 'atreides@dune.com', 'spiceflow', false, 'SPICE_OVERSEER', 'NIGHT'),
-    ('Kris', 'Kelvin', 'kelvin@solaris.com', 'oceanplanet', false, 'COSMIC_RESEARCHER', 'NIGHT'),
-    ('Roy', 'Batty', 'batty@bladerunner.com', 'nexus6', false, 'REVOLUTIONARY_LEADER', 'DAY'),
-    ('Duncan', 'Idaho', 'idaho@dune.com', 'fremen', false, 'DUNE_STRATEGIST', 'DAY'),
-    ('Hari', 'Seldon', 'seldon@solaris.com', 'station', false, 'PSYCHOHISTORIAN', 'DAY'),
-    ('Stalker', 'Guide', 'guide@stalker.com', 'zonevisit', false, 'ZONE_EXPLORER', 'EVENING'),
-    ('Gurney', 'Halleck', 'halleck@dune.com', 'baliset', false, 'BALISET_ARTIST', 'EVENING'),
-    ('Dr.', 'Snaut', 'snaut@solaris.com', 'cosmonaut', false, 'STATION_SCIENTIST', 'EVENING');
+    ('Rick', 'Deckard', 'deckard@bladerunner.com', 'voightkampff', false, 'BLADE_RUNNER', 'NIGHT'),
+    ('K', 'Joe', 'k@bladerunner2049.com', 'baseline', false, 'BLADE_RUNNER', 'NIGHT'),
+    ('Roy', 'Batty', 'batty@nexus6.com', 'morelife', false, 'REPLICANT', 'DAY'),
+    ('Pris', 'Stratton', 'pris@nexus6.com', 'basicpleasure', false, 'REPLICANT', 'DAY'),
+    ('J.F.', 'Sebastian', 'sebastian@tyrell.com', 'chessmaster', false, 'ENGINEER', 'EVENING'),
+    ('Eldon', 'Tyrell', 'tyrell@tyrell.com', 'replicantcreator', false, 'ENGINEER', 'EVENING');
 
 
 
 -- Insert specific tasks
 INSERT INTO task (name, description, creator_id, creation_date, status, category, shift_status)
 VALUES
-    ('Replicant Identification', 'Deckard must use the Voight-Kampff test to identify possible replicants in the city.', 1, '2023-08-01 09:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Arrakis Spice Monitoring', 'Paul Atreides to oversee spice production levels on Arrakis and report any anomalies.', 2, '2023-08-02 10:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Solaris Ocean Study', 'Kris Kelvin to analyze the behavioral patterns of the Solaris ocean.', 3, '2023-08-03 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Zone Artifact Retrieval', 'Stalker to lead an expedition to retrieve a rumored powerful artifact from The Zone.', 4, '2023-08-04 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Replicant Uprising Investigation', 'Investigate reports of a replicant uprising led by Roy Batty.', 1, '2023-08-05 13:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
-    ('Dune Reconnaissance', 'Duncan Idaho to conduct surveillance missions on Dune for strategic insights.', 5, '2023-08-06 10:30:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
-    ('Predictive Analysis', 'Hari Seldon to use psychohistory for predictive analysis of future events.', 6, '2023-08-07 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
-    ('Baliset Performance', 'Gurney Halleck to perform a musical piece on the baliset for troop morale.', 8, '2023-08-08 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING');
+    ('Replicant Identification', 'Deckard must use the Voight-Kampff test to identify possible replicants in the city.', 1, '2024-01-20 09:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
+    ('Baseline Test Administration', 'K is tasked with administering baseline tests to ensure no replicants are deviating from their designed emotional responses.', 2, '2024-01-21 10:00:00', 'IN_PROGRESS', 'CUSTOM', 'NIGHT'),
+    ('Replicant Freedom Movement', 'Roy Batty to lead a movement for replicant rights and freedom.', 3, '2024-01-22 11:00:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
+    ('Replicant Integration Study', 'Pris Stratton to analyze and report on replicant integration within human society.', 4, '2024-01-23 12:00:00', 'IN_PROGRESS', 'CUSTOM', 'DAY'),
+    ('Replicant Design Improvement', 'J.F. Sebastian to work on enhancements in replicant design for increased longevity.', 5, '2024-01-24 13:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING'),
+    ('Tyrell Corporation Strategy', 'Eldon Tyrell to develop new strategies for the Tyrell Corporation’s future replicant models.', 6, '2024-01-25 14:00:00', 'IN_PROGRESS', 'CUSTOM', 'EVENING');
 
 
 -- Insert assignments of tasks to users (UserTask)
 INSERT INTO user_task (user_id, task_id, user_task_status, assignment_date, assigned_by)
 VALUES
-    (2, 1, 'ASSIGNED', '2023-08-06 14:00:00', 3),
-    (3, 2, 'ASSIGNED', '2023-08-07 15:00:00', 1),
-    (5, 3, 'ASSIGNED', '2023-08-08 09:30:00', 6),
-    (6, 4, 'ASSIGNED', '2023-08-09 16:45:00', 5),
-    (8, 5, 'ASSIGNED', '2023-08-10 17:00:00', 9),
-    (5, 6, 'ASSIGNED', '2023-08-09 10:00:00', 6),
-    (6, 7, 'ASSIGNED', '2023-08-10 11:30:00', 5),
-    (8, 8, 'ASSIGNED', '2023-08-11 14:00:00', 7);
+    (1, 1, 'ASSIGNED', '2024-01-20 14:00:00', 2), -- Deckard assigned Replicant Identification
+    (2, 2, 'ASSIGNED', '2024-01-21 15:00:00', 1), -- K assigned Baseline Test Administration
+    (3, 3, 'ASSIGNED', '2024-01-22 09:30:00', 4), -- Roy Batty assigned Replicant Freedom Movement
+    (4, 4, 'ASSIGNED', '2024-01-23 16:45:00', 3), -- Pris Stratton assigned Replicant Integration Study
+    (5, 5, 'ASSIGNED', '2024-01-24 17:00:00', 6), -- J.F. Sebastian assigned Replicant Design Improvement
+    (6, 6, 'ASSIGNED', '2024-01-25 10:00:00', 5); -- Eldon Tyrell assigned Tyrell Corporation Strategy
+
 
 
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
-    (1, 1, 'Administering Voight-Kampff test to suspected replicants. Awaiting results.', '2023-08-11 09:15:00'),
-    (2, 2, 'Noticed unusual spice production patterns on Arrakis. Investigating.', '2023-08-12 10:30:00'),
-    (3, 3, 'Solaris ocean exhibits new phenomena. Recording data for analysis.', '2023-08-13 11:45:00'),
-    (4, 4, 'Preparing for The Zone expedition. Safety measures in place.', '2023-08-14 14:30:00'),
-    (1, 5, 'Tracking Roy Batty. Possible locations identified. Proceeding with caution.', '2023-08-15 15:45:00'),
-    (1, 1, 'Several suspects cleared. Continuing the search.', '2023-08-12 09:20:00'),
-    (2, 2, 'Spice flow is critical. Monitoring for Harkonnen interference.', '2023-08-13 10:35:00'),
-    (3, 3, 'The ocean responds to our presence. Need to study this interaction.', '2023-08-14 12:00:00'),
-    (5, 6, 'Recon in progress. The desert holds many secrets.', '2023-08-15 13:30:00'),
-    (6, 7, 'Initial predictions are concerning. Further analysis required.', '2023-08-16 15:00:00'),
-    (8, 8, 'Preparing a new composition to inspire the troops.', '2023-08-17 16:45:00');
+    (1, 1, 'Administering Voight-Kampff test to suspected replicants. Awaiting results.', '2024-01-21 09:15:00'),
+    (2, 2, 'Baseline tests conducted. No deviations detected so far.', '2024-01-22 10:30:00'),
+    (3, 3, 'Organizing replicant rights movement. Gathering support.', '2024-01-23 11:45:00'),
+    (4, 4, 'Studying human-replicant social dynamics. Compiling data.', '2024-01-24 14:30:00'),
+    (5, 5, 'Working on next-gen replicant design. Encountering complex challenges.', '2024-01-25 15:45:00'),
+    (6, 6, 'Strategizing for Tyrell Corp’s future. New model concepts underway.', '2024-01-26 09:20:00'),
+    (1, 1, 'Several suspects cleared. Continuing the search.', '2024-01-27 10:35:00'),
+    (2, 2, 'Re-evaluating baseline test parameters for improved accuracy.', '2024-01-28 12:00:00'),
+    (3, 3, 'Movement gaining traction. Planning next steps.', '2024-01-29 13:30:00'),
+    (4, 4, 'Discovering intriguing patterns in replicant integration.', '2024-01-30 15:00:00'),
+    (5, 5, 'Prototype development in progress. Testing advanced AI integration.', '2024-01-31 16:45:00');
+
