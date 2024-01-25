@@ -1,0 +1,14 @@
+[
+    {
+        "role": "BLADE_RUNNER",
+        "description": "Specializes in tracking down and dealing with rogue replicants. Equipped with investigative skills and advanced technology."
+    },
+    {
+        "role": "REPLICANT",
+        "description": "Bioengineered beings designed for various tasks, from menial labor to complex assignments. Possesses unique abilities and characteristics."
+    },
+    {
+        "role": "ENGINEER",
+        "description": "Focused on designing and improving replicant models and other high-tech equipment. Combines innovative engineering with cutting-edge scientific knowledge."
+    }
+]

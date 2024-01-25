@@ -1,14 +1,14 @@
 [
     {
-        "role": "BLADE_RUNNER",
-        "description": "Specializes in tracking down and dealing with rogue replicants. Equipped with investigative skills and advanced technology."
+        "role": "ATTENDANT",
+        "description": "Metricas Grafana y FMC."
     },
     {
-        "role": "REPLICANT",
-        "description": "Bioengineered beings designed for various tasks, from menial labor to complex assignments. Possesses unique abilities and characteristics."
+        "role": "REPORTER",
+        "description": "Reporte de Turno, Avisos de Falla y escalamiento a soporte."
     },
     {
-        "role": "ENGINEER",
-        "description": "Focused on designing and improving replicant models and other high-tech equipment. Combines innovative engineering with cutting-edge scientific knowledge."
+        "role": "HELPER",
+        "description": "Realizacion de HealthChecks, seguimiento y ejecucion de tareas. Revision de TTs a proveedores."
     }
 ]

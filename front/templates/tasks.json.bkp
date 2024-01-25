@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "btn": "AI_ETHICS",
+        "name": "AI Ethics Review",
+        "description": "Conduct a comprehensive review of AI and replicant ethical guidelines. Ensure compliance with latest regulations."
+    },
+    {
+        "id": 2,
+        "btn": "DATA_ANALYSIS",
+        "name": "Replicant Data Analysis",
+        "description": "Analyze extensive data sets on replicant behavior and performance. Identify patterns and areas for improvement."
+    },
+    {
+        "id": 3,
+        "btn": "SURVEILLANCE",
+        "name": "Urban Surveillance",
+        "description": "Implement advanced surveillance systems in urban areas to monitor replicant activities and ensure public safety."
+    },
+    {
+        "id": 4,
+        "btn": "TECH_UPGRADE",
+        "name": "Technology Upgrades",
+        "description": "Develop and deploy upgrades to existing replicant and AI technologies. Enhance efficiency and capability."
+    }
+]
+
