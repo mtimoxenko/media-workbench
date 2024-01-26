@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
     const form = document.querySelector('form');
-    const endpoint = 'http://184.73.218.172:8080/users';
+    const endpoint = 'http://localhost:8080/users';
 
 // Attach click event listeners to role tags
 document.querySelectorAll('.role-tag').forEach(tag => {
