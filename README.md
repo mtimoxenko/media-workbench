@@ -3,6 +3,17 @@
 ## Overview
 Media-Workbench is an intuitive and powerful task management system built to centralize and manage tasks across teams, particularly suited for Network Operations Centers (NOCs). It streamlines the assignment and tracking of tasks, empowering teams to create, assign, and manage workloads efficiently. With Media-Workbench, you can create tasks from scratch or leverage pre-designed templates, assign tasks to teams segmented by shifts—day, night, or evening—or directly to team members, including self-assignment for personal tracking. Each task's progress is transparently tracked, with the ability to add comments and view the latest updates directly on the task card. Completed tasks shift into a log where comments and histories are preserved, ensuring a comprehensive view of past activities. The application also designates roles to users, with each role outlining key responsibilities and capabilities within the system, ensuring clear delineations of duties and streamlined workflow management.
 
+## Components
+The Media-Workbench project is organized into several main components, each with its own responsibilities:
+
+- **back**: The backend service that manages the API and business logic.
+  - [Read more about the backend](back/README.md)
+- **front**: The frontend interface where users interact with the Media-Workbench.
+  - [Read more about the frontend](front/README.md)
+- **_cicd**: Continuous Integration and Continuous Deployment configurations and scripts.
+  - [Read more about CI/CD](_cicd/README.md)
+
+
 ## Key Features
 - **Task Management**: Centralize and manage tasks across different teams and shifts with a user-friendly interface.
 - **Template and Custom Tasks**: Start new tasks using predefined templates or create custom tasks to meet specific needs.
