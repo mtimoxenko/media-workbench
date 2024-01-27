@@ -82,14 +82,15 @@ This interface facilitates easy testing and interaction with the API endpoints.
 
 To log in to the application during development or testing, you can use the following credentials:
 
-| Email                     | Password          | Role          | Shift     |
-|---------------------------|-------------------|---------------|-----------|
-| deckard@bladerunner.com   | voightkampff      | BLADE_RUNNER  | NIGHT     |
-| k@bladerunner2049.com     | baseline          | BLADE_RUNNER  | NIGHT     |
-| batty@nexus6.com          | morelife          | REPLICANT     | DAY       |
-| pris@nexus6.com           | basicpleasure     | REPLICANT     | DAY       |
-| sebastian@tyrell.com      | chessmaster       | ENGINEER      | EVENING   |
-| tyrell@tyrell.com         | replicantcreator  | ENGINEER      | EVENING   |
+| Email             | Password | Role      | Shift   |
+|-------------------|----------|-----------|---------|
+| jmiga@noc.com     | noche    | REPORTER  | NIGHT   |
+| bsilver@noc.com   | noche    | HELPER    | NIGHT   |
+| lbardo@noc.com    | dia      | ATTENDANT | DAY     |
+| mvillano@noc.com  | dia      | NULL      | DAY     |
+| dturbio@noc.com   | tarde    | NULL      | EVENING |
+| gburgues@noc.com  | tarde    | NULL      | EVENING |
+
 
 
 ## Entity-Relationship (ER) Model

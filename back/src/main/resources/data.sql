@@ -2,7 +2,7 @@ INSERT INTO usr (name, surname, email, password, is_admin, role, shift)
 VALUES
     ('Joaquin', 'Miga', 'jmiga@noc.com', 'noche', false, 'REPORTER', 'NIGHT'),
     ('Brian', 'Silver', 'bsilver@noc.com', 'noche', false, 'HELPER', 'NIGHT'),
-    ('Lucas', 'Bardo', 'lbardo@noc.com', 'dia', false, null, 'DAY'),
+    ('Lucas', 'Bardo', 'lbardo@noc.com', 'dia', false, 'ATTENDANT', 'DAY'),
     ('Mariano', 'Villano', 'mvillano@noc.com', 'dia', false, null, 'DAY'),
     ('Daniel', 'Turbio', 'dturbio@noc.com', 'tarde', false, null, 'EVENING'),
     ('Gonzalo', 'Burgues', 'gburgues@noc.com', 'tarde', false, null, 'EVENING');
