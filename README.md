@@ -95,7 +95,7 @@ To log in to the application during development or testing, you can use the foll
 
 ## Entity-Relationship (ER) Model
 Below is the ER model of the Media-Workbench project:
-![ER Model](_docs/er_diagram.png)
+![ER Model](_docs/er_diagram.pdf)
 
 
 ## Contributing
