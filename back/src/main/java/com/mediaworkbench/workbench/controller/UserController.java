@@ -90,16 +90,16 @@ public class UserController {
                 .body("User updated successfully!");
     }
 
-    @Operation(summary = "Delete a User", description = "Deletes a user by ID")
-    @ApiResponse(responseCode = "200", description = "User deleted successfully")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(
-            @Parameter(description = "ID of the user to be deleted", required = true) @PathVariable Long id) {
-        userService.deleteUserByID(id);
+    @Operation(summary = "Deactivate a User", description = "Deactivates a user by ID")
+    @ApiResponse(responseCode = "200", description = "User deactivated successfully")
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<String> deactivateUser(
+            @Parameter(description = "ID of the user to be deactivated", required = true) @PathVariable Long id) {
+        userService.deactivateUserByID(id);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("user_deleted", "true");
+        httpHeaders.add("user_deactivated", "true");
         return ResponseEntity.ok()
                 .headers(httpHeaders)
-                .body("User deleted successfully!");
+                .body("User deactivated successfully!");
     }
 }

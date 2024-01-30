@@ -47,7 +47,7 @@ public class UserService implements IUserService {
         LOGGER.info("New user was registered [" + user.getName() + " " + user.getSurname() + "]");
 
         // Create a LoginUserResponse for the new user
-        int token = user.getIsAdmin() ? 33 : 1; // Token generation logic, can be modified as needed
+        int token = user.getIsActive() ? 1 : 33; // Token generation logic, can be modified as needed
         return new LoginUserResponse(token, user.getName(), user.getId(), user.getShift(), user.getRole());
     }
 
@@ -76,7 +76,7 @@ public class UserService implements IUserService {
                     user.getEmail(),
                     user.getShift(),
                     user.getRole(),
-                    user.getIsAdmin(),
+                    user.getIsActive(),
                     userTaskResponses // List of UserTaskResponses
             );
         }).collect(Collectors.toList());
@@ -107,7 +107,7 @@ public class UserService implements IUserService {
                 user.getEmail(),
                 user.getShift(),
                 user.getRole(),
-                user.getIsAdmin(),
+                user.getIsActive(),
                 userTaskResponses // List of UserTaskResponses
         );
     }
@@ -137,7 +137,7 @@ public class UserService implements IUserService {
         existingUser.setPassword(updateUserRequest.password());
         existingUser.setShift(updateUserRequest.shift());      // ShiftStatus
         existingUser.setRole(updateUserRequest.role());    // UserRoleStatus role
-        existingUser.setIsAdmin(updateUserRequest.isAdmin());
+        existingUser.setIsActive(updateUserRequest.isActive());
         // Do not replace collections, modify them if needed
 
         userRepository.save(existingUser);
@@ -147,23 +147,17 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void deleteUserByID(Long id) {
-        LOGGER.info("Attempting to delete user with id: " + id);
+    public void deactivateUserByID(Long id) {
+        LOGGER.info("Attempting to deactivate user with id: " + id);
 
-        if (!userRepository.existsById(id)) {
-            LOGGER.warn("User with id [" + id + "] not found for deletion.");
-            throw new CustomNotFoundException("User id [" + id + "] not found");
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomNotFoundException("User id [" + id + "] not found"));
 
-        try {
-            userRepository.deleteById(id);
-            LOGGER.info("User with id [" + id + "] successfully deleted from the database.");
-        } catch (DataAccessException e) {
-            LOGGER.error("Database access error occurred while deleting user with id " + id, e);
-            throw new CustomDatabaseException("Failed to delete user due to database access error", e);
-        }
+        user.setIsActive(false);
+        userRepository.save(user);
+
+        LOGGER.info("User with id [" + id + "] successfully deactivated.");
     }
-
 
 
 
@@ -179,7 +173,7 @@ public class UserService implements IUserService {
         User user = userOptional.get();
         LOGGER.info("User [" + user.getName() + " " + user.getSurname() + "] logged in successfully.");
 
-        int token = user.getIsAdmin() ? 33 : 1;
+        int token = user.getIsActive() ? 1 : 0;
         return new LoginUserResponse(token, user.getName(), user.getId(), user.getShift(), user.getRole());
     }
 

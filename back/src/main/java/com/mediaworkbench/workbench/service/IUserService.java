@@ -10,7 +10,7 @@ public interface IUserService {
     List<UserResponse> selectAllUser();
     UserResponse selectUserByID(Long id);
     void updateUserByID(UpdateUserRequest updateUserRequest);
-    void deleteUserByID(Long id);
+    void deactivateUserByID(Long id);
 
     LoginUserResponse login(LoginUserRequest loginUserRequest);
 }

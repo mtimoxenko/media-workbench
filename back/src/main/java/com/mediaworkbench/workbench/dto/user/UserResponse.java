@@ -13,6 +13,6 @@ public record UserResponse(
         String email,
         ShiftStatus shift,
         UserRoleStatus role,
-        Boolean isAdmin,
+        Boolean isActive,
         List<UserTaskResponse> assignedTasks
 ) { }

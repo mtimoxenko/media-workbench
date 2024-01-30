@@ -45,9 +45,9 @@ public class User {
     @Schema(description = "Shift user work in", example = "EVENING", required = true)
     private ShiftStatus shift;
 
-    @Column(name = "is_admin", nullable = false)
-    @Schema(description = "Flag to indicate if the User is an admin.", example = "true")
-    private Boolean isAdmin = false;
+    @Column(name = "is_active", nullable = false)
+    @Schema(description = "Flag to indicate if the User is active.", example = "true")
+    private Boolean isActive = true;
 
     @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

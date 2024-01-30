@@ -11,5 +11,5 @@ public record UpdateUserRequest(
         String password,
         ShiftStatus shift,
         UserRoleStatus role,
-        Boolean isAdmin
+        Boolean isActive
 ) { }
