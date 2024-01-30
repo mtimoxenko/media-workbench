@@ -30,6 +30,10 @@ window.addEventListener('load', function () {
     }
 
     function loginUser(payload) {
+        const loginButton = document.querySelector('.form-button.login');
+        loginButton.classList.add('loading'); // Add loading effect
+        loginButton.disabled = true; // Disable the button to prevent multiple submits
+    
         fetch(endpointLogin, {
             method: 'POST',
             headers: {'Content-type': 'application/json; charset=UTF-8'},
@@ -48,8 +52,9 @@ window.addEventListener('load', function () {
         })
         .catch(err => {
             displayMessage(err.message, true);
-        });
+        })
     }
+    
 
     function handleLoginSuccess(data) {
         displayMessage('Login successful. Redirecting...', false);

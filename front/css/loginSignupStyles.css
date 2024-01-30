@@ -382,6 +382,24 @@ noticeable when hovering over the button */
 }
 
 
+@keyframes loading {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+  }
+  
+  .loading {
+    /* Increase the duration to slow down the animation */
+    animation: loading 4s linear infinite;
+    /* Use the button's base color and a slightly darker variant for the loading effect */
+    background: linear-gradient(to right, rgba(67, 161, 243, 0.58) 50%, rgba(67, 161, 243, 0.78) 50%);
+    background-size: 200% 100%;
+  }
+  
+  
+
+  
+
+
 
 /* SWAL2 */
 /* Common styles for all Swal modals */
