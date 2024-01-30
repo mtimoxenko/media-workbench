@@ -5,8 +5,8 @@ if (!sessionStorage.getItem('jwt') || JSON.parse(sessionStorage.getItem('jwt')) 
 
 
 
-// const endpoint = '/api';
-const endpoint = 'http://localhost:8080';
+const endpoint = '/api';
+// const endpoint = 'http://localhost:8080';
 
 
 
