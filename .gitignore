@@ -15,4 +15,5 @@ back/workbench_app.log
 
 ### drw.io ###
 *.dtmp
-
+*.drawio
+_docs/models.drawio
