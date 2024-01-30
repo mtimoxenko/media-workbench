@@ -3,6 +3,13 @@ if (!sessionStorage.getItem('jwt') || JSON.parse(sessionStorage.getItem('jwt')) 
     window.location.replace('./index.html');
 }
 
+
+
+// const endpoint = '/api';
+const endpoint = 'http://localhost:8080';
+
+
+
 // Updates the displayed username and user image from session storage
 function updateUserDisplay() {
     const userNameDisplay = document.getElementById('username');
@@ -153,7 +160,7 @@ function cancelTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the cancellation
             // Start by creating the comment in the database
-            return fetch(`/api/comments`, {
+            return fetch(`${endpoint}/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -183,7 +190,7 @@ function cancelTask(userTaskId, taskId) {
         }
         console.log(commentResponse);
         // Comment created successfully, proceed to cancel the task
-        return fetch(`/api/usertasks/${userTaskId}`, {
+        return fetch(`${endpoint}/usertasks/${userTaskId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`
@@ -249,7 +256,7 @@ function cancelTask(userTaskId, taskId) {
 }
 // Initiates a task, updating its status to 'IN_PROGRESS'
 function initiateTask(userTaskId, taskId) {
-    fetch(`/api/usertasks`, {
+    fetch(`${endpoint}/usertasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -349,7 +356,7 @@ function completeTask(userTaskId, taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed completion
             // Start by creating the comment in the database
-            return fetch(`/api/comments`, {
+            return fetch(`${endpoint}/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -379,7 +386,7 @@ function completeTask(userTaskId, taskId) {
         }
         console.log(commentMessage);
         // Comment created successfully, now update the task status to 'COMPLETED'
-        return fetch(`/api/usertasks`, {
+        return fetch(`${endpoint}/usertasks`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -483,7 +490,7 @@ function addCommentToTask(taskId) {
         if (result.isConfirmed && result.value) {
             // User provided a comment and confirmed the action
             // Proceed with creating the comment in the database
-            return fetch(`/api/comments`, {
+            return fetch(`${endpoint}/comments`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -538,7 +545,7 @@ function addCommentToTask(taskId) {
 }
 // Sets up hover effect to display comments on task info buttons
 function fetchTaskInfo(taskId) {
-    fetch(`/api/tasks/${taskId}`)
+    fetch(`${endpoint}/tasks/${taskId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -580,7 +587,7 @@ function setupCommentHoverEffect() {
         function handleHover() {
             // Check if comments are already rendered
             if (!contentContainer.classList.contains("comments-loaded")) {
-                fetch(`/api/tasks/${taskId}`)
+                fetch(`${endpoint}/tasks/${taskId}`)
                     .then(response => response.json())
                     .then(task => {
                         const lastThreeComments = task.comments.slice(-3).reverse();
@@ -700,7 +707,7 @@ function cardClickHandler(event) {
 function fetchAndDisplayTasksCount(status, countElementId) {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`/api/users/${userId}`)
+    fetch(`${endpoint}/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -728,7 +735,7 @@ function fetchAndUpdateAvailableWorkCount() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('/api/tasks')
+    fetch(`${endpoint}/tasks`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -857,7 +864,7 @@ function updateTaskCardForConfirmation(taskCard, action) {
 function fetchAndDisplayInProgressTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`/api/users/${userId}`)
+    fetch(`${endpoint}/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -945,7 +952,7 @@ function renderInProgressTasks(inProgressTasks) {
 function fetchAndDisplayCompletedTasks() {
     const userId = JSON.parse(sessionStorage.getItem('userId'));
 
-    fetch(`/api/users/${userId}`)
+    fetch(`${endpoint}/users/${userId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1153,7 +1160,7 @@ function submitTask() {
     };
 
     // Continue with the fetch request if validation is successful
-    fetch('/api/tasks', {
+    fetch(`${endpoint}/tasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1354,7 +1361,7 @@ function submitTemplateTask(templateId) {
             
 
             // Proceed with the fetch request to submit the task data
-            return fetch('/api/tasks', { // Make sure this is the correct endpoint
+            return fetch(`${endpoint}/tasks`, { // Make sure this is the correct endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1408,7 +1415,7 @@ function fetchAndDisplayAvailableTasks() {
     // Retrieve the current shift from sessionStorage
     const currentShift = JSON.parse(sessionStorage.getItem('shift'));
 
-    fetch('/api/tasks')
+    fetch(`${endpoint}/tasks`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -1525,7 +1532,7 @@ document.addEventListener('click', function(e) {
 // Helper function to update task status to 'IN_PROGRESS'
 function updateTaskStatusToInProgress(taskId) {
     const actualUserShift = JSON.parse(sessionStorage.getItem('shift'));
-    return fetch(`/api/tasks`, {
+    return fetch(`${endpoint}/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -1545,7 +1552,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
         shiftStatus: selectedValue
     };
 
-    return fetch(`/api/tasks`, {
+    return fetch(`${endpoint}/tasks`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -1557,7 +1564,7 @@ function updateTaskShiftStatus(taskId, selectedValue) {
 function createComment(taskId, comment) {
     const userId = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`/api/comments`, {
+    return fetch(`${endpoint}/comments`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -1574,7 +1581,7 @@ function createComment(taskId, comment) {
 function createUserTask(taskId, userId) {
     const assigner = Number(sessionStorage.getItem('userId'));
 
-    return fetch(`/api/usertasks`, {
+    return fetch(`${endpoint}/usertasks`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -1589,8 +1596,8 @@ function createUserTask(taskId, userId) {
 
 
 function fetchUsersAndCreateShiftContainers() {
-    // Send a GET request to fetch the user data from '/api/users'
-    return fetch('/api/users')
+    // Send a GET request to fetch the user data from '${endpoint}/users'
+    return fetch(`${endpoint}/users`)
         // Once the response is received, parse it as JSON
         .then(response => response.json())
         .then(users => {
