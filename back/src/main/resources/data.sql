@@ -28,7 +28,6 @@ VALUES
     (5, 5, 'ASSIGNED', '2023-08-10 17:00:00', 6);
 
 
-
 -- Insert specific comments
 INSERT INTO comment (user_id, task_id, text, timestamp)
 VALUES
