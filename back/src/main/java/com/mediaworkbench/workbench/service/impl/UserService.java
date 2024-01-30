@@ -5,7 +5,6 @@ import com.mediaworkbench.workbench.repository.IUserRepository;
 import com.mediaworkbench.workbench.dto.usertask.UserTaskResponse;
 import com.mediaworkbench.workbench.model.User;
 import com.mediaworkbench.workbench.service.IUserService;
-import com.mediaworkbench.workbench.utils.exceptions.CustomDatabaseException;
 import com.mediaworkbench.workbench.utils.exceptions.CustomNotFoundException;
 import com.mediaworkbench.workbench.utils.exceptions.DuplicateEmailException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,10 +13,14 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -113,12 +116,6 @@ public class UserService implements IUserService {
     }
 
 
-
-
-
-
-
-
     @Override
     public void updateUserByID(UpdateUserRequest updateUserRequest) {
         if (!userRepository.existsById(updateUserRequest.id()))
@@ -160,8 +157,6 @@ public class UserService implements IUserService {
     }
 
 
-
-
     public LoginUserResponse login(LoginUserRequest loginUserRequest) {
         Optional<User> userOptional = userRepository.findByEmail(loginUserRequest.email());
 
@@ -178,7 +173,6 @@ public class UserService implements IUserService {
     }
 
 
-
     private boolean isEmailDuplicated(String email, Long userId) {
         if (userId == null) {
             // For new user insertion, check if any user with the given email already exists
@@ -187,6 +181,35 @@ public class UserService implements IUserService {
             // For existing user update, check if any other user with the given email exists
             return userRepository.findByEmailAndIdNot(email, userId).isPresent();
         }
+    }
+
+
+    public List<ScheduleResponse> processUserScheduleFile(MultipartFile file) {
+        List<ScheduleResponse> namesList = new ArrayList<>();
+
+        try (InputStream inputStream = file.getInputStream();
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            int nameColumnIndex = 1; // Assuming the names are in the second column
+
+            for (Row row : sheet) {
+                Cell nameCell = row.getCell(nameColumnIndex);
+                if (nameCell != null && nameCell.getCellType() == CellType.STRING) {
+                    String name = nameCell.getStringCellValue();
+                    // Add extra checks if needed, e.g., to skip headers
+                    if (name != null && !name.trim().isEmpty() && !name.equalsIgnoreCase("Apellido y Nombre")) {
+                        namesList.add(new ScheduleResponse(name.trim()));
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            LOGGER.error("Error processing user schedule file", e);
+            throw new RuntimeException("Error processing user schedule file: " + e.getMessage());
+        }
+
+        return namesList;
     }
 
 

@@ -86,6 +86,35 @@
 			<version>1.0.3</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.5</version>
+		</dependency>
+
+		<!-- Apache POI for Excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.3</version> <!-- Check for the latest version -->
+		</dependency>
+		<!-- Apache POI OOXML Schemas -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>4.1.2</version> <!-- Check for the latest version -->
+		</dependency>
+
+
+		<!-- Apache Commons Compress for zip and other compression formats -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.21</version> <!-- Check for the latest version -->
+		</dependency>
+
+
 
 	</dependencies>
 

@@ -13,8 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @Tag(name = "Users", description = "Endpoints for user management")
 @RestController
@@ -102,4 +104,36 @@ public class UserController {
                 .headers(httpHeaders)
                 .body("User deactivated successfully!");
     }
+
+
+
+
+    @Operation(summary = "Upload User Schedule File", description = "Uploads an .xlsm file containing user roles and workdays")
+    @ApiResponse(responseCode = "200", description = "Names extracted successfully")
+    @PostMapping("/upload-schedule")
+    public ResponseEntity<?> uploadUserSchedule(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded");
+        }
+
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || !originalFilename.toLowerCase().endsWith(".xlsm")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file type. Please upload an '.xlsm' file.");
+        }
+
+        try {
+            List<ScheduleResponse> names = userService.processUserScheduleFile(file);
+            return ResponseEntity.ok(names); // Return the list of names as JSON
+        } catch (Exception e) {
+            // Log the error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing the file: " + e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
 }
