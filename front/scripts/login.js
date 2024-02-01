@@ -31,8 +31,6 @@ window.addEventListener('load', function () {
 
     function loginUser(payload) {
         const loginButton = document.querySelector('.form-button.login');
-        loginButton.classList.add('loading'); // Add loading effect
-        loginButton.disabled = true; // Disable the button to prevent multiple submits
     
         fetch(endpointLogin, {
             method: 'POST',
@@ -48,11 +46,30 @@ window.addEventListener('load', function () {
             return response.json();
         })
         .then(data => {
+            loginButton.disabled = true; // Disable the button to prevent multiple submits
+            const errorMessageElement = document.getElementById('errores'); // Select the error message element
+            if (errorMessageElement) {
+                errorMessageElement.style.display = 'block'; // Reset error message visibility
+            }
+            loginButton.classList.add('loading'); // Add loading effect
             handleLoginSuccess(data);
         })
         .catch(err => {
-            displayMessage(err.message, true);
+            const errorMessageElement = document.getElementById('errores'); // Select the error message element
+            if (errorMessageElement) {
+                errorMessageElement.style.display = 'block'; // Reset error message visibility
+            }
+            displayMessage(err.message, true); // Show the error message
+        
+            // Set a timeout to hide the error message after 1 second
+            setTimeout(() => {
+                const errorMessageElement = document.getElementById('errores'); // Select the error message element
+                if (errorMessageElement) {
+                    errorMessageElement.style.display = 'none'; // Hide the error message
+                }
+            }, 1700); // Time in milliseconds
         })
+        
     }
     
 

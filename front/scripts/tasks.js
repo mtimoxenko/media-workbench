@@ -126,7 +126,6 @@ function showUserInfo() {
   
   
 
-
 // Cancels a user task with a required comment
 function cancelTask(userTaskId, taskId) {
     const userId = sessionStorage.getItem('userId'); // Retrieve userId from session storage
