@@ -1,12 +1,19 @@
 window.addEventListener('load', function () {
     console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
 
-
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');
     const password = document.querySelector('#inputPassword');
+
+
+
+
     const endpointLogin = '/api/users/login';
     // const endpointLogin = 'http://localhost:8080/users/login';
+
+
+
+
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();

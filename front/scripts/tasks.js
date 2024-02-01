@@ -1924,8 +1924,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Assuming tasksContainer is defined and accessible here
-    const tasksContainer = document.querySelector('.tasks-container');
-    renderAddNewTaskCard(tasksContainer);
+    // const tasksContainer = document.querySelector('.tasks-container');
+    // renderAddNewTaskCard(tasksContainer);
 
 });
 
