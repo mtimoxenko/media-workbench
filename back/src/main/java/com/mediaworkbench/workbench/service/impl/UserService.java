@@ -13,14 +13,9 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -184,33 +179,6 @@ public class UserService implements IUserService {
     }
 
 
-    public List<ScheduleResponse> processUserScheduleFile(MultipartFile file) {
-        List<ScheduleResponse> namesList = new ArrayList<>();
-
-        try (InputStream inputStream = file.getInputStream();
-             Workbook workbook = new XSSFWorkbook(inputStream)) {
-
-            Sheet sheet = workbook.getSheetAt(0);
-            int nameColumnIndex = 1; // Assuming the names are in the second column
-
-            for (Row row : sheet) {
-                Cell nameCell = row.getCell(nameColumnIndex);
-                if (nameCell != null && nameCell.getCellType() == CellType.STRING) {
-                    String name = nameCell.getStringCellValue();
-                    // Add extra checks if needed, e.g., to skip headers
-                    if (name != null && !name.trim().isEmpty() && !name.equalsIgnoreCase("Apellido y Nombre")) {
-                        namesList.add(new ScheduleResponse(name.trim()));
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            LOGGER.error("Error processing user schedule file", e);
-            throw new RuntimeException("Error processing user schedule file: " + e.getMessage());
-        }
-
-        return namesList;
-    }
 
 
 }
