@@ -34,7 +34,7 @@ public class UserSchedule {
     private Integer dayNumber;
 
     @Column(name = "is_working_day", nullable = false)
-    private boolean isWorkingDay;
+    private Boolean isWorkingDay;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
