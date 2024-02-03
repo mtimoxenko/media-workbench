@@ -1,12 +1,15 @@
 package com.mediaworkbench.workbench.utils.exceptions;
 
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.Objects;
 
 
 @ControllerAdvice
@@ -82,5 +85,26 @@ public class GlobalExceptionHandler {
         LOGGER.error("Database error: " + ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        LOGGER.error("Data integrity violation: " + ex.getMessage(), ex);
+        return new ResponseEntity<>("Data integrity violation: " + Objects.requireNonNull(ex.getRootCause()).getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(CustomDataIntegrityViolationException.class)
+    public ResponseEntity<String> handleCustomDataIntegrityViolationException(CustomDataIntegrityViolationException ex) {
+        LOGGER.error(ex.getMessage());
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+
+    @ExceptionHandler(CustomValidationException.class)
+    public ResponseEntity<String> handleCustomValidationException(CustomValidationException ex) {
+        LOGGER.error(ex.getMessage());
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
 
 }

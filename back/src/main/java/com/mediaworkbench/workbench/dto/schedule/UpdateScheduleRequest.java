@@ -5,7 +5,6 @@ import com.mediaworkbench.workbench.model.UserRoleStatus;
 
 public record UpdateScheduleRequest(
         Long id,
-        LocalDate date,
         UserRoleStatus role,
         Boolean isWorkingDay
 ) { }

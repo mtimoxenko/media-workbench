@@ -36,3 +36,59 @@ VALUES
     (4, 3, 'Verificar EDGE 10 que esta en mantenimiento.', '2023-08-13 11:45:00'),
     (3, 4, 'Hay algunos TT pendientes en ICD.', '2023-08-14 14:30:00'),
     (6, 5, 'Gestionar las alarmas por evento de la fecha.', '2023-08-15 15:45:00');
+
+
+-- Insert schedules for users, with consecutive days and 1-2 days off included
+INSERT INTO user_schedule (user_id, date, day_of_week, day_number, is_working_day, role) VALUES
+    (1, '2024-02-04', 'SUNDAY', 4, TRUE, 'HELPER'),
+    (1, '2024-02-05', 'MONDAY', 5, TRUE, 'HELPER'),
+    (1, '2024-02-06', 'TUESDAY', 6, FALSE, 'HELPER'),
+    (1, '2024-02-07', 'WEDNESDAY', 7, TRUE, 'HELPER'),
+    (1, '2024-02-08', 'THURSDAY', 8, TRUE, 'HELPER'),
+    (1, '2024-02-09', 'FRIDAY', 9, TRUE, 'HELPER'),
+    (1, '2024-02-10', 'SATURDAY', 10, FALSE, 'HELPER'),
+
+    (2, '2024-02-04', 'SUNDAY', 4, TRUE, 'HELPER'),
+    (2, '2024-02-05', 'MONDAY', 5, FALSE, 'HELPER'),
+    (2, '2024-02-06', 'TUESDAY', 6, FALSE, 'HELPER'),
+    (2, '2024-02-07', 'WEDNESDAY', 7, TRUE, 'HELPER'),
+    (2, '2024-02-08', 'THURSDAY', 8, TRUE, 'HELPER'),
+    (2, '2024-02-09', 'FRIDAY', 9, TRUE, 'HELPER'),
+    (2, '2024-02-10', 'SATURDAY', 10, TRUE, 'HELPER'),
+
+    (3, '2024-02-04', 'SUNDAY', 4, TRUE, 'ATTENDANT'),
+    (3, '2024-02-05', 'MONDAY', 5, TRUE, 'ATTENDANT'),
+    (3, '2024-02-06', 'TUESDAY', 6, TRUE, 'ATTENDANT'),
+    (3, '2024-02-07', 'WEDNESDAY', 7, FALSE, 'ATTENDANT'),
+    (3, '2024-02-08', 'THURSDAY', 8, FALSE, 'ATTENDANT'),
+    (3, '2024-02-09', 'FRIDAY', 9, TRUE, 'ATTENDANT'),
+    (3, '2024-02-10', 'SATURDAY', 10, TRUE, 'ATTENDANT'),
+
+    (4, '2024-02-04', 'SUNDAY', 4, TRUE, 'ATTENDANT'),
+    (4, '2024-02-05', 'MONDAY', 5, FALSE, 'ATTENDANT'),
+    (4, '2024-02-06', 'TUESDAY', 6, FALSE, 'ATTENDANT'),
+    (4, '2024-02-07', 'WEDNESDAY', 7, TRUE, 'ATTENDANT'),
+    (4, '2024-02-08', 'THURSDAY', 8, TRUE, 'ATTENDANT'),
+    (4, '2024-02-09', 'FRIDAY', 9, TRUE, 'ATTENDANT'),
+    (4, '2024-02-10', 'SATURDAY', 10, TRUE, 'ATTENDANT'),
+
+    (5, '2024-02-04', 'SUNDAY', 4, TRUE, null),
+    (5, '2024-02-05', 'MONDAY', 5, TRUE, null),
+    (5, '2024-02-06', 'TUESDAY', 6, TRUE, null),
+    (5, '2024-02-07', 'WEDNESDAY', 7, FALSE, null),
+    (5, '2024-02-08', 'THURSDAY', 8, FALSE, null),
+    (5, '2024-02-09', 'FRIDAY', 9, TRUE, null),
+    (5, '2024-02-10', 'SATURDAY', 10, TRUE, null),
+
+    (6, '2024-02-04', 'SUNDAY', 4, TRUE, null),
+    (6, '2024-02-05', 'MONDAY', 5, FALSE, null),
+    (6, '2024-02-06', 'TUESDAY', 6, FALSE, null),
+    (6, '2024-02-07', 'WEDNESDAY', 7, TRUE, null),
+    (6, '2024-02-08', 'THURSDAY', 8, TRUE, null),
+    (6, '2024-02-09', 'FRIDAY', 9, TRUE, null),
+    (6, '2024-02-10', 'SATURDAY', 10, TRUE, null);
+
+
+
+
+

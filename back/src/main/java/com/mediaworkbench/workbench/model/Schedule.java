@@ -3,8 +3,8 @@ package com.mediaworkbench.workbench.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.DayOfWeek; // This is now using the java.time.DayOfWeek
 
 @Getter
 @Setter
@@ -28,7 +28,7 @@ public class Schedule {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "day_of_week", nullable = false)
-    private DayOfWeek dayOfWeek;
+    private DayOfWeek dayOfWeek; // Using java.time.DayOfWeek
 
     @Column(name = "day_number", nullable = false)
     private Integer dayNumber;
@@ -37,7 +37,6 @@ public class Schedule {
     private Boolean isWorkingDay;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private UserRoleStatus role;
-
 }
