@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-    console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
+    console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/mtimoxenko ');
 
     const form = document.querySelector('form');
     const email = document.querySelector('#inputEmail');

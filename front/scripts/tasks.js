@@ -1864,7 +1864,7 @@ function assignTaskToGroup(taskId, selectedValue, comment) {
 
 // Event listener for DOMContentLoaded to ensure the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/fr3m3n ');
+    console.log('🚀 Developed by Maximo Timochenko. Explore more at https://github.com/mtimoxenko ');
     AOS.init(); // Initialize animations
 
     // Call this function when the page loads or when the relevant session storage items are updated
