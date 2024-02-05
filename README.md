@@ -1,7 +1,40 @@
 # Media-Workbench
 
-## Overview
-Media-Workbench is an intuitive and powerful task management App built to centralize and manage tasks across teams, particularly suited for Network Operations Centers (NOCs). It streamlines the assignment and tracking of tasks, empowering teams to create, assign, and manage workloads efficiently. With Media-Workbench, you can create tasks from scratch or leverage pre-designed templates, assign tasks to teams segmented by shifts—day, night, or evening—or directly to team members, including self-assignment for personal tracking. Each task's progress is transparently tracked, with the ability to add comments and view the latest updates directly on the task card. Completed tasks shift into a log where comments and histories are preserved, ensuring a comprehensive view of past activities. The application also designates roles to users, with each role outlining key responsibilities and capabilities within the system, ensuring clear delineations of duties and streamlined workflow management.
+## Motivation
+
+The journey of Media-Workbench began from a simple need within our team for better workflow management. It was a suggestion I made, hoping to find a solution that could streamline our processes and bring some order to the chaos. Developed using Java and Spring Boot, wrapped up in Docker for easy deployment, and set into motion with GitLab CICD pipelines utilizing Infrastructure as Code (IaC) techniques, Media-Workbench is our humble attempt to address this need.
+
+## Why Use `Media-Workbench`?
+
+Media-Workbench is not just another tool; it's a reflection of our team's effort to make workflow management as intuitive and seamless as possible. Here's why you might find it useful:
+
+- **Simple and straightforward**: Designed to be user-friendly, allowing you to get your work done without getting lost in complexity.
+- **Built with care**: Every feature has been developed with the user's workflow in mind, aiming to enhance efficiency without overwhelming.
+- **Community-driven**: We're always looking for feedback to make Media-Workbench better for everyone.
+
+
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://gitlab.com/frem3n/media-workbench
+cd media-workbench
+
+# Ensure Docker and Docker Compose are installed on your system
+# Start the application with Docker Compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop and remove containers
+docker-compose down
+
+# Access the frontend
+Visit http://localhost:3000
+```
+
 
 ## Components
 The Media-Workbench project is organized into several main components, each with its own responsibilities:
@@ -13,55 +46,6 @@ The Media-Workbench project is organized into several main components, each with
 - **_cicd**: Continuous Integration and Continuous Deployment configurations and scripts.
   - [Read more about CI/CD](_cicd/README.md)
 
-
-## Key Features
-- **Task Management**: Centralize and manage tasks across different teams and shifts with a user-friendly interface.
-- **Template and Custom Tasks**: Start new tasks using predefined templates or create custom tasks to meet specific needs.
-- **Dynamic Task Assignment**: Assign tasks to teams based on shift timings, to individual team members, or to yourself.
-- **Real-time Tracking and Updates**: Progress on tasks is updated in real-time with the ability for team members to add comments and view recent activities directly on task cards.
-- **Comment History**: Maintain a log of the latest comments for ongoing tasks and a comprehensive history for completed tasks.
-- **Role-Based Access**: Define user roles with specific responsibilities, enhancing structure and clarity within your team's operations.
-- **Shift Segmentation**: Organize workload and task visibility based on day, night, and evening shifts, optimizing 24/7 operations.
-- **Backend Efficiency**: A robust Java backend powered by Spring Boot ensures optimal performance and reliability.
-- **DevOps Integration**: Seamless deployment process with Docker, Terraform, and Ansible for streamlined operations.
-- **Scalable Architecture**: Built to grow with your team and project needs, ensuring that your management system adapts to your evolving requirements.
-
-
-
-## Getting Started
-Begin by cloning the repository and setting up the development environment:
-
-
-## Installation
-```bash
-git clone https://gitlab.com/frem3n/media-workbench
-cd media-workbench
-# Follow specific setup instructions
-```
-
-## Running the Application with Docker Compose
-
-To start the application using Docker Compose, follow these steps:
-
-1. Ensure Docker and Docker Compose are installed on your system.
-2. Open a terminal and navigate to the root directory of the project where the `docker-compose.yml` file is located.
-3. Run the following command to build and start the containers in the background:
-
-```bash
-docker-compose up -d
-```
-
-To view the logs of the running services, use:
-```bash
-docker-compose logs -f
-```
-
-When you are done, you can stop and remove the containers with the command:
-```bash
-docker-compose down
-```
-
-Visit http://localhost:3000 to access the frontend
 
 ## Additional Features
 
