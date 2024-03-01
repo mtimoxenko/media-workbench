@@ -18,7 +18,7 @@ Media-Workbench is not just another tool; it's a reflection of our team's effort
 
 ```bash
 # Clone the repository
-git clone https://gitlab.com/frem3n/media-workbench
+git clone https://gitlab.com/mtimoxenko/media-workbench
 cd media-workbench
 
 # Ensure Docker and Docker Compose are installed on your system

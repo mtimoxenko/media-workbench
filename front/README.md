@@ -18,7 +18,7 @@ These instructions will get you a copy of the frontend service up and running on
 ### Installation
 Clone the repository and navigate to the frontend service directory:
 ```bash
-git clone https://gitlab.com/frem3n/media-workbench
+git clone https://gitlab.com/mtimoxenko/media-workbench
 cd media-workbench/front
 ```
 

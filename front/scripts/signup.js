@@ -3,8 +3,8 @@ window.addEventListener('load', function () {
 
 
 
-    const endpoint = '/api/users';
-    // const endpoint = 'http://localhost:8080/users';
+    // const endpoint = '/api/users';
+    const endpoint = 'http://localhost:8080/users';
 
 
 

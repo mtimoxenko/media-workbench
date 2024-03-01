@@ -20,7 +20,7 @@ These instructions will get you a copy of the backend service up and running on 
 ### Installation
 Clone the repository and navigate to the backend service directory:
 ```bash
-git clone https://gitlab.com/frem3n/media-workbench
+git clone https://gitlab.com/mtimoxenko/media-workbench
 cd media-workbench/back
 ```
 

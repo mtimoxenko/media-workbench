@@ -66,7 +66,7 @@ build_aws_infrastructure:
     - cd $TF_PATH
     - git config --global user.email "ci-runner@example.com"
     - git config --global user.name "CI Runner"
-    - 'git remote set-url origin https://oauth2:$CI_DEPLOY_TOKEN@gitlab.com/frem3n/media-workbench.git'
+    - 'git remote set-url origin https://oauth2:$CI_DEPLOY_TOKEN@gitlab.com/mtimoxenko/media-workbench.git'
   script:
     - gitlab-terraform apply
     - echo "Extracting EC2 instance public IP..."

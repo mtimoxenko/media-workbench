@@ -9,7 +9,7 @@ deploy_front_to_aws:
     - FRONTEND_TAG_CLEANED="${CI_COMMIT_TAG#frontend-}"
     - cd $ANSIBLE_PATH
     - apk add --no-cache git # Make sure git is installed
-    - git clone --single-branch --branch deployment-branch https://gitlab.com/frem3n/media-workbench.git temp_repo
+    - git clone --single-branch --branch deployment-branch https://gitlab.com/mtimoxenko/media-workbench.git temp_repo
     - mv temp_repo/_cicd/infra/config/hosts.ini .
     - rm -rf temp_repo # Clean up
     - chmod 400 $SSH_KEY
@@ -26,7 +26,7 @@ deploy_back_to_aws:
     - BACKEND_TAG_CLEANED="${CI_COMMIT_TAG#backend-}"
     - cd $ANSIBLE_PATH
     - apk add --no-cache git # Make sure git is installed
-    - git clone --single-branch --branch deployment-branch https://gitlab.com/frem3n/media-workbench.git temp_repo
+    - git clone --single-branch --branch deployment-branch https://gitlab.com/mtimoxenko/media-workbench.git temp_repo
     - mv temp_repo/_cicd/infra/config/hosts.ini .
     - rm -rf temp_repo # Clean up
     - chmod 400 $SSH_KEY

@@ -8,8 +8,8 @@ window.addEventListener('load', function () {
 
 
 
-    const endpointLogin = '/api/users/login';
-    // const endpointLogin = 'http://localhost:8080/users/login';
+    // const endpointLogin = '/api/users/login';
+    const endpointLogin = 'http://localhost:8080/users/login';
 
 
 
